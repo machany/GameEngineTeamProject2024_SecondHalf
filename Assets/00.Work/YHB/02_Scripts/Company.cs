@@ -1,3 +1,7 @@
+using System.Collections;
+using UnityEngine;
+using UnityEngine.Serialization;
+
 public enum ResourceType
 {
     Red,
@@ -17,28 +21,39 @@ public class Company : Building
         Square,
         Rhombus
     }
-
+    
     /// <summary>회사의 모양</summary>
-    public CompanyShapeType _shapeType;
+    private CompanyShapeType _shapeType;
     /// <summary>회사의 필요로 하는 자원, 색</summary>
-    public ResourceType resourceType;
+    public ResourceType requestType;
 
+    private bool _countDown;
+    private float _countDownTime;
+
+    private int _requestCost;
     /// <summary>회사가 필요로하는 자원 갯수</summary>
-    private int _requsetCost;
-    private int _productCost;
-    /// <summary>회사가 생산한 자원</summary>
-    private int ProdutCost
+    private int RequestCost
     {
-        get { return _productCost; }
+        get => _requestCost;
         set
         {
-            if (value > CompanyManager.Instance.maxProductCost) _productCost = CompanyManager.Instance.maxProductCost;
-            else if (value < 0) _productCost = 0;
-            else _productCost = value;
+            if (value < CompanyManager.Instance.maxRequestCost)
+                RequestOverCountDown();
+            
+            _requestCost = value;
         }
     }
+    
+    private int _productCost;
+    /// <summary>회사가 생산한 자원</summary>
+    private int ProductCost
+    {
+        get => _productCost;
+        set => _productCost = value < 0 ? 0 :
+            value > CompanyManager.Instance.maxProductCost ? CompanyManager.Instance.maxProductCost : value;
+    }
 
-    private void Awake()
+    private void OnEnable()
     {
         Initialize();
     }
@@ -49,9 +64,63 @@ public class Company : Building
     private void Initialize()
     {
         buildingType = BuildingType.Company;
-        _needCost = 0;
-        ProdutCost = 0;
+        RequestCost = 0;
+        ProductCost = 0;
+        CompanyManager.Instance.OnCompanyProduct += HandleProduct;
+        CompanyManager.Instance.OnCompanyRequest += HandleRequest;
     }
 
+    /// <summary>
+    /// 자원을 생산합니다.
+    /// </summary>
+    public void HandleProduct()
+    {
+        StartCoroutine(ProductCoe(Random.Range(0, 1)));
+    }
     
+    /// <summary>
+    /// 자원을 필요로 합니다.
+    /// </summary>
+    public void HandleRequest()
+    {
+        StartCoroutine(RequestCoe(Random.Range(0, 1)));
+    }
+
+    /// <summary>회사가 자원을 n개 더 생산합니다.</summary>
+    /// <param name="n">추가로 생산할 자원의 개수 기본값 : 1</param>
+    private IEnumerator ProductCoe(int n = 1)
+    {
+        yield return new WaitForSeconds(Random.Range(CompanyManager.Instance.minProductTime, CompanyManager.Instance.maxProductTime));
+        ProductCost += n;
+    }
+
+    /// <summary>회사가 자원을 n개 더 필요로합니다.</summary>
+    /// <param name="n">추가할 필요 자원의 개수 기본값 : 1</param>
+    private IEnumerator RequestCoe(int n = 1)
+    {
+        yield return new WaitForSeconds(Random.Range(CompanyManager.Instance.minRequestTime, CompanyManager.Instance.maxRequestTime));
+        RequestCost += n;
+    }
+    
+    /// <summary>
+    /// 카운트 다운을 시작합니다.
+    /// </summary>
+    private void RequestOverCountDown()
+    {
+        
+    }
+    
+    /// <summary>
+    /// 회사를 비활성화 할 때 사용합니다.
+    /// </summary>
+    private void DisableCompany()
+    {
+        CompanyManager.Instance.OnCompanyProduct -= HandleProduct;
+        CompanyManager.Instance.OnCompanyRequest -= HandleRequest;
+    }
+
+    private void OnDestroy()
+    {
+        DisableCompany();
+    }
 }
