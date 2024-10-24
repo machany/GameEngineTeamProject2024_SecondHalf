@@ -19,12 +19,12 @@ public class Company : Building
     }
 
     /// <summary>회사의 모양</summary>
-    public CompanyShapeType shapeType;
+    public CompanyShapeType _shapeType;
     /// <summary>회사의 필요로 하는 자원, 색</summary>
     public ResourceType resourceType;
 
     /// <summary>회사가 필요로하는 자원 갯수</summary>
-    private int _needCost;
+    private int _requsetCost;
     private int _productCost;
     /// <summary>회사가 생산한 자원</summary>
     private int ProdutCost

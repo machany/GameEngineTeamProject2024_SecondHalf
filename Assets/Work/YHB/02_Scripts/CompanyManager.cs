@@ -14,8 +14,16 @@ public class CompanyManager : MonoBehaviour
     private NotOverlapEnumType<Company.CompanyShapeType> _companyShape = new NotOverlapEnumType<Company.CompanyShapeType>();
     ///<summary>색의 중복을 피하기 위한 변수입니다.</summary>
     private NotOverlapEnumType<ResourceType> _companyResource = new NotOverlapEnumType<ResourceType>();
+    
     /// <summary>생산된 자원이 최대로 보관할 수 있는 양</summary>
     public int maxProductCost = 5;
+    /// <summary>필요로 할 수 있는 자원의 최대의 양</summary>
+    public int maxRequestCost = 5;
+    
+    /// <summary></summary>
+    public float minProductTime, maxProductTime;
+    /// <summary></summary>
+    public float minRequestTime, maxRequestTime;
 
     private void Awake()
     {
