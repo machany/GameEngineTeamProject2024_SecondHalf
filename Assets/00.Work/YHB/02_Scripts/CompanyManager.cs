@@ -10,11 +10,11 @@ public class CompanyManager : MonoBehaviour
     public static CompanyManager Instance;
     
     /// <summary>회사의 모양에 따른 생산될 자원을 나타냅니다.</summary>
-    public Dictionary<Company.CompanyShapeType, ResourceType> productShape = new Dictionary<Company.CompanyShapeType, ResourceType>();
+    public Dictionary<CompanyShapeType, ResourceType> productShape = new Dictionary<CompanyShapeType, ResourceType>();
     ///<summary>모양의 중복을 피하기위한 변수입니다.</summary>
-    private NotOverlapEnum<Company.CompanyShapeType> _companyShape = new NotOverlapEnum<Company.CompanyShapeType>();
+    public NotOverlapEnum<CompanyShapeType> _companyShape = new NotOverlapEnum<CompanyShapeType>();
     ///<summary>색의 중복을 피하기 위한 변수입니다.</summary>
-    private NotOverlapEnum<ResourceType> _companyResource = new NotOverlapEnum<ResourceType>();
+    public NotOverlapEnum<ResourceType> _companyResource = new NotOverlapEnum<ResourceType>();
 
     /// <summary>회사에서 자원을 생산하게 합니다.</summary>
     public Action OnCompanyProduct;
@@ -68,7 +68,7 @@ public class CompanyManager : MonoBehaviour
         ResourceType.Yellow => Color.yellow,
         ResourceType.Green => Color.green,
         ResourceType.Blue => Color.blue,
-        ResourceType.Black => Color.black,
+        ResourceType.Purple => new Color(0.5f, 0f, 1f),
         _ => Color.white
     };
 }
