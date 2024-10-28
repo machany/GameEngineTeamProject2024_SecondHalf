@@ -9,9 +9,9 @@ using Random = UnityEngine.Random;
 /// Get()메서드를 이용해 사용합니다.
 /// </summary>
 /// <typeparam name="T">반드시 enum형식을 넣으세요.</typeparam>
-public class NotOverlapEnumType<T>
+public class NotOverlapEnum<T>
 {
-    private List<T> list = new List<T>();
+    private List<T> _list = new List<T>();
 
     /// <summary>
     /// enum을 중복없이 렌덤으로 return합니다.
@@ -21,24 +21,25 @@ public class NotOverlapEnumType<T>
     {
         try
         {
-            if (list.Count == 0)
+            if (_list.Count == 0)
             {
-                list.Clear();
+                _list.Clear();
 
                 foreach (T item in Enum.GetValues(typeof(T)))
                 {
-                    list.Add(item);
+                    _list.Add(item);
                 }
             }
 
-            int randomIndex = Random.Range(0, list.Count);
-            T returnValue = list[randomIndex];
-            list.RemoveAt(randomIndex);
+            int randomIndex = Random.Range(0, _list.Count);
+            T returnValue = _list[randomIndex];
+            _list.RemoveAt(randomIndex);
             return returnValue;
         }
-        catch (ArgumentException)
+        catch (ArgumentException ex)
         {
-            Debug.Log(typeof(T).Name + " isn't enum");
+            Debug.LogError(ex.Message);
+            Debug.Log(typeof(T) + " isn't enum");
             return default(T);
         }
     }
