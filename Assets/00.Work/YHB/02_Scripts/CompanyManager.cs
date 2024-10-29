@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class CompanyManager : MonoBehaviour
@@ -12,25 +13,26 @@ public class CompanyManager : MonoBehaviour
     /// <summary>회사의 모양에 따른 생산될 자원을 나타냅니다.</summary>
     public Dictionary<CompanyShapeType, ResourceType> productShape = new Dictionary<CompanyShapeType, ResourceType>();
     ///<summary>모양의 중복을 피하기위한 변수입니다.</summary>
-    public NotOverlapEnum<CompanyShapeType> _companyShape = new NotOverlapEnum<CompanyShapeType>();
+    public NotOverlapEnum<CompanyShapeType> companyShape = new NotOverlapEnum<CompanyShapeType>();
     ///<summary>색의 중복을 피하기 위한 변수입니다.</summary>
-    public NotOverlapEnum<ResourceType> _companyResource = new NotOverlapEnum<ResourceType>();
+    public NotOverlapEnum<ResourceType> companyResource = new NotOverlapEnum<ResourceType>();
 
     /// <summary>회사에서 자원을 생산하게 합니다.</summary>
     public Action OnCompanyProduct;
     /// <summary>회사에서 자원을 필요하게 합니다.</summary>
     public Action OnCompanyRequest;
     
-    /// <summary>생산된 자원이 최대로 보관할 수 있는 양</summary>
+    [Header("Resources")]
+    // 생산된 자원이 최대로 보관할 수 있는 양
     public int maxProductCost = 5;
-    /// <summary>카운트 다운이 시작되는 자원의 양</summary>
+    // 카운트 다운이 시작되는 자원의 양
     public int maxRequestCost = 5;
     
     /// <summary>자원 생산을 위한 최대/소 시간</summary>
     public float minProductTime, maxProductTime;
     /// <summary>자원 필요를 위한 최대/소 시간</summary>
     public float minRequestTime, maxRequestTime;
-
+    
     private void Awake()
     {
         Initialize();
@@ -54,21 +56,8 @@ public class CompanyManager : MonoBehaviour
     {
         productShape.Clear();
         for (int i = 0; i < 5; i++)
-            productShape.Add(_companyShape.Get(), _companyResource.Get());
+            productShape.Add(companyShape.Get(), companyResource.Get());
     }
     
-    /// <summary>
-    /// 자원의 타입에 맞는 색을 반환해주는 함수입니다.
-    /// </summary>
-    /// <param name="resourceType">자원의 타입</param>
-    /// <returns>자원의 색</returns>
-    public Color GetResourceColor(ResourceType resourceType) => resourceType switch
-    {
-        ResourceType.Red => Color.red,
-        ResourceType.Yellow => Color.yellow,
-        ResourceType.Green => Color.green,
-        ResourceType.Blue => Color.blue,
-        ResourceType.Purple => new Color(0.5f, 0f, 1f),
-        _ => Color.white
-    };
+    
 }

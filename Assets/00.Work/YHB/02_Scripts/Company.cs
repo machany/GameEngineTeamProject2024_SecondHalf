@@ -23,7 +23,7 @@ public enum CompanyShapeType // 회사의 모양을 나타냅니다.
 public class Company : Building
 {
     /// <summary>회사의 모양</summary>
-    private CompanyShapeType _shapeType;
+    public CompanyShapeType shapeType;
     /// <summary>회사의 필요로 하는 자원, 색</summary>
     public ResourceType requestType;
 
@@ -61,8 +61,8 @@ public class Company : Building
     private void Initialize()
     {
         buildingType = BuildingType.Company;
-        _shapeType = CompanyManager.Instance._companyShape.Get();
-        requestType = CompanyManager.Instance._companyResource.Get();
+        requestType = CompanyManager.Instance.companyResource.Get();
+        shapeType = CompanyManager.Instance.companyShape.Get();
         
         RequestCost = 0;
         ProductCost = 0;
@@ -72,7 +72,8 @@ public class Company : Building
 
         #region test
 
-        transform.GetComponent<SpriteRenderer>().color = CompanyManager.Instance.GetResourceColor(requestType);
+        transform.GetComponent<SpriteRenderer>().color = CompanyInfo.Instance.GetResourceColor(requestType);
+        transform.GetComponent<SpriteRenderer>().sprite = CompanyInfo.Instance.GetShapeSprite(shapeType);
 
         #endregion
     }

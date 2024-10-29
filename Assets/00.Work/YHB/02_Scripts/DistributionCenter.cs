@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class DistributionCenter : Building
 {
-    private Dictionary<ResourceType, int> _storage = new Dictionary<ResourceType, int>();
+    public Dictionary<ResourceType, int> Storage = new Dictionary<ResourceType, int>();
         
     private void OnEnable()
     {
@@ -20,24 +20,32 @@ public class DistributionCenter : Building
     /// <summary> 창고 초기화 </summary>
     private void StorageInit()
     {
-        _storage.Clear();
+        Storage.Clear();
         foreach (ResourceType item in Enum.GetValues(typeof(ResourceType)))
-            _storage.Add(item, 0);
+            Storage.Add(item, 0);
     }
 
-    private void InputResource(ResourceType resource)
+    /// <summary>
+    /// 자원을 넣으면 해당 자원의 값이 증가합니다.
+    /// </summary>
+    /// <param name="resource">넣을 자원</param>
+    public void AddCenterResource(ResourceType resource)
     {
-        _storage[resource]++;
+        Storage[resource]++;
     }
     
-    private bool OutputResource(ResourceType resource)
+    /// <summary>
+    /// 창고에서 자원을 꺼내올 수 있는지 확인합니다.
+    /// </summary>
+    /// <param name="resource">꺼내올 자원</param>
+    /// <returns>리턴이 true면 자원을 꺼내온 것입니다.</returns>
+    public bool GetCenterResource(ResourceType resource)
     {
-        if (--_storage[resource] < 0)
-        {
-            _storage[resource] = 0;
+        if (Storage[resource] < 0)
             return false;
-        }
-        
+
+        Storage[resource]--;
         return true;
+
     }
 }

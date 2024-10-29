@@ -36,11 +36,11 @@ public class NotOverlapEnum<T>
             _list.RemoveAt(randomIndex);
             return returnValue;
         }
-        catch (ArgumentException ex)
+        catch (Exception ex)
         {
             Debug.LogError(ex.Message);
             Debug.Log(typeof(T) + " isn't enum");
-            return default(T);
+            return default;
         }
     }
 }
