@@ -3,10 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CompanyInfo : MonoBehaviour
+public class CompanyInfo : MonoSingleton<CompanyInfo>
 {
-    public static CompanyInfo Instance;
-    
     [Header("Info")]
     [Tooltip("Circle, Triangle, InvertedTriangle, Square, Rhombus순 입니다.")]
     [SerializeField] private List<Sprite> companySprites;
@@ -24,8 +22,7 @@ public class CompanyInfo : MonoBehaviour
     /// </summary>
     private void Initialize()
     {
-        if (Instance == null)
-            Instance = this;
+
     }
     
     /// <summary>

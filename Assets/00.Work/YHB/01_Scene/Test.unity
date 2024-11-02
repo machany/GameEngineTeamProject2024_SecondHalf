@@ -426,10 +426,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxProductCost: 5
   maxRequestCost: 5
-  minProductTime: 10
-  maxProductTime: 10
-  minRequestTime: 10
-  maxRequestTime: 10
+  minDelayTime: 1
+  maxDelayTime: 5
+  productTime: 2
+  requestTime: 3
 --- !u!4 &2083696859
 Transform:
   m_ObjectHideFlags: 0

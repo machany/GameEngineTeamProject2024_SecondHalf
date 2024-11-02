@@ -36,7 +36,7 @@ public class Company : Building
         get => _requestCost;
         set
         {
-            if (value < CompanyManager.Instance.maxRequestCost)
+            if (value > CompanyManager.Instance.maxRequestCost)
                 _countDown.RequestOverCountDown();
             
             _requestCost = value;
@@ -79,31 +79,35 @@ public class Company : Building
     }
 
     /// <summary>자원을 생산합니다.</summary>
-    private void HandleProduct()
+    private void HandleProduct(int n)
     {
-        StartCoroutine(ProductCoe(Random.Range(0, 1)));
+        if (n != 0) 
+            StartCoroutine(ProductCoe(n < 0 ? 0 : 1));
     }
     
     /// <summary>자원을 필요로 합니다.</summary>
-    private void HandleRequest()
+    private void HandleRequest(int n)
     {
-        StartCoroutine(RequestCoe(Random.Range(0, 1)));
+        if (n != 0) 
+            StartCoroutine(RequestCoe(n > 0 ? 1 : 0));
     }
 
     /// <summary>회사가 자원을 n개 더 생산합니다.</summary>
     /// <param name="n">추가로 생산할 자원의 개수 기본값 : 1</param>
-    private IEnumerator ProductCoe(int n = 1)
+    private IEnumerator ProductCoe(int n)
     {
-        yield return new WaitForSeconds(Random.Range(CompanyManager.Instance.minProductTime, CompanyManager.Instance.maxProductTime));
+        yield return new WaitForSeconds(Random.Range(CompanyManager.Instance.minDelayTime, CompanyManager.Instance.maxDelayTime));
         ProductCost += n;
+        Debug.Log("ProductCost : " + ProductCost);
     }
 
     /// <summary>회사가 자원을 n개 더 필요로합니다.</summary>
     /// <param name="n">추가할 필요 자원의 개수 기본값 : 1</param>
-    private IEnumerator RequestCoe(int n = 1)
+    private IEnumerator RequestCoe(int n)
     {
-        yield return new WaitForSeconds(Random.Range(CompanyManager.Instance.minRequestTime, CompanyManager.Instance.maxRequestTime));
+        yield return new WaitForSeconds(Random.Range(CompanyManager.Instance.minDelayTime, CompanyManager.Instance.maxDelayTime));
         RequestCost += n;
+        Debug.Log("RequestCost : " + RequestCost);
     }
     
     /// <summary>회사를 비활성화 할 때 사용합니다.</summary>
