@@ -8,6 +8,6 @@ public class GameOverCount
     /// <summary>카운트 다운을 시작합니다.</summary>
     public void RequestOverCountDown()
     {
-        
+        Debug.Log("Requesting over countdown");
     }
 }
