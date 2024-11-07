@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 using UnityEngine.Serialization;
 
 public enum ResourceType
@@ -22,6 +24,9 @@ public enum CompanyShapeType // 회사의 모양을 나타냅니다.
 
 public class Company : Building
 {
+    public event Action<bool> OnRequestCostChanged;
+    public event Action<bool> OnProductCostChanged;
+
     /// <summary>회사의 모양</summary>
     public CompanyShapeType shapeType;
     /// <summary>회사의 필요로 하는 자원, 색</summary>
@@ -36,10 +41,16 @@ public class Company : Building
         get => _requestCost;
         set
         {
-            if (value > CompanyManager.Instance.maxRequestCost)
+            if (value <= CompanyInfo.Instance.requestCoolDownStart)
+            {
+                OnRequestCostChanged?.Invoke(_requestCost <= value);
+                _requestCost = value < 0 ? 0 : value;
+            }
+            else
+            {
+                _requestCost = CompanyInfo.Instance.requestCoolDownStart;
                 _countDown.RequestOverCountDown();
-            
-            _requestCost = value;
+            }
         }
     }
     
@@ -48,8 +59,12 @@ public class Company : Building
     private int ProductCost
     {
         get => _productCost;
-        set => _productCost = value < 0 ? 0 :
-            value > CompanyManager.Instance.maxProductCost ? CompanyManager.Instance.maxProductCost : value;
+        set
+        {
+            OnProductCostChanged?.Invoke(_productCost <= value);
+
+            _productCost = value;
+        }
     }
 
     private void OnEnable()
@@ -96,7 +111,7 @@ public class Company : Building
     /// <param name="n">추가로 생산할 자원의 개수 기본값 : 1</param>
     private IEnumerator ProductCoe(int n)
     {
-        yield return new WaitForSeconds(Random.Range(CompanyManager.Instance.minDelayTime, CompanyManager.Instance.maxDelayTime));
+        yield return new WaitForSeconds(Random.Range(CompanyInfo.Instance.minDelayTime, CompanyInfo.Instance.maxDelayTime));
         ProductCost += n;
         Debug.Log("ProductCost : " + ProductCost);
     }
@@ -105,7 +120,7 @@ public class Company : Building
     /// <param name="n">추가할 필요 자원의 개수 기본값 : 1</param>
     private IEnumerator RequestCoe(int n)
     {
-        yield return new WaitForSeconds(Random.Range(CompanyManager.Instance.minDelayTime, CompanyManager.Instance.maxDelayTime));
+        yield return new WaitForSeconds(Random.Range(CompanyInfo.Instance.minDelayTime, CompanyInfo.Instance.maxDelayTime));
         RequestCost += n;
         Debug.Log("RequestCost : " + RequestCost);
     }

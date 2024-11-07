@@ -5,13 +5,33 @@ using UnityEngine;
 
 public class CompanyInfo : MonoSingleton<CompanyInfo>
 {
-    [Header("Info")]
+    [Header("Company Info")]
     [Tooltip("Circle, Triangle, InvertedTriangle, Square, Rhombus순 입니다.")]
     [SerializeField] private List<Sprite> companySprites;
-    
+
     [Tooltip("Red, Yellow, Green, Blue, Purple순 입니다.")]
     [SerializeField] private List<Color> companyColor;
-    
+
+    //[Header("Mark Info")]
+    [field: SerializeField] public GameObject RequestMark { get; private set; }
+    [field: SerializeField] public GameObject ProductMark { get; private set; }
+
+    [field: SerializeField] public float RequestRadius {  get; private set; }
+    [field: SerializeField] public float ProductRadius { get; private set; }
+    [field: SerializeField] public float DuringTime {  get; private set; }
+
+    [Header("Resources")]
+    // 생산된 자원이 최대로 보관할 수 있는 양
+    public int maxRequestCost = 5;
+    // 카운트 다운이 시작되는 자원의 양
+    public int requestCoolDownStart = 5;
+
+    [Header("Company")]
+    // 자원 생산을 위한 최대/소 시간 딜레이
+    public float minDelayTime;
+    // 자원 생산을 위한 최대/소 시간 딜레이
+    public float maxDelayTime;
+
     private void Awake()
     {
         Initialize();
