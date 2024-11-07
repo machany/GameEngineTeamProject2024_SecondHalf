@@ -19,18 +19,6 @@ public class CompanyManager : MonoSingleton<CompanyManager>
     public Action<int> OnCompanyProduct;
     /// <summary>회사에서 자원을 필요하게 합니다.</summary>
     public Action<int> OnCompanyRequest;
-    
-    [Header("Resources")]
-    // 생산된 자원이 최대로 보관할 수 있는 양
-    public int maxProductCost = 5;
-    // 카운트 다운이 시작되는 자원의 양
-    public int maxRequestCost = 5;
-    
-    [Header("Company")]
-    // 자원 생산을 위한 최대/소 시간 딜레이
-    public float minDelayTime;
-    // 자원 생산을 위한 최대/소 시간 딜레이
-    public float maxDelayTime;
 
     /// 생성 주기입니다.
     [SerializeField] private float productTime, requestTime;
@@ -39,6 +27,20 @@ public class CompanyManager : MonoSingleton<CompanyManager>
     private void Awake()
     {
         Initialize();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Keypad0))
+            Time.timeScale = 0.5f;
+        else if (Input.GetKeyDown(KeyCode.Keypad1))
+            Time.timeScale = 1f;
+        else if (Input.GetKeyDown(KeyCode.Keypad2))
+            Time.timeScale = 2f;
+        else if (Input.GetKeyDown(KeyCode.Q))
+            Time.timeScale -= 0.1f;
+        else if (Input.GetKeyDown(KeyCode.E))
+            Time.timeScale += 0.1f;
     }
 
     private void LateUpdate()
