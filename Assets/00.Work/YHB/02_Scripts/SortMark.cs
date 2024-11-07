@@ -94,9 +94,5 @@ public class SortMark : MonoBehaviour
 
     // 0 ~ 2 * pi사이의 (0 ~ 1)비율의 위치를 구함
     private float linear(float criteria, int number)
-    {
-        Debug.Log($"{number} : {Mathf.Lerp(0, 2 * Mathf.PI, criteria * number)}");
-        return Mathf.Lerp(0, 2 * Mathf.PI, criteria * number);
-    }
-    //    => Mathf.Lerp(0, 2 * Mathf.PI, criteria * number);
+        => Mathf.Lerp(0, 2 * Mathf.PI, criteria * number);
 }

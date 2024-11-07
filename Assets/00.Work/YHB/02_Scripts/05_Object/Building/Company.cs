@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
-using UnityEngine.Serialization;
 
 public enum ResourceType
 {
@@ -53,7 +52,7 @@ public class Company : Building
             }
         }
     }
-    
+
     private int _productCost;
     /// <summary>회사가 생산한 자원</summary>
     private int ProductCost
@@ -78,33 +77,27 @@ public class Company : Building
         buildingType = BuildingType.Company;
         requestType = CompanyManager.Instance.companyResource.Get();
         shapeType = CompanyManager.Instance.companyShape.Get();
-        
+
         RequestCost = 0;
         ProductCost = 0;
-        
+
         CompanyManager.Instance.OnCompanyProduct += HandleProduct;
         CompanyManager.Instance.OnCompanyRequest += HandleRequest;
 
-        #region test
-
         transform.GetComponent<SpriteRenderer>().color = CompanyInfo.Instance.GetResourceColor(requestType);
         transform.GetComponent<SpriteRenderer>().sprite = CompanyInfo.Instance.GetShapeSprite(shapeType);
-
-        #endregion
     }
 
     /// <summary>자원을 생산합니다.</summary>
-    private void HandleProduct(int n)
+    private void HandleProduct()
     {
-        if (n != 0) 
-            StartCoroutine(ProductCoe(n < 0 ? 0 : 1));
+        StartCoroutine(ProductCoe(Random.Range(0, 2)));
     }
-    
+
     /// <summary>자원을 필요로 합니다.</summary>
-    private void HandleRequest(int n)
+    private void HandleRequest()
     {
-        if (n != 0) 
-            StartCoroutine(RequestCoe(n > 0 ? 1 : 0));
+        StartCoroutine(RequestCoe(Random.Range(0, 2)));
     }
 
     /// <summary>회사가 자원을 n개 더 생산합니다.</summary>
@@ -112,7 +105,8 @@ public class Company : Building
     private IEnumerator ProductCoe(int n)
     {
         yield return new WaitForSeconds(Random.Range(CompanyInfo.Instance.minDelayTime, CompanyInfo.Instance.maxDelayTime));
-        ProductCost += n;
+        if (n != 0)
+            ProductCost += n;
         Debug.Log("ProductCost : " + ProductCost);
     }
 
@@ -121,10 +115,11 @@ public class Company : Building
     private IEnumerator RequestCoe(int n)
     {
         yield return new WaitForSeconds(Random.Range(CompanyInfo.Instance.minDelayTime, CompanyInfo.Instance.maxDelayTime));
-        RequestCost += n;
+        if (n != 0)
+            RequestCost += n;
         Debug.Log("RequestCost : " + RequestCost);
     }
-    
+
     /// <summary>회사를 비활성화 할 때 사용합니다.</summary>
     private void DisableCompany()
     {
