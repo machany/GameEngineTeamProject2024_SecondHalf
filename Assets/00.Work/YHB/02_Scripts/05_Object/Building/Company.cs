@@ -4,6 +4,7 @@ using UnityEngine.Serialization;
 
 public enum ResourceType
 {
+    None,
     Red,
     Yellow,
     Green,
