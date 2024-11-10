@@ -25,6 +25,10 @@ public class Vehicle : MonoBehaviour
         OnResourceChanged += ResourceChange;
         OnCompanyReached += CompanyReach;
         OnCenterReached += CenterReach;
+        //OnResourceReceive += ResourceReceive;
+        OnResourceSend += ResourceSend;
+        
+        Initialize();
     }
 
     private void OnDisable()
@@ -32,6 +36,28 @@ public class Vehicle : MonoBehaviour
         OnResourceChanged -= ResourceChange;
         OnCompanyReached -= CompanyReach;
         OnCenterReached -= CenterReach;
+        //OnResourceReceive -= ResourceReceive;
+        OnResourceSend -= ResourceSend;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Company"))
+        {
+            Company company = collision.GetComponent<Company>();
+            OnCompanyReached?.Invoke();
+        }
+        else if (collision.CompareTag("Center"))
+        {
+            Center center = collision.GetComponent<Center>();
+            OnCenterReached?.Invoke();
+        }
+    }
+
+    private void Initialize()
+    {
+        moveSpeed = vehicleSO.moveSpeed;
+        maxStorageResource = vehicleSO.maxStorageResource;
     }
 
     private void ResourceChange(ResourceType resourceType, int resource)
@@ -54,5 +80,16 @@ public class Vehicle : MonoBehaviour
             OnResourceReceive?.Invoke();
         else
             OnResourceSend?.Invoke();
+    }
+
+    private void ResourceReceive<T>(T building) where T : Building
+    {
+        if (building is Company company)
+        {
+        }
+    }
+
+    private void ResourceSend()
+    {
     }
 }
