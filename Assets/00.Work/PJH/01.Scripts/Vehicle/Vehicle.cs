@@ -7,15 +7,16 @@ public class Vehicle : MonoBehaviour
 {
     public Action<ResourceType, int> OnResourceChanged;
 
-    public Action OnCompanyReached;
-    public Action OnCenterReached;
+    public Action<Company> OnCompanyReached;
+    public Action<DistributionCenter> OnCenterReached;
 
-    public Action OnResourceReceive;
-    public Action OnResourceSend;
+    public Action<Building> OnResourceReceive;
+    public Action<Building> OnResourceSend;
 
-    [SerializeField] private float moveSpeed;
-    [SerializeField] private int maxStorageResource;
     [SerializeField] private VehicleSO vehicleSO;
+    
+    private float moveSpeed;
+    private int maxStorageResource;
 
     private ResourceType _storageResourceType;
     private int _storageResource;
@@ -25,9 +26,9 @@ public class Vehicle : MonoBehaviour
         OnResourceChanged += ResourceChange;
         OnCompanyReached += CompanyReach;
         OnCenterReached += CenterReach;
-        //OnResourceReceive += ResourceReceive;
+        OnResourceReceive += ResourceReceive;
         OnResourceSend += ResourceSend;
-        
+
         Initialize();
     }
 
@@ -36,7 +37,7 @@ public class Vehicle : MonoBehaviour
         OnResourceChanged -= ResourceChange;
         OnCompanyReached -= CompanyReach;
         OnCenterReached -= CenterReach;
-        //OnResourceReceive -= ResourceReceive;
+        OnResourceReceive -= ResourceReceive;
         OnResourceSend -= ResourceSend;
     }
 
@@ -45,12 +46,12 @@ public class Vehicle : MonoBehaviour
         if (collision.CompareTag("Company"))
         {
             Company company = collision.GetComponent<Company>();
-            OnCompanyReached?.Invoke();
+            OnCompanyReached?.Invoke(company);
         }
         else if (collision.CompareTag("Center"))
         {
-            Center center = collision.GetComponent<Center>();
-            OnCenterReached?.Invoke();
+            DistributionCenter center = collision.GetComponent<DistributionCenter>();
+            OnCenterReached?.Invoke(center);
         }
     }
 
@@ -66,30 +67,61 @@ public class Vehicle : MonoBehaviour
         _storageResource = resource;
     }
 
-    private void CompanyReach()
+    private void CompanyReach(Company company)
     {
         if (_storageResourceType == ResourceType.None)
-            OnResourceReceive?.Invoke();
+            OnResourceReceive?.Invoke(company);
         else
-            OnResourceSend?.Invoke();
+            OnResourceSend?.Invoke(company);
     }
 
-    private void CenterReach()
+    private void CenterReach(DistributionCenter center)
     {
         if (_storageResourceType == ResourceType.None)
-            OnResourceReceive?.Invoke();
+            OnResourceReceive?.Invoke(center);
         else
-            OnResourceSend?.Invoke();
+            OnResourceSend?.Invoke(center);
     }
 
-    private void ResourceReceive<T>(T building) where T : Building
+    private void ResourceReceive(Building building)
     {
-        if (building is Company company)
+        switch (building)
         {
+            case Company company:
+                _storageResource = company.ProductCost;
+                _storageResourceType = company.GetCompanyResourceType();
+                break;
+
+            case DistributionCenter center:
+                //if (center.GetCenterResource())
+            {
+                // 리퀘스트 한 자원의 타입을 알아내서 넣어줘야 함
+                //_storageResource = center.Storage[]
+                break;
+            }
         }
     }
 
-    private void ResourceSend()
+    private void ResourceSend(Building building)
     {
+        switch (building)
+        {
+            case Company company:
+                if (company.requestType == _storageResourceType)
+                {
+                    company.RequestCost = _storageResource;
+                    _storageResourceType = ResourceType.None;
+                    _storageResource = 0;
+                }
+
+                break;
+
+            case DistributionCenter center:
+                center.AddCenterResource(_storageResourceType, _storageResource);
+                _storageResourceType = ResourceType.None;
+                _storageResource = 0;
+
+                break;
+        }
     }
 }

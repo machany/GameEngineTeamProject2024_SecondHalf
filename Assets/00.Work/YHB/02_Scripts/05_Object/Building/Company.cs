@@ -78,6 +78,8 @@ public class Company : Building
 
         #endregion
     }
+    
+    public ResourceType GetCompanyResourceType() => CompanyManager.Instance.productShape[shapeType];
 
     /// <summary>자원을 생산합니다.</summary>
     private void HandleProduct(int n)
@@ -122,4 +124,5 @@ public class Company : Building
     {
         DisableCompany();
     }
+
 }

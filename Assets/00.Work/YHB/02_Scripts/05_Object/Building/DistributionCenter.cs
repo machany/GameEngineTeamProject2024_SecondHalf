@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class DistributionCenter : Building
 {
     public Dictionary<ResourceType, int> Storage = new Dictionary<ResourceType, int>();
-        
+
     private void OnEnable()
     {
         Initialize();
@@ -28,12 +28,13 @@ public class DistributionCenter : Building
     /// <summary>
     /// 자원을 넣으면 해당 자원의 값이 증가합니다.
     /// </summary>
+    /// <param name="resourceType">넣을 자원 타입</param>
     /// <param name="resource">넣을 자원</param>
-    public void AddCenterResource(ResourceType resource)
+    public void AddCenterResource(ResourceType resourceType, int resource)
     {
-        Storage[resource]++;
+        Storage[resourceType] += resource;
     }
-    
+
     /// <summary>
     /// 창고에서 자원을 꺼내올 수 있는지 확인합니다.
     /// </summary>
@@ -46,6 +47,5 @@ public class DistributionCenter : Building
 
         Storage[resource]--;
         return true;
-
     }
 }
