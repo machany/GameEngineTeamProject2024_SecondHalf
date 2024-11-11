@@ -13,7 +13,8 @@ public class InputLine : MonoBehaviour
     
     private bool _isInput = false;
     private bool _isLine = false;
-
+    public bool _isAlpha  = false;
+    
     private GameObject _line;
     private GameObject _mainCenter;
     
@@ -61,6 +62,11 @@ public class InputLine : MonoBehaviour
             {
                 _line?.GetComponent<Line>().LineWidthReset();
                 _isLine = false;
+                _isAlpha = false;
+                if (_line is not null)
+                {
+                    _lineManager.LineReSetAlpha(_line.GetComponent<Line>()._lineGroupType, _line.GetComponent<Line>()._lineType);
+                }
             }
         }
 
@@ -109,11 +115,16 @@ public class InputLine : MonoBehaviour
     private void CheckHitCollider(RaycastHit2D hit)
     {
         GameObject hitObject = hit.collider.gameObject;
-
+        
         if (hitObject.GetComponent<Line>() is not null)
         {
             _line = hitObject;
             _line.GetComponent<Line>().LineWidthUp();
+            if (!_isAlpha)
+            {
+                _lineManager.LineSetAlpha(_line.GetComponent<Line>()._lineGroupType, _line.GetComponent<Line>()._lineType);
+                _isAlpha = true;
+            }
             _isLine = true;
         }
         else if (hitObject.GetComponent<Buil>() is not null)
@@ -121,23 +132,38 @@ public class InputLine : MonoBehaviour
             Buil builComponent = hitObject.GetComponent<Buil>();
             if (builComponent.Current < 2)
             {
-                builComponent.Current++;
+                builComponent.Current++; 
                 BuildingPos(hitObject.transform, false, false);
             }
             _line?.GetComponent<Line>().LineWidthReset();
             _isLine = false;
+            if (_isAlpha)
+            { 
+                _lineManager.LineReSetAlpha(_line.GetComponent<Line>()._lineGroupType, _line.GetComponent<Line>()._lineType);
+                _isAlpha = false;
+            }
         }
         else if (hitObject.GetComponent<MainCenter>() is not null)
         {
             BuildingPos(hitObject.transform, true, false);
             _line?.GetComponent<Line>().LineWidthReset();
             _isLine = false;
+            if (_isAlpha)
+            {
+                _lineManager.LineReSetAlpha(_line.GetComponent<Line>()._lineGroupType, _line.GetComponent<Line>()._lineType);
+                _isAlpha = false;
+            }
         }
         else if (hitObject.GetComponent<Center>() is not null)
         {
             BuildingPos(hitObject.transform, false, true);
             _line?.GetComponent<Line>().LineWidthReset();
             _isLine = false;
+            if (_isAlpha)
+            {
+                _lineManager.LineReSetAlpha(_line.GetComponent<Line>()._lineGroupType, _line.GetComponent<Line>()._lineType);
+                _isAlpha = false;
+            }
         }
     }
 }

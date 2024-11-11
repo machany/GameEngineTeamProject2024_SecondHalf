@@ -75,6 +75,18 @@ public class LineGroup : MonoBehaviour
         LineGroupType.Green => outputGreenObjects,
         _ => throw new Exception("wow, you seem like 570")
     };
+    public List<GameObject> GetAllLines()
+    {
+        List<GameObject> allLines = new List<GameObject>();
+        allLines.AddRange(inputRedObjects);
+        allLines.AddRange(inputBlueObjects);
+        allLines.AddRange(inputGreenObjects);
+        allLines.AddRange(outputRedObjects);
+        allLines.AddRange(outputBlueObjects);
+        allLines.AddRange(outputGreenObjects);
+
+        return allLines;
+    }
 }
 
 

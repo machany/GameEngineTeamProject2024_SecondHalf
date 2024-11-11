@@ -10,8 +10,11 @@ public class Line : MonoBehaviour
     public LineGroupType _lineGroupType;
     public LineType _lineType;
     
+    
+    private SpriteRenderer _spriteRenderer;
     private void Awake()
     {
+        _spriteRenderer = GetComponent<SpriteRenderer>();
         lineWidth = 0.5f;
     }
 
@@ -28,5 +31,22 @@ public class Line : MonoBehaviour
         transform.localScale = new Vector2(transform.localScale.magnitude,lineWidth);
         Debug.Log(1);
 
+    }
+
+    public void LineSetAlpha( bool alpha)
+    {
+        Color currentColor = _spriteRenderer.color;
+        if (alpha)
+        {
+            _spriteRenderer.color = new Color(currentColor.r, currentColor.g, currentColor.b, 1f);
+            Debug.Log(0);
+
+        }
+        else
+        {
+            _spriteRenderer.color = new Color(currentColor.r, currentColor.g, currentColor.b, 0.5f);
+
+            Debug.Log(2);
+        }
     }
 }
