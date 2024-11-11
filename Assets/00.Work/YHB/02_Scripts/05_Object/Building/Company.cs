@@ -4,6 +4,7 @@ using UnityEngine.Serialization;
 
 public enum ResourceType
 {
+    None,
     Red,
     Yellow,
     Green,
@@ -31,7 +32,7 @@ public class Company : Building
 
     private int _requestCost;
     /// <summary>회사가 필요로하는 자원 갯수</summary>
-    private int RequestCost
+    public int RequestCost
     {
         get => _requestCost;
         set
@@ -45,7 +46,7 @@ public class Company : Building
     
     private int _productCost;
     /// <summary>회사가 생산한 자원</summary>
-    private int ProductCost
+    public int ProductCost
     {
         get => _productCost;
         set => _productCost = value < 0 ? 0 :
