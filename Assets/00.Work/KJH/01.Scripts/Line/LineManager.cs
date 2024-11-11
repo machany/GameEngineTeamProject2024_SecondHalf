@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using VHierarchy.Libs;
+using System.Linq;
 
 public class LineManager : MonoBehaviour
 {
@@ -109,4 +110,54 @@ public class LineManager : MonoBehaviour
         value++;
         _lineGroup.GetLinePosType(lineType,lineGroupType).RemoveRange(value, _lineGroup.GetLinePosType(lineType,lineGroupType).Count-value);
     }
+
+    public void LineReSetAlpha(LineGroupType lineGroupType, LineType lineType)
+    {
+        // 선택된 라인 타입에 해당하는 라인만 true로 설정
+        foreach (var item in _lineGroup.GetLineType(lineType, lineGroupType))
+        {
+            item.GetComponent<Line>().LineSetAlpha(true);
+        }
+
+        // 나머지 라인들 false로 설정
+        foreach (var groupType in Enum.GetValues(typeof(LineGroupType)).Cast<LineGroupType>())
+        {
+            foreach (var type in Enum.GetValues(typeof(LineType)).Cast<LineType>())
+            {
+                // 현재 선택된 타입은 건너뜀
+                if (groupType == lineGroupType && type == lineType) continue;
+
+                // 나머지 타입의 라인들을 false로 설정
+                foreach (var item in _lineGroup.GetLineType(type, groupType))
+                {
+                    item.GetComponent<Line>().LineSetAlpha(true);
+                }
+            }
+        }
+    }
+
+    public void LineSetAlpha(LineGroupType lineGroupType, LineType lineType)
+    {
+        foreach (var item in _lineGroup.GetLineType(lineType, lineGroupType))
+        {
+            item.GetComponent<Line>().LineSetAlpha(true);
+        }
+
+        // 나머지 라인들 false로 설정
+        foreach (var groupType in Enum.GetValues(typeof(LineGroupType)).Cast<LineGroupType>())
+        {
+            foreach (var type in Enum.GetValues(typeof(LineType)).Cast<LineType>())
+            {
+                // 현재 선택된 타입은 건너뜀
+                if (groupType == lineGroupType && type == lineType) continue;
+
+                // 나머지 타입의 라인들을 false로 설정
+                foreach (var item in _lineGroup.GetLineType(type, groupType))
+                {
+                    item.GetComponent<Line>().LineSetAlpha(false);
+                }
+            }
+        }
+    }
+
 }
