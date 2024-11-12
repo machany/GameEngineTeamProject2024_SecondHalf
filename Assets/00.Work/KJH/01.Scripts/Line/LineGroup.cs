@@ -28,7 +28,7 @@ public class LineGroup : MonoBehaviour
     public List<Transform> outputGreenPos = new();
 
     public List<GameObject> inputRedObjects = new();
-    public List<GameObject> inputBlueObjects = new();
+    public List<GameObject> inputBlueObjects = new(); 
     public List<GameObject> inputGreenObjects = new();
 
     public List<GameObject> outputRedObjects = new();
