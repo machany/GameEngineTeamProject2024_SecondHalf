@@ -5,6 +5,9 @@ using VHierarchy.Libs;
 
 public class SortMark : MonoBehaviour
 {
+    [SerializeField] private float requestPos, productPos;
+    [SerializeField] private float interval;
+
     private List<GameObject> _sortRequestTargets = new List<GameObject>();
     private List<GameObject> _sortProductTargets = new List<GameObject>();
 
@@ -76,7 +79,7 @@ public class SortMark : MonoBehaviour
         float distance = 1f / _sortRequestTargets.Count;
 
         for (int i = 0; i < _sortRequestTargets.Count; i++)
-            _sortRequestTargets[i].transform.DOMove(new Vector2(Mathf.Cos(linear(distance, i)), Mathf.Sin(linear(distance, i))) * CompanyInfo.Instance.RequestRadius
+            _sortRequestTargets[i].transform.DOMove(new Vector2(linear(interval, _sortRequestTargets.Count, distance, i), requestPos) * CompanyInfo.Instance.RequestRadius
                 + (Vector2)transform.position, CompanyInfo.Instance.DuringTime);
     }
 
@@ -88,11 +91,14 @@ public class SortMark : MonoBehaviour
         float distance = 1f / _sortProductTargets.Count;
 
         for (int i = 0; i < _sortProductTargets.Count; i++)
-            _sortProductTargets[i].transform.DOMove(new Vector2(Mathf.Cos(linear(distance, i)), Mathf.Sin(linear(distance, i))) * CompanyInfo.Instance.ProductRadius
+            _sortProductTargets[i].transform.DOMove(new Vector2(linear(interval, _sortProductTargets.Count, distance, i), productPos) * CompanyInfo.Instance.RequestRadius
                 + (Vector2)transform.position, CompanyInfo.Instance.DuringTime);
     }
 
     // 0 ~ 2 * pi사이의 (0 ~ 1)비율의 위치를 구함
     private float linear(float criteria, int number)
         => Mathf.Lerp(0, 2 * Mathf.PI, criteria * number);
+
+    private float linear(float intervalValue, int count, float criteria, int number)
+        => Mathf.Lerp(-(intervalValue * (count - 1) / 2), intervalValue * count / 2, criteria * number);
 }
