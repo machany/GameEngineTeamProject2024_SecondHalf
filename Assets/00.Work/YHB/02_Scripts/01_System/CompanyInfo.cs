@@ -11,7 +11,25 @@ public class CompanyInfo : MonoSingleton<CompanyInfo>
     
     [Tooltip("Red, Yellow, Green, Blue, Purple순 입니다.")]
     [SerializeField] private List<Color> companyColor;
-    
+
+    [Header("Resources")]
+    // 생산된 자원이 최대로 보관할 수 있는 양
+    public int maxProductCost = 5;
+    // 카운트 다운이 시작되는 자원의 양
+    public int maxRequestCost = 5;
+
+    [Header("Company")]
+    // 자원 생산을 위한 최대/소 시간 딜레이
+    public float minDelayTime;
+    public float maxDelayTime;
+    // 정렬시 걸리는 시간
+    public float DuringTime;
+    public GameObject RequestMark, ProductMark;
+
+    [Header("SortMark")]
+    public float interval;
+    public float requestPos, productPos;
+
     private void Awake()
     {
         Initialize();
