@@ -135,7 +135,6 @@ GameObject:
   - component: {fileID: 44314473}
   - component: {fileID: 44314472}
   - component: {fileID: 44314471}
-  - component: {fileID: 44314474}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -187,24 +186,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a5cba0b9e088424095e4d32ffae41a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputRedPos: []
-  inputBluePos: []
-  inputGreenPos: []
-  outputRedPos: []
-  outputBluePos: []
-  outputGreenPos: []
+  inlinePositions:
+  - lineGroupType: 0
+    positions: []
+  - lineGroupType: 1
+    positions: []
+  - lineGroupType: 2
+    positions: []
+  outlinePositions:
+  - lineGroupType: 0
+    positions: []
+  - lineGroupType: 1
+    positions: []
+  - lineGroupType: 2
+    positions: []
   inputRedObjects: []
   inputBlueObjects: []
   inputGreenObjects: []
   outputRedObjects: []
   outputBlueObjects: []
   outputGreenObjects: []
-  ir: {fileID: 1131267083888888882, guid: aeb83bad0b0716842b2fcf8e6dbc99fa, type: 3}
-  ib: {fileID: 1131267083888888882, guid: b00a7e3ee65a3b54084ac38be582567b, type: 3}
-  ig: {fileID: 1131267083888888882, guid: 9d9e29ca667784e4bb7c5a3618575d41, type: 3}
-  or: {fileID: 1131267083888888882, guid: 1c7c38e7384d01542bea97d3e749dc29, type: 3}
-  ob: {fileID: 1131267083888888882, guid: b56e635056e95034d9e2af52a53ea475, type: 3}
-  og: {fileID: 1131267083888888882, guid: 90ff6362c10464d4f8a802d5046eb072, type: 3}
+  inputRed: {fileID: 1131267083888888882, guid: aeb83bad0b0716842b2fcf8e6dbc99fa, type: 3}
+  inputBlue: {fileID: 1131267083888888882, guid: b00a7e3ee65a3b54084ac38be582567b, type: 3}
+  inputGreen: {fileID: 1131267083888888882, guid: 9d9e29ca667784e4bb7c5a3618575d41, type: 3}
+  outputRed: {fileID: 1131267083888888882, guid: 1c7c38e7384d01542bea97d3e749dc29, type: 3}
+  outputBlue: {fileID: 1131267083888888882, guid: b56e635056e95034d9e2af52a53ea475, type: 3}
+  outputGreen: {fileID: 1131267083888888882, guid: 90ff6362c10464d4f8a802d5046eb072, type: 3}
 --- !u!114 &44314473
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -221,20 +228,6 @@ MonoBehaviour:
   _lineGroupType: 0
   _lineType: 0
   CenterPoint: {fileID: 1658070564}
---- !u!114 &44314474
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 44314469}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7a00a7f05742f74dabb5704ad34a383, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _mainCenter: {fileID: 1658070564}
-  _lineGroup: {fileID: 44314472}
 --- !u!1 &60243853
 GameObject:
   m_ObjectHideFlags: 0

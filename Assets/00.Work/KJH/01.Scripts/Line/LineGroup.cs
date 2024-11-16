@@ -17,16 +17,29 @@ public enum LineType
     Output
 }
 
+//임시 코드 지워질 예정↓
+[Serializable]
+public class LineGroupPosition
+{
+    public LineGroupType lineGroupType; // Key
+    public List<Transform> positions;  // Value
+}
 public class LineGroup : MonoBehaviour
 {
+    [SerializeField] private List<LineGroupPosition> inlinePositions = new();
+    [SerializeField] private List<LineGroupPosition> outlinePositions = new();
+
+    private Dictionary<LineGroupType, List<Transform>> _inlinePos = new();
+    private Dictionary<LineGroupType, List<Transform>> _outlinePos = new();
+
     public List<Transform> inputRedPos = new();
-    public List<Transform> inputBluePos = new();
+    public List<Transform> inputBluePos = new(); 
     public List<Transform> inputGreenPos = new();
 
     public List<Transform> outputRedPos = new();
     public List<Transform> outputBluePos = new();
     public List<Transform> outputGreenPos = new();
-
+    
     public List<GameObject> inputRedObjects = new();
     public List<GameObject> inputBlueObjects = new(); 
     public List<GameObject> inputGreenObjects = new();
@@ -58,10 +71,10 @@ public class LineGroup : MonoBehaviour
     public List<Transform> GetLinePosType(LineType lineType, LineGroupType lineGroupType) => lineGroupType switch
     {
         LineGroupType.Red when lineType == LineType.Input => inputRedPos,
-        LineGroupType.Red => outputRedPos,
-        LineGroupType.Blue when lineType == LineType.Input => inputBluePos,
-        LineGroupType.Blue => outputBluePos,
-        LineGroupType.Green when lineType == LineType.Input => inputGreenPos,
+        LineGroupType.Red => inputBluePos,
+        LineGroupType.Blue when lineType == LineType.Input => inputGreenPos,
+        LineGroupType.Blue => outputRedPos,
+        LineGroupType.Green when lineType == LineType.Input => outputBluePos,
         LineGroupType.Green => outputGreenPos,
         _ => throw new Exception("wow, you seem like 5.7")
     };
@@ -79,17 +92,4 @@ public class LineGroup : MonoBehaviour
         LineGroupType.Green => outputGreenObjects,
         _ => throw new Exception("wow, you seem like 570")
     };
-
-    public List<GameObject> GetAllLines()
-    {
-        List<GameObject> allLines = new List<GameObject>();
-        allLines.AddRange(inputRedObjects);
-        allLines.AddRange(inputBlueObjects);
-        allLines.AddRange(inputGreenObjects);
-        allLines.AddRange(outputRedObjects);
-        allLines.AddRange(outputBlueObjects);
-        allLines.AddRange(outputGreenObjects);
-
-        return allLines;
-    }
 }

@@ -21,6 +21,7 @@ public class LineManager : MonoBehaviour
     private void Awake()
     {
         LineWidth = 0.5f;
+        LineSetting();
     }
 
     private void Update()
@@ -47,6 +48,18 @@ public class LineManager : MonoBehaviour
             _lineType = LineType.Output;
         }
     }
+
+    public void LineSetting()
+    {
+        _lineGroup.GetLinePosType(LineType.Input, LineGroupType.Red).Add(CenterPoint);
+        _lineGroup.GetLinePosType(LineType.Input, LineGroupType.Blue).Add(CenterPoint);
+        _lineGroup.GetLinePosType(LineType.Input, LineGroupType.Green).Add(CenterPoint);
+        _lineGroup.GetLinePosType(LineType.Output, LineGroupType.Red).Add(CenterPoint);
+        _lineGroup.GetLinePosType(LineType.Output, LineGroupType.Blue).Add(CenterPoint);
+        _lineGroup.GetLinePosType(LineType.Output, LineGroupType.Green).Add(CenterPoint);
+    }
+    
+    
     
     //라인연결조건검사 메쏘드
     public void CheckLineConnectionConditions(Transform startPoint, Transform endPoint)
@@ -85,32 +98,37 @@ public class LineManager : MonoBehaviour
     }
 
     //선로 삭제 메쏘드
-    public void RemoveList(int value,GameObject lineobj)
+    public void RemoveList(int index, GameObject lineObj1)
     {
-        LineGroupType lineGroupType = lineobj.GetComponent<Line>()._lineGroupType;
-        LineType lineType = lineobj.GetComponent<Line>()._lineType;
+        var posList = _lineGroup.GetLinePosType(_lineType, _lineGroupType);
+        var lineList = _lineGroup.GetLineType(_lineType, _lineGroupType);
         
-        if (value >= 0 && value < _lineGroup.GetLineType(lineType,lineGroupType).Count)
+        GameObject lineObj2 = (index + 1 < lineList.Count) ? lineList[index + 1] : null;
+        
+        int currentIndex = index; 
+        int nextIndex = index + 2;   
+
+        if (currentIndex >= 0 && nextIndex < posList.Count)
         {
-            for (int i = value; i < _lineGroup.GetLineType(lineType,lineGroupType).Count; i++)
-            {
-                Destroy(_lineGroup.GetLineType(lineType,lineGroupType)[i]); // 선로삭제
-            }
+            LineConnection(posList[currentIndex], posList[nextIndex]);
         }
-        _lineGroup.GetLineType(lineType,lineGroupType).RemoveRange(value, _lineGroup.GetLineType(lineType,lineGroupType).Count-value);
-       
-        _lineGroup.GetLinePosType(lineType,lineGroupType)[value].GetComponent<Buil>().Current--; 
-        if (value >= 0 && value < _lineGroup.GetLinePosType(lineType,lineGroupType).Count)
+        if (lineObj1 != null)
         {
-            for (int i = value+1; i < _lineGroup.GetLinePosType(lineType,lineGroupType).Count; i++)
-            { 
-                _lineGroup.GetLinePosType(lineType,lineGroupType)[i].GetComponent<Buil>().Current-=2; 
-            }
+            lineList.Remove(lineObj1);
+            Destroy(lineObj1);
         }
-        value++;
-        _lineGroup.GetLinePosType(lineType,lineGroupType).RemoveRange(value, _lineGroup.GetLinePosType(lineType,lineGroupType).Count-value);
+        if (lineObj2 != null)
+        {
+            lineList.Remove(lineObj2);
+            Destroy(lineObj2);
+        }
+
+        Debug.Log($"위치 {currentIndex}와 {nextIndex} 사이의 선을 제거gka, 다시연결함.");
     }
 
+
+
+    
     public void LineReSetAlpha(LineGroupType lineGroupType, LineType lineType)
     {
         // 선택된 라인 타입에 해당하는 라인만 true로 설정
@@ -159,5 +177,4 @@ public class LineManager : MonoBehaviour
             }
         }
     }
-
 }

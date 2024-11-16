@@ -33,7 +33,7 @@ public class Line : MonoBehaviour
 
     }
 
-    public void LineSetAlpha( bool alpha)
+    public void LineSetAlpha(bool alpha)
     {
         Color currentColor = _spriteRenderer.color;
         if (alpha)
