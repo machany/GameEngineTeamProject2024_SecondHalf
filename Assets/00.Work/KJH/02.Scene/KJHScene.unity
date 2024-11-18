@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 44314473}
   - component: {fileID: 44314472}
   - component: {fileID: 44314471}
+  - component: {fileID: 44314474}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -200,6 +201,12 @@ MonoBehaviour:
     positions: []
   - lineGroupType: 2
     positions: []
+  inputRedPos: []
+  inputBluePos: []
+  inputGreenPos: []
+  outputRedPos: []
+  outputBluePos: []
+  outputGreenPos: []
   inputRedObjects: []
   inputBlueObjects: []
   inputGreenObjects: []
@@ -228,6 +235,23 @@ MonoBehaviour:
   _lineGroupType: 0
   _lineType: 0
   CenterPoint: {fileID: 1658070564}
+--- !u!114 &44314474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 44314469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11b86f35ffb93ed4ab658062388b96a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  savePath: Assets/00.Work\KJH\01.Scripts\SaveGame.txt
+  a: 22222
+  b: 04000000050000008b2b0800
+  loada: 0
+  loadb: 
 --- !u!1 &60243853
 GameObject:
   m_ObjectHideFlags: 0
