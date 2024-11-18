@@ -181,6 +181,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f959fdb570c6d3744ac8a35ceeed78d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  requestPos: -1
-  productPos: 1
-  interval: 1
+  ProductMark: {fileID: 11400000, guid: a14c9eeeef8123a4ab72526d54c3837e, type: 2}
+  RequestMark: {fileID: 11400000, guid: 08be7555d5d75dd41a846fa58cb104b2, type: 2}
