@@ -1,0 +1,22 @@
+.button-option {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    background-color: rgb(151, 151, 151);
+}
+
+.visual-element-setting {
+    flex-grow: 0;
+    width: 75%;
+    height: 75%;
+    align-self: center;
+    top: 125px;
+    background-color: rgba(26, 26, 26, 0.76);
+}
+
+.button-exit {
+    position: absolute;
+    width: 75px;
+    height: 75px;
+    align-self: flex-end;
+}
