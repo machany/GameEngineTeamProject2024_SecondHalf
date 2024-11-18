@@ -2,20 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-// 선로 색
-public enum LineGroupType
-{
-    Red,
-    Blue,
-    Green
-}
 
-// 선로 타입 구분
-public enum LineType
-{
-    Input,
-    Output
-}
 
 //임시 코드 지워질 예정↓
 [Serializable]

@@ -103,7 +103,6 @@ public class Company : Building
         yield return new WaitForSeconds(Random.Range(CompanyInfo.Instance.minDelayTime, CompanyInfo.Instance.maxDelayTime));
         ProductCost += n;
         OnProductCostChanged?.Invoke(n);
-        Debug.Log("ProductCoe : " + n);
     }
 
     /// <summary>회사가 자원을 n개 더 필요로합니다.</summary>
@@ -113,7 +112,6 @@ public class Company : Building
         yield return new WaitForSeconds(Random.Range(CompanyInfo.Instance.minDelayTime, CompanyInfo.Instance.maxDelayTime));
         RequestCost += n;
         OnRequestCostChanged?.Invoke(n);
-        Debug.Log("RequestCoe : " + n);
     }
 
     /// <summary>회사를 비활성화 할 때 사용합니다.</summary>
