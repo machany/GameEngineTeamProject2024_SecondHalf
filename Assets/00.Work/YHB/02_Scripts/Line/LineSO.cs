@@ -22,4 +22,6 @@ public class LineSO : ScriptableObject
     public LineGroupType group;
     public LineType type;
     public List<Transform> lineInfo = new List<Transform>();
+
+    public LineRender render;
 }
