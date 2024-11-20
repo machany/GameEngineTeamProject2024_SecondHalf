@@ -1,6 +1,39 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System;
+
+public static class Library
+{
+    public static int FindValueLocation<T>(this IEnumerable<T> tar, T value)
+    {
+        if (tar == null || !tar.Contains(value))
+            return -1;
+
+        int i = 0;
+        foreach (T item in tar)
+        {
+            i++;
+            if (EqualityComparer<T>.Default.Equals(item, value))
+                return i;
+        }
+
+        return -1;
+    }
+
+    public static void AddAt<T>(this List<T> col, T value, int at)
+    {
+        if (at < 0)
+            return;
+
+        col.Add(value);
+
+        for (int i = col.Count - 1; i >= at + 1; i--)
+            col[i] = col[i - 1];
+
+        col[at] = value;
+    }
+}
 
 public class NotOverlapValue<T>
 {
