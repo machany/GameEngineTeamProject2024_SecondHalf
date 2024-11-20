@@ -3,5 +3,10 @@
     <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="Button_Option" class="button-option" />
     <ui:VisualElement name="VisualElement_Setting" class="visual-element-setting">
         <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Button_Exit" class="button-exit" />
+        <ui:Label tabindex="-1" text="설정" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Label_Title" style="color: rgb(255, 255, 255); -unity-text-align: middle-center; align-self: center; font-size: 75px;" />
+        <ui:Slider label="전체음" high-value="100" name="Slider_MasterVolume" style="width: 50%; align-self: center; color: rgb(255, 255, 255); font-size: 30px; -unity-text-align: middle-center; height: 15%;" />
+        <ui:Slider label="배경음" high-value="100" name="Slider_MusicVolume" style="width: 50%; align-self: center; color: rgb(255, 255, 255); font-size: 30px; -unity-text-align: middle-center; height: 15%;" />
+        <ui:Slider label="효과음" high-value="100" name="Slider_EffectVolume" style="width: 50%; align-self: center; color: rgb(255, 255, 255); font-size: 30px; -unity-text-align: middle-center; height: 15%;" />
+        <ui:DropdownField label="화면 설정" index="-1" choices="전체화면, 창화면" style="width: 50%; align-self: center; color: rgb(255, 255, 255); font-size: 30px; -unity-text-align: middle-center; top: 50px;" />
     </ui:VisualElement>
 </ui:UXML>

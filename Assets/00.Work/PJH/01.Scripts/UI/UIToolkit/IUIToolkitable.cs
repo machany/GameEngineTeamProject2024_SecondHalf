@@ -1,5 +1,5 @@
 
-public interface IRootable
+public interface IUIToolkitable
 {
     public void GetUIElements();
 }
