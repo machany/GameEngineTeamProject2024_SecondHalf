@@ -8,6 +8,9 @@ public class SortMark : MonoBehaviour
     private List<GameObject> _sortRequestTargets = new List<GameObject>();
     private List<GameObject> _sortProductTargets = new List<GameObject>();
 
+    [SerializeField] private PoolItemSO ProductMark;
+    [SerializeField] private PoolItemSO RequestMark;
+
     private void OnEnable()
     {
         Initialize();
@@ -36,10 +39,9 @@ public class SortMark : MonoBehaviour
         {
             for (int i = 0; i < n; i++)
             {
-                _sortRequestTargets.Add(Instantiate(CompanyInfo.Instance.RequestMark, transform));
+                _sortRequestTargets.Add(PoolManager.Instance.Pop(RequestMark));
                 _sortRequestTargets[_sortRequestTargets.Count - 1].transform.position = transform.position;
             }
-            // 풀링 Pop 필요 _sortRequestTargets[_sortRequestTargets.Count - 1]
         }
         else if (_sortRequestTargets.Count <= 0 || n == 0)
             return;
@@ -47,10 +49,9 @@ public class SortMark : MonoBehaviour
         {
             for (int i = 0; i < n; i++)
             {
-                _sortRequestTargets[_sortRequestTargets.Count - 1].Destroy();
+                PoolManager.Instance.Push(RequestMark, _sortRequestTargets[_sortRequestTargets.Count - 1]);
                 _sortRequestTargets.RemoveAt(_sortRequestTargets.Count - 1);
             }
-            // 풀링 Push 필요 _sortRequestTargets[_sortRequestTargets.Count - 1]
         }
         SortRequest();
     }
@@ -61,10 +62,9 @@ public class SortMark : MonoBehaviour
         {
             for (int i = 0; i < n; i++)
             {
-                _sortProductTargets.Add(Instantiate(CompanyInfo.Instance.ProductMark, transform));
+                _sortProductTargets.Add(PoolManager.Instance.Pop(ProductMark));
                 _sortProductTargets[_sortProductTargets.Count - 1].transform.position = transform.position;
             }
-            // 풀링 Pop 필요 _sortRequestTargets[_sortRequestTargets.Count - 1]
         }
         else if (_sortProductTargets.Count <= 0 || n == 0)
             return;
@@ -72,10 +72,9 @@ public class SortMark : MonoBehaviour
         {
             for (int i = 0; i < n; i++)
             {
-                _sortProductTargets[_sortProductTargets.Count - 1].Destroy();
+                PoolManager.Instance.Push(ProductMark, _sortProductTargets[_sortProductTargets.Count - 1]);
                 _sortProductTargets.RemoveAt(_sortProductTargets.Count - 1);
             }
-            // 풀링 Push 필요 _sortRequestTargets[_sortRequestTargets.Count - 1]
         }
         SortProduct();
     }
