@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="VisualElement_Vehicle" style="flex-grow: 0; justify-content: space-around; width: 5%; height: 40%; align-items: center; position: absolute; top: 300px;">
+        <ui:VisualElement name="VisualElement_Car" style="flex-grow: 0; background-color: rgb(52, 213, 218); width: 100px; height: 100px;" />
+        <ui:VisualElement name="VisualElement_Trailer" style="flex-grow: 0; background-color: rgb(203, 218, 52); width: 100px; height: 100px;" />
+        <ui:VisualElement name="VisualElement_Truck" style="flex-grow: 0; background-color: rgb(218, 52, 74); width: 100px; height: 100px;" />
+    </ui:VisualElement>
+</ui:UXML>

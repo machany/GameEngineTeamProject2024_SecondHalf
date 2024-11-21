@@ -15,7 +15,6 @@ public class OptionUI : UIToolkit, IInputable, IDraggable
     private VisualElement _settingVisualElement;
 
     private Vector2 _defaultMousePosition;
-    private Vector2 _defaultElementPosition;
 
     private bool _isDrag;
     
@@ -123,7 +122,7 @@ public class OptionUI : UIToolkit, IInputable, IDraggable
 
         if (ScreenOut(_settingVisualElement))
         {
-            _settingVisualElement.style.position = Position.Absolute;
+            _settingVisualElement.style.position = Position.Relative;
             _settingVisualElement.style.left = StyleKeyword.Null;
             _settingVisualElement.style.top = StyleKeyword.Null;
             _settingVisualElement.style.width = StyleKeyword.Null;
