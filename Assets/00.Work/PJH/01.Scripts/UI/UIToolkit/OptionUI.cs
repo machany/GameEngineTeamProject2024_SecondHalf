@@ -1,25 +1,24 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class OptionUI : MonoBehaviour, IUIToolkitable, IDraggable
+public class OptionUI : UIToolkit, IInputable, IDraggable
 {
+    [field: SerializeField] public InputReader InputCompo { get; private set; }
+    
     private const string _optionStr = "Button_Option";
     private const string _exitStr = "Button_Exit";
     private const string _settingStr = "VisualElement_Setting";
 
-    [SerializeField] private InputReader _inputReader;
-
-    private VisualElement _root;
-
     private Button _optionButton;
     private Button _exitButton;
+    
     private VisualElement _settingVisualElement;
 
     private Vector2 _defaultMousePosition;
     private Vector2 _defaultElementPosition;
 
     private bool _isDrag;
-
+    
     private void OnEnable()
     {
         GetUIElements();
@@ -28,7 +27,8 @@ public class OptionUI : MonoBehaviour, IUIToolkitable, IDraggable
 
         _optionButton.clicked += ClickOptionButton;
         _exitButton.clicked += ClickExitButton;
-        _inputReader.OnOptionEvent += OnEscapeEvent;
+        
+        InputCompo.OnOptionEvent += OnOptionEvent;
 
         _settingVisualElement.RegisterCallback<MouseDownEvent>(OnMouseDown);
         _settingVisualElement.RegisterCallback<MouseMoveEvent>(OnMouseMove);
@@ -39,20 +39,22 @@ public class OptionUI : MonoBehaviour, IUIToolkitable, IDraggable
     {
         _optionButton.clicked -= ClickOptionButton;
         _exitButton.clicked -= ClickExitButton;
-        _inputReader.OnOptionEvent -= OnEscapeEvent;
+        
+        InputCompo.OnOptionEvent -= OnOptionEvent;
 
         _settingVisualElement.UnregisterCallback<MouseDownEvent>(OnMouseDown);
         _settingVisualElement.UnregisterCallback<MouseMoveEvent>(OnMouseMove);
         _settingVisualElement.UnregisterCallback<MouseUpEvent>(OnMouseUp);
     }
 
-    public void GetUIElements()
+    protected override void GetUIElements()
     {
-        _root = GetComponent<UIDocument>().rootVisualElement;
+        base.GetUIElements();
 
-        _optionButton = _root.Q<Button>(_optionStr);
-        _exitButton = _root.Q<Button>(_exitStr);
-        _settingVisualElement = _root.Q<VisualElement>(_settingStr);
+        _optionButton = root.Q<Button>(_optionStr);
+        _exitButton = root.Q<Button>(_exitStr);
+        
+        _settingVisualElement = root.Q<VisualElement>(_settingStr);
     }
 
     private void ClickOptionButton()
@@ -68,7 +70,7 @@ public class OptionUI : MonoBehaviour, IUIToolkitable, IDraggable
         Time.timeScale = 1;
     }
 
-    private void OnEscapeEvent()
+    private void OnOptionEvent()
     {
         if (_settingVisualElement.style.display == DisplayStyle.Flex)
         {
@@ -88,7 +90,7 @@ public class OptionUI : MonoBehaviour, IUIToolkitable, IDraggable
         _settingVisualElement.CaptureMouse();
 
         _defaultMousePosition = downEvent.localMousePosition;
-        Vector2 offset = downEvent.mousePosition - _root.worldBound.position - _defaultMousePosition;
+        Vector2 offset = downEvent.mousePosition - root.worldBound.position - _defaultMousePosition;
 
         _settingVisualElement.style.position = Position.Absolute;
         _settingVisualElement.style.left = offset.x;
@@ -127,14 +129,15 @@ public class OptionUI : MonoBehaviour, IUIToolkitable, IDraggable
             _settingVisualElement.style.width = StyleKeyword.Null;
         }
     }
-    
+
     private bool ScreenOut(VisualElement visualElement)
     {
         Rect worldBound = visualElement.worldBound;
         float screenWidth = Screen.width;
         float screenHeight = Screen.height;
-        
-        if (worldBound.xMin < 0 || worldBound.xMax > screenWidth || worldBound.yMin < 0 || worldBound.yMax > screenHeight)
+
+        if (worldBound.xMin < 0 || worldBound.xMax > screenWidth || worldBound.yMin < 0 ||
+            worldBound.yMax > screenHeight)
             return true;
 
         return false;

@@ -471,6 +471,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a42cce6efc178a4bab7d54d92f4ff1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <InputCompo>k__BackingField: {fileID: 11400000, guid: 0fe90c4e69d236e4abb64bafd1272308, type: 2}
+  speedValueList:
+  - 1
+  - 1.5
+  - 2
 --- !u!1 &596964285
 GameObject:
   m_ObjectHideFlags: 0
@@ -675,7 +680,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cebafd72858ba24488a71e62755524b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inputReader: {fileID: 11400000, guid: 0fe90c4e69d236e4abb64bafd1272308, type: 2}
+  <InputCompo>k__BackingField: {fileID: 11400000, guid: 0fe90c4e69d236e4abb64bafd1272308, type: 2}
 --- !u!1 &835074699
 GameObject:
   m_ObjectHideFlags: 0
