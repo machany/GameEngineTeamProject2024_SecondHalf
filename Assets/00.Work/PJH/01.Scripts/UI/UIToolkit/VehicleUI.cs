@@ -23,6 +23,10 @@ public class VehicleUI : UIToolkit, IInputable
     private void OnEnable()
     {
         GetUIElements();
+
+        _carButton.clicked += OnCarEvent;
+        _truckButton.clicked += OnTruckEvent;
+        _trailerButton.clicked += OnTrailerEvent;
         
         InputCompo.OnCarEvent += OnCarEvent;
         InputCompo.OnTruckEvent += OnTruckEvent;
@@ -31,6 +35,10 @@ public class VehicleUI : UIToolkit, IInputable
     
     private void OnDisable()
     {
+        _carButton.clicked -= OnCarEvent;
+        _truckButton.clicked -= OnTruckEvent;
+        _trailerButton.clicked -= OnTrailerEvent;
+        
         InputCompo.OnCarEvent -= OnCarEvent;
         InputCompo.OnTruckEvent -= OnTruckEvent;
         InputCompo.OnTrailerEvent -= OnTrailerEvent;
@@ -47,16 +55,16 @@ public class VehicleUI : UIToolkit, IInputable
     
     private void OnCarEvent()
     {
-        _isCarSelected = true;
+        _isCarSelected = !_isCarSelected;
     }
     
     private void OnTruckEvent()
     {
-        _isTruckSelected = true;
+        _isTruckSelected = !_isTruckSelected;
     }
     
     private void OnTrailerEvent()
     {
-        _isTrailerSelected = true;
+        _isTrailerSelected = !_isTrailerSelected;
     }
 }
