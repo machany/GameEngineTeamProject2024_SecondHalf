@@ -1,9 +1,7 @@
 using DG.Tweening;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
-using UnityEngine.Analytics;
 
 public class Vehicle : VehicleStorage
 {
@@ -42,32 +40,42 @@ public class Vehicle : VehicleStorage
         }
     }
 
+    // 반투명화를 위함
+    private SpriteRenderer _spriteRenderer;
+
     protected override void Initialize()
     {
+        _spriteRenderer = transform.GetComponent<SpriteRenderer>();
+
         base.Initialize();
         LineController.Instance.OnLineInfoChanged += HandleLineInfoChanged;
+        LineController.Instance.OnLineTypeChanged += HandleLineTypeChange;
+
+        _spriteRenderer = transform.GetComponent<SpriteRenderer>();
 
         _moveSpeed = vehicleSO.moveSpeed;
     }
 
-    protected override void OnTriggerEnter2D(Collider2D collision)
+    // 반투명화 등 처리
+    private void HandleLineTypeChange(LineType curLineType)
     {
-        Debug.Log("ss");
-
-        SetMove();
-        base.OnTriggerEnter2D(collision);
+        Color color = _spriteRenderer.color;
+        color.a = EqualityComparer<LineType>.Default.Equals(_currentLine.type, curLineType) ? 1f : LineController.Instance.invisibleValue;
+        _spriteRenderer.color = color;
     }
 
     private void HandleLineInfoChanged(LineSO curLine, int value, bool isAdd)
     {
-        if (!EqualityComparer<LineSO>.Default.Equals(_currentLine, curLine) || value == -1)
-        {
-            PoolManager.Instance.Push(_me, gameObject);
-            return;
-        }
+        if (value > 0) return;
 
-        if (index > value)
-            index += isAdd ? 1 : -1;
+        if (EqualityComparer<LineSO>.Default.Equals(_currentLine, curLine))
+        {
+            // 변경 후 도착하기 전 다시 연결 시를 위한 인덱스 변경
+            // index = _currentLine.lineInfo.FindValueLocation(_currentTargetTrm);
+
+            if (index > value)
+                index += isAdd ? 1 : -1;
+        }
     }
 
     // 라인 설정
@@ -97,6 +105,8 @@ public class Vehicle : VehicleStorage
         {
             if (!_currentLine.lineInfo.Contains(_currentTargetTrm))
                 throw new Exception("의도된 예외입니다. 현재 라인에 도착지점이 없음");
+
+            ArriveBuilding(_currentTargetTrm);
 
             SetMove(_currentLine.lineInfo[index]);
             index += _dir;
@@ -131,5 +141,6 @@ public class Vehicle : VehicleStorage
     private void Disable()
     {
         LineController.Instance.OnLineInfoChanged -= HandleLineInfoChanged;
+        LineController.Instance.OnLineTypeChanged -= HandleLineTypeChange;
     }
 }

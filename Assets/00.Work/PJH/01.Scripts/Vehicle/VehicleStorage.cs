@@ -39,16 +39,16 @@ public class VehicleStorage : MonoBehaviour, IVehicle
         OnResourceSend -= ResourceSend;
     }
 
-    protected virtual void OnTriggerEnter2D(Collider2D collision)
+    protected void ArriveBuilding(Transform buildingTrm)
     {
-        if (collision.CompareTag("Company"))
+        if (buildingTrm.TryGetComponent<Company>(out Company company))
         {
-            Company company = collision.GetComponent<Company>();
+            Debug.Log("회사");
             OnCompanyReached?.Invoke(company);
         }
-        else if (collision.CompareTag("Center"))
+        else if (buildingTrm.TryGetComponent<DistributionCenter>(out DistributionCenter center))
         {
-            DistributionCenter center = collision.GetComponent<DistributionCenter>();
+            Debug.Log("센터");
             OnCenterReached?.Invoke(center);
         }
     }
