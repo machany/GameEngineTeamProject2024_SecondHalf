@@ -1,127 +1,135 @@
+using DG.Tweening;
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
+using UnityEngine.Analytics;
 
-public class Vehicle : MonoBehaviour
+public class Vehicle : VehicleStorage
 {
-    public Action<ResourceType, int> OnResourceChanged;
+    [SerializeField] private PoolItemSO _me;
+    [SerializeField] private float _moveSpeed;
 
-    public Action<Company> OnCompanyReached;
-    public Action<DistributionCenter> OnCenterReached;
+    // ¿Ãµø ∞¸∑√
+    private static Ease ease = Ease.InOutQuad;
+    private Transform _currentTargetTrm;
+    [SerializeField] private float stopTime;
 
-    public Action<Building> OnResourceReceive;
-    public Action<Building> OnResourceSend;
+    // ≥ª∞° º”«ÿ¿÷¥¬ º±∑Œ
+    private LineSO _currentLine;
 
-    [SerializeField] private VehicleSO vehicleSO;
-    
-    private float moveSpeed;
-    private int maxStorageResource;
-
-    private ResourceType _storageResourceType;
-    private int _storageResource;
-
-    private void OnEnable()
+    // ≥ª∞° ∞• πÊ«‚
+    private sbyte _dir = -1;
+    private int _index;
+    // _index»£¡ŸΩ√ √≥∏Æ«ÿæﬂ «“ ∞˙¡§¿ª ¿ß«‘
+    private int index
     {
-        OnResourceChanged += ResourceChange;
-        OnCompanyReached += CompanyReach;
-        OnCenterReached += CenterReach;
-        OnResourceReceive += ResourceReceive;
-        OnResourceSend += ResourceSend;
-
-        Initialize();
-    }
-
-    private void OnDisable()
-    {
-        OnResourceChanged -= ResourceChange;
-        OnCompanyReached -= CompanyReach;
-        OnCenterReached -= CenterReach;
-        OnResourceReceive -= ResourceReceive;
-        OnResourceSend -= ResourceSend;
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Company"))
+        get => _index;
+        set
         {
-            Company company = collision.GetComponent<Company>();
-            OnCompanyReached?.Invoke(company);
-        }
-        else if (collision.CompareTag("Center"))
-        {
-            DistributionCenter center = collision.GetComponent<DistributionCenter>();
-            OnCenterReached?.Invoke(center);
-        }
-    }
-
-    private void Initialize()
-    {
-        moveSpeed = vehicleSO.moveSpeed;
-        maxStorageResource = vehicleSO.maxStorageResource;
-    }
-
-    private void ResourceChange(ResourceType resourceType, int resource)
-    {
-        _storageResourceType = resourceType;
-        _storageResource = resource;
-    }
-
-    private void CompanyReach(Company company)
-    {
-        if (_storageResourceType == ResourceType.None)
-            OnResourceReceive?.Invoke(company);
-        else
-            OnResourceSend?.Invoke(company);
-    }
-
-    private void CenterReach(DistributionCenter center)
-    {
-        if (_storageResourceType == ResourceType.None)
-            OnResourceReceive?.Invoke(center);
-        else
-            OnResourceSend?.Invoke(center);
-    }
-
-    private void ResourceReceive(Building building)
-    {
-        switch (building)
-        {
-            case Company company:
-                _storageResource = company.ProductCost;
-                _storageResourceType = company.GetCompanyResourceType();
-                break;
-
-            case DistributionCenter center:
-                //if (center.GetCenterResource())
+            if (value <= 0)
             {
-                // Î¶¨ÌÄòÏä§Ìä∏ Ìïú ÏûêÏõêÏùò ÌÉÄÏûÖÏùÑ ÏïåÏïÑÎÇ¥ÏÑú ÎÑ£Ïñ¥Ï§òÏïº Ìï®
-                //_storageResource = center.Storage[]
-                break;
+                _index = 0;
+                _dir = 1;
             }
+            else if (value >= _currentLine.lineInfo.Count)
+            {
+                _index = _currentLine.lineInfo.Count - 1;
+                _dir = -1;
+            }
+            else
+                _index = value;
         }
     }
 
-    private void ResourceSend(Building building)
+    protected override void Initialize()
     {
-        switch (building)
+        base.Initialize();
+        LineController.Instance.OnLineInfoChanged += HandleLineInfoChanged;
+
+        _moveSpeed = vehicleSO.moveSpeed;
+    }
+
+    protected override void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("ss");
+
+        SetMove();
+        base.OnTriggerEnter2D(collision);
+    }
+
+    private void HandleLineInfoChanged(LineSO curLine, int value, bool isAdd)
+    {
+        if (!EqualityComparer<LineSO>.Default.Equals(_currentLine, curLine) || value == -1)
         {
-            case Company company:
-                if (company.requestType == _storageResourceType)
-                {
-                    company.RequestCost = _storageResource;
-                    _storageResourceType = ResourceType.None;
-                    _storageResource = 0;
-                }
-
-                break;
-
-            case DistributionCenter center:
-                center.AddCenterResource(_storageResourceType, _storageResource);
-                _storageResourceType = ResourceType.None;
-                _storageResource = 0;
-
-                break;
+            PoolManager.Instance.Push(_me, gameObject);
+            return;
         }
+
+        if (index > value)
+            index += isAdd ? 1 : -1;
+    }
+
+    // ∂Û¿Œ º≥¡§
+    public void SetLine(LineType lineType, LineGroupType lineGroupType, Vector3? startPos = null)
+    {
+        _currentLine = LineController.Instance.GetLine(lineType, lineGroupType);
+
+        if (_currentLine.lineInfo.Count <= 0)
+            return;
+        else if (startPos is null)
+            transform.position = _currentLine.lineInfo[0].transform.position;
+        else
+            transform.position = (Vector3)startPos;
+
+        index = 0;
+        _dir = 1;
+
+        _currentTargetTrm = _currentLine.lineInfo[index];
+        index += _dir;
+        SetMove(_currentLine.lineInfo[index]);
+        index += _dir;
+    }
+
+    private void SetMove()
+    {
+        try
+        {
+            if (!_currentLine.lineInfo.Contains(_currentTargetTrm))
+                throw new Exception("¿«µµµ» øπø‹¿‘¥œ¥Ÿ. «ˆ¿Á ∂Û¿Œø° µµ¬¯¡ˆ¡°¿Ã æ¯¿Ω");
+
+            SetMove(_currentLine.lineInfo[index]);
+            index += _dir;
+        }
+        catch (Exception ex)
+        {
+            Debug.LogException(ex);
+            PoolManager.Instance.Push(_me, gameObject);
+            return;
+        }
+    }
+
+    // øÚ¡˜¿Ã¥¬ πÊ«‚ º≥¡§
+    private void SetMove(Transform targetTrm)
+    {
+        Debug.Log(targetTrm.position);
+
+        Vector3 dir = targetTrm.position - _currentTargetTrm.position;
+
+        Sequence seq = DOTween.Sequence();
+        seq.Append(transform.DOMove(targetTrm.position, dir.magnitude / _moveSpeed * 10).SetEase(ease)).SetDelay(stopTime);
+        seq.OnComplete(SetMove);
+
+        _currentTargetTrm = targetTrm;
+    }
+
+    protected override void OnDisable()
+    {
+        Disable();
+    }
+
+    private void Disable()
+    {
+        LineController.Instance.OnLineInfoChanged -= HandleLineInfoChanged;
     }
 }
