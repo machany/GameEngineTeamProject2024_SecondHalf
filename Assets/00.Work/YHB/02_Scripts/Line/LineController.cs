@@ -2,25 +2,36 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LineController : MonoBehaviour
+public class LineController : MonoSingleton<LineController>
 {
     public Action OnLineChanged;
+    // 현재 라인이 감지한 모든 강의 갯수
+    public Action<int> OnBridgeChanged;
+    public Action<LineType> OnLineTypeChanged;
+    // 현재 라인, 변경이 된 인덱스, 추가로 인한 변경 시 true
+    public Action<LineSO, int, bool> OnLineInfoChanged;
 
     [field: SerializeField] public LineType CurrentLineType { get; private set; }
-    [field: SerializeField] public LineGroupType CurrentGroup { get; private set; }
+    [field: SerializeField] public LineGroupType CurrentGroupType { get; private set; }
+
+    [SerializeField] private LayerMask obstacleLayer;
 
     [SerializeField] private PoolItemSO linerender;
-    [SerializeField] private float _invisibleValue = 0.3f;
+    public float invisibleValue = 0.3f;
 
-    private List<LineSO> lines = new List<LineSO>();
+    public List<LineSO> lines = new List<LineSO>();
+
     private LineSO _curLine;
     private Transform _currentTrm;
+
+    // Test
+    [SerializeField] PoolItemSO vehile;
 
     // Test
     private void Update()
     {
         LineType TLT = CurrentLineType;
-        LineGroupType TGT = CurrentGroup;
+        LineGroupType TGT = CurrentGroupType;
 
         if (Input.GetKeyDown(KeyCode.O))
         {
@@ -43,12 +54,26 @@ public class LineController : MonoBehaviour
         {
             TGT = LineGroupType.Green;
         }
+        
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            Vehicle vehicle = PoolManager.Instance.Pop(vehile).GetComponent<Vehicle>();
+            vehicle.SetLine(CurrentLineType, CurrentGroupType);
+        }
 
         SetLineType(TLT, TGT); // => 라인 설정시 호출시키면됨.
+        OnLineTypeChanged?.Invoke(CurrentLineType);
     }
 
     public LineType GetLineType() => CurrentLineType;
-    public LineGroupType GetGroupType() => CurrentGroup;
+    public LineGroupType GetGroupType() => CurrentGroupType;
+    public LineSO GetLine(LineType lineType, LineGroupType lineGroupType)
+    {
+        foreach (LineSO line in lines)
+            if (EqualityComparer<LineType>.Default.Equals(line.type, lineType) && EqualityComparer<LineGroupType>.Default.Equals(line.group, lineGroupType))
+                return line;
+        return null;
+    }
 
     private void Awake()
     {
@@ -86,11 +111,23 @@ public class LineController : MonoBehaviour
         {
             if (_currentTrm is not null && EqualityComparer<Transform>.Default.Equals(companyTrm, _currentTrm))
             {
+                int removeBefore = _curLine.lineInfo.FindValueLocation(companyTrm);
+
                 _curLine.lineInfo.Remove(companyTrm);
 
                 if (_curLine.lineInfo.Count <= 1)
+                {
                     _curLine.lineInfo.Clear();
+                    OnBridgeChanged?.Invoke(0);
+                    OnLineInfoChanged?.Invoke(_curLine, -1, false);
 
+                    goto ClearSkip;
+                }
+
+                OnLineInfoChanged?.Invoke(_curLine, removeBefore, false);
+                _currentTrm = null;
+
+            ClearSkip:
                 goto EndProces;
             }
 
@@ -98,13 +135,33 @@ public class LineController : MonoBehaviour
             return;
         }
 
-        if (_currentTrm is not null && _curLine.lineInfo.Count / 2 >= _curLine.lineInfo.FindValueLocation(_currentTrm))
-            _curLine.lineInfo.AddAt(companyTrm, 0);
+        if (_currentTrm is not null)
+        {
+            int location = _curLine.lineInfo.FindValueLocation(_currentTrm) - 1;
+            Debug.Log(location);
+            if (location == 0)
+            {
+                _curLine.lineInfo.AddAt(companyTrm, 0);
+            }
+            else if (location == _curLine.lineInfo.Count - 1)
+            {
+                _curLine.lineInfo.Add(companyTrm);
+            }
+            else
+            {
+                // 클릭한 건물과 연결된 가장 가까운 건물과 연결
+                _curLine.lineInfo.AddAt(companyTrm,
+                    (_curLine.lineInfo[location - 1].position - companyTrm.position).magnitude
+                    < (_curLine.lineInfo[location + 1].position - companyTrm.position).magnitude ? location : location + 1);
+            }
+        }
         else
             _curLine.lineInfo.Add(companyTrm);
 
-        EndProces:
-        _currentTrm = null;
+        OnLineInfoChanged?.Invoke(_curLine, _curLine.lineInfo.FindValueLocation(companyTrm), true);
+
+    EndProces:
+        ShotRay();
         _curLine.render.DrawLine();
     }
 
@@ -112,7 +169,7 @@ public class LineController : MonoBehaviour
     public void SetLineType(LineType lineValue, LineGroupType groupValue)
     {
         CurrentLineType = lineValue;
-        CurrentGroup = groupValue;
+        CurrentGroupType = groupValue;
 
         foreach (LineSO lineInfo in lines)
         {
@@ -142,13 +199,30 @@ public class LineController : MonoBehaviour
             }
             else
             {
-                color.a = Mathf.Clamp(_invisibleValue, 0f, 1f);
+                color.a = Mathf.Clamp(invisibleValue, 0f, 1f);
                 lineInfo.render.SetSortOder(-(int)lineInfo.group - Enum.GetValues(typeof(LineGroupType)).Length);
             }
 
             lineInfo.render.SetColor(color);
             _curLine.render.SetSortOder(1);
         }
+    }
+
+    private void ShotRay()
+    {
+        int usedBridge = 0;
+        int i = 0;
+
+        if (_curLine.lineInfo.Count == 1) return;
+
+        do
+        {
+            Vector3 direction = _curLine.lineInfo[i + 1].position - _curLine.lineInfo[i].position;
+            usedBridge += Physics2D.Raycast(_curLine.lineInfo[i++].position, direction.normalized, direction.magnitude + 1, obstacleLayer) ? 1 : 0;
+        } while (i < _curLine.lineInfo.Count - 1);
+
+        Debug.Log(usedBridge);
+        OnBridgeChanged?.Invoke(usedBridge);
     }
 
     private void OnDestroy()
