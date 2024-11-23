@@ -127,9 +127,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""BlueLine"",
+                    ""name"": ""YellowLine"",
                     ""type"": ""Button"",
-                    ""id"": ""74cfd3ca-9c97-4737-88f7-2a29ee6daaff"",
+                    ""id"": ""8d396cc6-555d-4858-b33a-e28f743ede8e"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -139,6 +139,24 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""name"": ""GreenLine"",
                     ""type"": ""Button"",
                     ""id"": ""470cd5a3-ef3b-4032-a91e-e7e0608ec529"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""BlueLine"",
+                    ""type"": ""Button"",
+                    ""id"": ""74cfd3ca-9c97-4737-88f7-2a29ee6daaff"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PurpleLine"",
+                    ""type"": ""Button"",
+                    ""id"": ""afffb2a0-be8f-4efa-8ad2-8df7bcdb35cd"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -313,23 +331,45 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""8abb8d89-3016-4c4c-89c7-9cbd31ca11c9"",
-                    ""path"": ""<Keyboard>/2"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""BlueLine"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""5e8a2e7c-8ae6-4685-a884-358d010219bc"",
                     ""path"": ""<Keyboard>/3"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""GreenLine"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ee6322dd-6402-402d-8b21-08e2e366a0d8"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""YellowLine"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5c30ad08-8f8b-4d4b-b463-7471ee9ae99e"",
+                    ""path"": ""<Keyboard>/5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PurpleLine"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8abb8d89-3016-4c4c-89c7-9cbd31ca11c9"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""BlueLine"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -357,8 +397,10 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Player_Truck = m_Player.FindAction("Truck", throwIfNotFound: true);
         m_Player_Trailer = m_Player.FindAction("Trailer", throwIfNotFound: true);
         m_Player_RedLine = m_Player.FindAction(" RedLine", throwIfNotFound: true);
-        m_Player_BlueLine = m_Player.FindAction("BlueLine", throwIfNotFound: true);
+        m_Player_YellowLine = m_Player.FindAction("YellowLine", throwIfNotFound: true);
         m_Player_GreenLine = m_Player.FindAction("GreenLine", throwIfNotFound: true);
+        m_Player_BlueLine = m_Player.FindAction("BlueLine", throwIfNotFound: true);
+        m_Player_PurpleLine = m_Player.FindAction("PurpleLine", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -431,8 +473,10 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Truck;
     private readonly InputAction m_Player_Trailer;
     private readonly InputAction m_Player_RedLine;
-    private readonly InputAction m_Player_BlueLine;
+    private readonly InputAction m_Player_YellowLine;
     private readonly InputAction m_Player_GreenLine;
+    private readonly InputAction m_Player_BlueLine;
+    private readonly InputAction m_Player_PurpleLine;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -448,8 +492,10 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @Truck => m_Wrapper.m_Player_Truck;
         public InputAction @Trailer => m_Wrapper.m_Player_Trailer;
         public InputAction @RedLine => m_Wrapper.m_Player_RedLine;
-        public InputAction @BlueLine => m_Wrapper.m_Player_BlueLine;
+        public InputAction @YellowLine => m_Wrapper.m_Player_YellowLine;
         public InputAction @GreenLine => m_Wrapper.m_Player_GreenLine;
+        public InputAction @BlueLine => m_Wrapper.m_Player_BlueLine;
+        public InputAction @PurpleLine => m_Wrapper.m_Player_PurpleLine;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -492,12 +538,18 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @RedLine.started += instance.OnRedLine;
             @RedLine.performed += instance.OnRedLine;
             @RedLine.canceled += instance.OnRedLine;
-            @BlueLine.started += instance.OnBlueLine;
-            @BlueLine.performed += instance.OnBlueLine;
-            @BlueLine.canceled += instance.OnBlueLine;
+            @YellowLine.started += instance.OnYellowLine;
+            @YellowLine.performed += instance.OnYellowLine;
+            @YellowLine.canceled += instance.OnYellowLine;
             @GreenLine.started += instance.OnGreenLine;
             @GreenLine.performed += instance.OnGreenLine;
             @GreenLine.canceled += instance.OnGreenLine;
+            @BlueLine.started += instance.OnBlueLine;
+            @BlueLine.performed += instance.OnBlueLine;
+            @BlueLine.canceled += instance.OnBlueLine;
+            @PurpleLine.started += instance.OnPurpleLine;
+            @PurpleLine.performed += instance.OnPurpleLine;
+            @PurpleLine.canceled += instance.OnPurpleLine;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -535,12 +587,18 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @RedLine.started -= instance.OnRedLine;
             @RedLine.performed -= instance.OnRedLine;
             @RedLine.canceled -= instance.OnRedLine;
-            @BlueLine.started -= instance.OnBlueLine;
-            @BlueLine.performed -= instance.OnBlueLine;
-            @BlueLine.canceled -= instance.OnBlueLine;
+            @YellowLine.started -= instance.OnYellowLine;
+            @YellowLine.performed -= instance.OnYellowLine;
+            @YellowLine.canceled -= instance.OnYellowLine;
             @GreenLine.started -= instance.OnGreenLine;
             @GreenLine.performed -= instance.OnGreenLine;
             @GreenLine.canceled -= instance.OnGreenLine;
+            @BlueLine.started -= instance.OnBlueLine;
+            @BlueLine.performed -= instance.OnBlueLine;
+            @BlueLine.canceled -= instance.OnBlueLine;
+            @PurpleLine.started -= instance.OnPurpleLine;
+            @PurpleLine.performed -= instance.OnPurpleLine;
+            @PurpleLine.canceled -= instance.OnPurpleLine;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -580,7 +638,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnTruck(InputAction.CallbackContext context);
         void OnTrailer(InputAction.CallbackContext context);
         void OnRedLine(InputAction.CallbackContext context);
-        void OnBlueLine(InputAction.CallbackContext context);
+        void OnYellowLine(InputAction.CallbackContext context);
         void OnGreenLine(InputAction.CallbackContext context);
+        void OnBlueLine(InputAction.CallbackContext context);
+        void OnPurpleLine(InputAction.CallbackContext context);
     }
 }
