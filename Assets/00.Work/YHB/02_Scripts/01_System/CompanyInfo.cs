@@ -24,6 +24,7 @@ public class CompanyInfo : MonoSingleton<CompanyInfo>
     public float maxDelayTime;
     // 정렬시 걸리는 시간
     public float DuringTime;
+    public float startCountDownTime = 5.7f;
     public GameObject RequestMark, ProductMark;
 
     [Header("SortMark")]

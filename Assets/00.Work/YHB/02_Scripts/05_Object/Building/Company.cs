@@ -40,8 +40,10 @@ public class Company : Building
         get => _requestCost;
         set
         {
-            if (value > CompanyInfo.Instance.maxRequestCost)
+            if (value > CompanyInfo.Instance.maxRequestCost && !_countDown.countDown)
                 _countDown.RequestOverCountDown();
+            else if (_countDown.countDown && value <= CompanyInfo.Instance.maxRequestCost)
+                _countDown.RequestCancelCountDown();
 
             _requestCost = value;
         }
