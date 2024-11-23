@@ -8,18 +8,18 @@ public class Vehicle : VehicleStorage
     [SerializeField] private PoolItemSO _me;
     [SerializeField] private float _moveSpeed;
 
-    // ÀÌµ¿ °ü·Ã
+    // ì´ë™ ê´€ë ¨
     private static Ease ease = Ease.InOutQuad;
     private Transform _currentTargetTrm;
     [SerializeField] private float stopTime;
 
-    // ³»°¡ ¼ÓÇØÀÖ´Â ¼±·Î
+    // ë‚´ê°€ ì†í•´ìˆëŠ” ì„ ë¡œ
     private LineSO _currentLine;
 
-    // ³»°¡ °¥ ¹æÇâ
+    // ë‚´ê°€ ê°ˆ ë°©í–¥
     private sbyte _dir = -1;
     private int _index;
-    // _indexÈ£ÁÙ½Ã Ã³¸®ÇØ¾ß ÇÒ °úÁ¤À» À§ÇÔ
+    // _indexí˜¸ì¤„ì‹œ ì²˜ë¦¬í•´ì•¼ í•  ê³¼ì •ì„ ìœ„í•¨
     private int index
     {
         get => _index;
@@ -40,7 +40,7 @@ public class Vehicle : VehicleStorage
         }
     }
 
-    // ¹İÅõ¸íÈ­¸¦ À§ÇÔ
+    // ë°˜íˆ¬ëª…í™”ë¥¼ ìœ„í•¨
     private SpriteRenderer _spriteRenderer;
 
     protected override void Initialize()
@@ -56,7 +56,7 @@ public class Vehicle : VehicleStorage
         _moveSpeed = vehicleSO.moveSpeed;
     }
 
-    // ¹İÅõ¸íÈ­ µî Ã³¸®
+    // ë°˜íˆ¬ëª…í™” ë“± ì²˜ë¦¬
     private void HandleLineTypeChange(LineType curLineType)
     {
         Color color = _spriteRenderer.color;
@@ -70,7 +70,7 @@ public class Vehicle : VehicleStorage
 
         if (EqualityComparer<LineSO>.Default.Equals(_currentLine, curLine))
         {
-            // º¯°æ ÈÄ µµÂøÇÏ±â Àü ´Ù½Ã ¿¬°á ½Ã¸¦ À§ÇÑ ÀÎµ¦½º º¯°æ
+            // ë³€ê²½ í›„ ë„ì°©í•˜ê¸° ì „ ë‹¤ì‹œ ì—°ê²° ì‹œë¥¼ ìœ„í•œ ì¸ë±ìŠ¤ ë³€ê²½
             // index = _currentLine.lineInfo.FindValueLocation(_currentTargetTrm);
 
             if (index > value)
@@ -78,7 +78,7 @@ public class Vehicle : VehicleStorage
         }
     }
 
-    // ¶óÀÎ ¼³Á¤
+    // ë¼ì¸ ì„¤ì •
     public void SetLine(LineType lineType, LineGroupType lineGroupType, Vector3? startPos = null)
     {
         _currentLine = LineController.Instance.GetLine(lineType, lineGroupType);
@@ -104,7 +104,7 @@ public class Vehicle : VehicleStorage
         try
         {
             if (!_currentLine.lineInfo.Contains(_currentTargetTrm))
-                throw new Exception("ÀÇµµµÈ ¿¹¿ÜÀÔ´Ï´Ù. ÇöÀç ¶óÀÎ¿¡ µµÂøÁöÁ¡ÀÌ ¾øÀ½");
+                throw new Exception("ì˜ë„ëœ ì˜ˆì™¸ì…ë‹ˆë‹¤. í˜„ì¬ ë¼ì¸ì— ë„ì°©ì§€ì ì´ ì—†ìŒ");
 
             ArriveBuilding(_currentTargetTrm);
 
@@ -119,7 +119,7 @@ public class Vehicle : VehicleStorage
         }
     }
 
-    // ¿òÁ÷ÀÌ´Â ¹æÇâ ¼³Á¤
+    // ì›€ì§ì´ëŠ” ë°©í–¥ ì„¤ì •
     private void SetMove(Transform targetTrm)
     {
         Debug.Log(targetTrm.position);

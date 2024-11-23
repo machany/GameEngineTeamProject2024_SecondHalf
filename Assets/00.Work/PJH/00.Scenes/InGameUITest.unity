@@ -2091,7 +2091,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab93669270453564db0f1f014bafda0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <InputCompo>k__BackingField: {fileID: 0}
+  <InputCompo>k__BackingField: {fileID: 11400000, guid: 0fe90c4e69d236e4abb64bafd1272308, type: 2}
 --- !u!1 &2027065025
 GameObject:
   m_ObjectHideFlags: 0
