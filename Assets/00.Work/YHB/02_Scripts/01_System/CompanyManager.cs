@@ -16,14 +16,14 @@ public class CompanyManager : MonoSingleton<CompanyManager>
     public NotOverlapValue<ResourceType> companyResource;
 
     /// <summary>회사에서 자원을 생산하게 합니다.</summary>
-    public Action<int> OnCompanyProduct;
+    public Action OnCompanyProduct;
     /// <summary>회사에서 자원을 필요하게 합니다.</summary>
-    public Action<int> OnCompanyRequest;
+    public Action OnCompanyRequest;
 
     /// 생성 주기입니다.
     [SerializeField] private float productTime, requestTime;
     private float _lastProductTime, _lastRequestTime;
-    
+
     private void Awake()
     {
         Initialize();
@@ -74,12 +74,12 @@ public class CompanyManager : MonoSingleton<CompanyManager>
         if (Time.time > _lastProductTime + productTime)
         {
             _lastProductTime = Time.time;
-            OnCompanyProduct?.Invoke(Random.Range(0, 5) == 0 ? 2 : Random.Range(0, 2));
+            OnCompanyProduct?.Invoke();
         }
         else if (Time.time > _lastRequestTime + requestTime)
         {
             _lastRequestTime = Time.time;
-            OnCompanyRequest?.Invoke(Random.Range(0, 5) == 0 ? 2 : Random.Range(0, 2));
+            OnCompanyRequest?.Invoke();
         }
     }
 }

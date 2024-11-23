@@ -13,9 +13,11 @@ public class CompanyInfo : MonoSingleton<CompanyInfo>
     [SerializeField] private List<Color> companyColor;
 
     [Header("Resources")]
+    // 카운트 다운이 시작되는 자원의 양
+    public int limitRequestCost = 5;
     // 생산된 자원이 최대로 보관할 수 있는 양
     public int maxProductCost = 5;
-    // 카운트 다운이 시작되는 자원의 양
+    // 필요로 하는 자원이 최대로 보관할 수 있는 양
     public int maxRequestCost = 5;
 
     [Header("Company")]

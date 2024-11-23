@@ -40,7 +40,7 @@ public class Company : Building
         get => _requestCost;
         set
         {
-            if (value > CompanyInfo.Instance.maxRequestCost)
+            if (value > CompanyInfo.Instance.limitRequestCost)
                 _countDown.RequestOverCountDown();
 
             _requestCost = value;
@@ -85,14 +85,18 @@ public class Company : Building
     public ResourceType GetCompanyResourceType() => CompanyManager.Instance.productShape[shapeType];
 
     /// <summary>자원을 생산합니다.</summary>
-    private void HandleProduct(int n)
+    private void HandleProduct()
     {
+        int n = Random.Range(0, 5) == 0 ? 2 : Random.Range(0, 2);
+        n = ProductCost + n >= CompanyInfo.Instance.maxProductCost ? 0 : n;
         StartCoroutine(ProductCoe(n));
     }
 
     /// <summary>자원을 필요로 합니다.</summary>
-    private void HandleRequest(int n)
+    private void HandleRequest()
     {
+        int n = Random.Range(0, 5) == 0 ? 2 : Random.Range(0, 2);
+        n = RequestCost + n >= CompanyInfo.Instance.maxRequestCost ? 0 : n;
         StartCoroutine(RequestCoe(n));
     }
 
@@ -125,5 +129,4 @@ public class Company : Building
     {
         DisableCompany();
     }
-
 }
