@@ -1,161 +1,109 @@
-using UnityEngine;
-using UnityEngine.Audio;
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
-using UAPT.UI;
+using UnityEngine;
 
-#region 사운드 에디터 설정
-#if UNITY_EDITOR
-using UnityEditor;
-[CustomEditor(typeof(SoundManager))]
-public class SoundManagerEditor : Editor
+public enum ESFXName
 {
-    const string INFO = "슬라이더 설정 값\n" +
-       "--------------------\n" +
-       "Slider Min Value : 0.001\n" +
-       "Slider Max Value : 1\n\n" +
-        "MixerPath : AudioMixer가 들어있는 폴더 주소\n" +
-        "예시) Resources/AudioMixer 폴더 안에있는 \n" +
-        "      _Mixer 을 가져오고 싶으면\n" +
-        "MixerPath 안에다 AudioMixer/_Mixer 을 써주면 된다.";
+    Click,
+    Hover
+}
 
-    public override void OnInspectorGUI()
+public class SoundManager : MonoSingleton<SoundManager>
+{
+    [Header("BGM")] [SerializeField] private List<AudioClip> bgmClips;
+    [SerializeField] private float bgmVolume;
+
+    [Header("SFX")] [SerializeField] private List<AudioClip> sfxClips;
+    [SerializeField] private float sfxVolume;
+
+    [SerializeField] private int channel;
+
+    private AudioSource _bgmPlayer;
+    private AudioSource[] _sfxPlayer;
+
+    private int _channelIndex;
+
+    public float BgmVolume
     {
-        EditorGUILayout.HelpBox(INFO, MessageType.Info);
-        base.OnInspectorGUI();
-        SoundManager soundManager = (SoundManager)target;
-        // [CustomEditor(typeof(SoundManager))] 에 써져있는 target을 가져옴
-        if (GUILayout.Button("사운드 데이터 삭제"))
+        get => bgmVolume;
+
+        set
         {
-            soundManager.DeleteSoundData();
+            bgmVolume = value;
+            _bgmPlayer.volume = bgmVolume;
         }
     }
 
-
-}
-#endif
-#endregion
-public class SoundManager : MonoSingleton<SoundManager>
-{
-    [SerializeField]
-    private string _mixerPath = "AudioMixer/_Mixer";
-    [SerializeField]
-    private string _audioContainPath = "AudioSO";
-    private SoundContainerSO _so;
-    private AudioMixer _mixer;
-    private Dictionary<EAudioName, AudioClip> _audioDictionary;
-    public Dictionary<EAudioName, AudioClip> AudioDictionary => _audioDictionary;
-    private AudioSource _audioSource;
-
-
-    public AudioMixer Mixer
+    public float SfxVolume
     {
-        get
+        get => sfxVolume;
+
+        set
         {
-            MixerNullChake();
-            return _mixer;
+            sfxVolume = value;
+
+            foreach (AudioSource item in _sfxPlayer)
+                item.volume = sfxVolume;
         }
     }
 
     private void Awake()
     {
-        //_audioSource = gameObject.AddComponent<AudioSource>();
-        if (Instance != null && Instance != this)
-            Destroy(gameObject);
-
-        _audioSource = GetComponent<AudioSource>();
-        FixedScreen.FixedScreenSet();
+        Initialize();
     }
 
-    private void OnEnable()
+    private void Initialize()
     {
-        MixerNullChake();
-        AudioSONullChake();
-    }
+        // BGM 플레이어 초기화
+        GameObject bgmObj = new GameObject("BGMPlayer");
+        bgmObj.transform.parent = transform;
 
-    private void AudioSONullChake()
-    {
-        _so = Resources.Load<SoundContainerSO>(_audioContainPath);
-        _audioDictionary = new Dictionary<EAudioName, AudioClip>();
-        foreach (EAudioName item in Enum.GetValues(typeof(EAudioName)))
+        _bgmPlayer = bgmObj.AddComponent<AudioSource>();
+        _bgmPlayer.playOnAwake = false;
+        _bgmPlayer.loop = true;
+        _bgmPlayer.volume = bgmVolume;
+        _bgmPlayer.clip = bgmClips[0];
+
+        // SFX 플레이어 초기화
+        GameObject sfxObj = new GameObject("SFXPlayer");
+        sfxObj.transform.parent = transform;
+        _sfxPlayer = new AudioSource[channel];
+
+        for (int i = 0; i < _sfxPlayer.Length; i++)
         {
-            Type t = typeof(SoundContainerSO);
-            FieldInfo info = t.GetField($"_{item.ToString().ToLower()}", BindingFlags.NonPublic | BindingFlags.Instance);
-
-            if (info == null)
-            {
-                Debug.Log(item);
-                continue;
-            }
-
-            AudioClip clip = info.GetValue(_so) as AudioClip;
-
-            if (clip == null)
-                continue;
-
-            _audioDictionary.Add(item, clip);
+            _sfxPlayer[i] = sfxObj.AddComponent<AudioSource>();
+            _sfxPlayer[i].playOnAwake = false;
+            _sfxPlayer[i].volume = sfxVolume;
         }
     }
 
-    public static void PlaySound(EAudioType type, EAudioName playAudioName, float spawnTime = 4) => Instance._PlaySound(type, playAudioName, spawnTime);
-
-    private void _PlaySound(EAudioType type, EAudioName playAudioName, float spawnTime = 4)
+    public void PlayBgm(int value)
     {
-        if (_audioDictionary.ContainsKey(playAudioName) == false)
+        _bgmPlayer.clip = bgmClips[value];
+        _bgmPlayer.Play();
+    }
+
+    public void StopBgm(int value)
+    {
+        _bgmPlayer.clip = bgmClips[value];
+        _bgmPlayer.Stop();
+    }
+    
+    //효과음 재생(AudioManager.Instance.PlaySfx(AudioManager.Sfx.실행할 효과음); 형태로 사용)
+    public void PlaySfx(ESFXName soundName)
+    {
+        for (int i = 0; i < _sfxPlayer.Length; i++)
         {
-            Debug.LogError($"{playAudioName} 해당 이넘에 해당하는 Auido Clip이 SO에 존재하지 않습니다.");
-            return;
+            int loopIndex = (i + _channelIndex) % _sfxPlayer.Length;
+
+            if (_sfxPlayer[loopIndex].isPlaying)
+                continue;
+            
+            _channelIndex = loopIndex;
+            _sfxPlayer[loopIndex].clip = sfxClips[(int)soundName];
+            _sfxPlayer[loopIndex].Play();
+            break;
         }
-
-        if (type == EAudioType.SFX)
-            PoolManager.SpawnFromPool("SoundObj", Vector3.zero).GetComponent<SoundPlayer>().PlaySound(_audioDictionary[playAudioName], spawnTime);
-
-
-    }
-
-    //public void ChangeBGM(AudioClip clip)
-    //{
-    //    _audioSource.clip = clip;
-    //    _audioSource.Play();
-    //}
-
-    public void DeleteSoundData()
-    {
-        PlayerPrefs.DeleteKey("MasterVolume");
-        PlayerPrefs.DeleteKey("MusicVolume");
-        PlayerPrefs.DeleteKey("SFXVoluem");
-        #region 사운드 테스트
-#if UNITY_EDITOR
-
-        Debug.Log("사운드 저장 데이터 삭제 됨");
-#endif
-        #endregion
-    }
-
-    public void VolumeSetMaster(float volume)
-    {
-        MixerNullChake();
-        _mixer.SetFloat("Master", Mathf.Log10(volume) * 20); PlayerPrefs.SetFloat("MasterVolume", volume);
-    }
-    public void VolumeSetMusic(float volume)
-    {
-        MixerNullChake();
-        _mixer.SetFloat("Music", Mathf.Log10(volume) * 20); PlayerPrefs.SetFloat("MusicVolume", volume);
-    }
-    public void VolumeSetSFX(float volume)
-    {
-        MixerNullChake();
-        _mixer.SetFloat("SFX", Mathf.Log10(volume) * 20); PlayerPrefs.SetFloat("SFXVolume", volume);
-    }
-
-    /// <summary>
-    /// Mixer가 Null인경우 재정의
-    /// </summary>
-    private void MixerNullChake()
-    {
-        if (_mixer != null)
-            return;
-        _mixer = Resources.Load<AudioMixer>(_mixerPath);
     }
 }
