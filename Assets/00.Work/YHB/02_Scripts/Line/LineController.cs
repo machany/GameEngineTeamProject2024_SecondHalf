@@ -11,21 +11,23 @@ public class LineController : MonoSingleton<LineController>
     // 현재 라인, 변경이 된 인덱스, 추가로 인한 변경 시 true
     public Action<LineSO, int, bool> OnLineInfoChanged;
 
-    [field: SerializeField] public LineType CurrentLineType { get; private set; }
-    [field: SerializeField] public LineGroupType CurrentGroupType { get; private set; }
+    public LineType CurrentLineType { get; private set; }
+    public LineGroupType CurrentGroupType { get; private set; }
 
+    [Header("Obstacle")]
     [SerializeField] private LayerMask obstacleLayer;
 
+    [Header("Line")]
     [SerializeField] private PoolItemSO linerender;
     public float invisibleValue = 0.3f;
 
-    public List<LineSO> lines = new List<LineSO>();
-
     private LineSO _curLine;
     private Transform _currentTrm;
+    [HideInInspector] public List<LineSO> lines = new List<LineSO>();
 
     // Test
-    [SerializeField] PoolItemSO vehile;
+    [Header("Test")]
+    [SerializeField] private PoolItemSO vehile;
 
     // Test
     private void Update()
@@ -61,8 +63,7 @@ public class LineController : MonoSingleton<LineController>
             vehicle.SetLine(CurrentLineType, CurrentGroupType);
         }
 
-        SetLineType(TLT, TGT); // => 라인 설정시 호출시키면됨.
-        OnLineTypeChanged?.Invoke(CurrentLineType);
+        HandleChangedLineType(TLT, TGT);
     }
 
     public LineType GetLineType() => CurrentLineType;
@@ -73,6 +74,13 @@ public class LineController : MonoSingleton<LineController>
             if (EqualityComparer<LineType>.Default.Equals(line.type, lineType) && EqualityComparer<LineGroupType>.Default.Equals(line.group, lineGroupType))
                 return line;
         return null;
+    }
+    private int GetAllBridgeCount()
+    {
+        int i = 0;
+        foreach (LineSO line in lines)
+            i += line.usedBridgeCount;
+        return i;
     }
 
     private void Awake()
@@ -97,11 +105,23 @@ public class LineController : MonoSingleton<LineController>
                 line.group = group;
                 line.render = PoolManager.Instance.Pop(linerender).GetComponent<LineRender>();
                 line.render.Initialize(line);
+                line.usedBridgeCount = 0;
                 lines.Add(line);
             }
 
         _curLine = lines[0];
         SetLineColor();
+    }
+
+    private void HandleChangedLineType(LineType lineType, LineGroupType lineGroupType)
+    {
+        if (EqualityComparer<LineType>.Default.Equals(CurrentLineType, lineType) && EqualityComparer<LineGroupType>.Default.Equals(CurrentGroupType, lineGroupType))
+            return;
+
+        SetLineType(lineType, lineGroupType);
+        OnLineTypeChanged?.Invoke(CurrentLineType);
+
+        ShotRay();
     }
 
     // 회사 클릭시
@@ -138,8 +158,7 @@ public class LineController : MonoSingleton<LineController>
         if (_currentTrm is not null)
         {
             int location = _curLine.lineInfo.FindValueLocation(_currentTrm) - 1;
-            Debug.Log(location);
-            if (location == 0)
+            if (location <= 0)
             {
                 _curLine.lineInfo.AddAt(companyTrm, 0);
             }
@@ -160,6 +179,8 @@ public class LineController : MonoSingleton<LineController>
 
         OnLineInfoChanged?.Invoke(_curLine, _curLine.lineInfo.FindValueLocation(companyTrm), true);
 
+        _currentTrm = companyTrm;
+
     EndProces:
         ShotRay();
         _curLine.render.DrawLine();
@@ -176,7 +197,6 @@ public class LineController : MonoSingleton<LineController>
             if (!EqualityComparer<LineSO>.Default.Equals(_curLine, lineInfo) && EqualityComparer<LineGroupType>.Default.Equals(lineInfo.group, groupValue) && EqualityComparer<LineType>.Default.Equals(lineInfo.type, lineValue))
             {
                 _curLine = lineInfo;
-                Debug.Log("변경");
                 OnLineChanged?.Invoke();
                 break;
             }
@@ -213,7 +233,7 @@ public class LineController : MonoSingleton<LineController>
         int usedBridge = 0;
         int i = 0;
 
-        if (_curLine.lineInfo.Count == 1) return;
+        if (_curLine.lineInfo.Count <= 1) return;
 
         do
         {
@@ -221,8 +241,10 @@ public class LineController : MonoSingleton<LineController>
             usedBridge += Physics2D.Raycast(_curLine.lineInfo[i++].position, direction.normalized, direction.magnitude + 1, obstacleLayer) ? 1 : 0;
         } while (i < _curLine.lineInfo.Count - 1);
 
-        Debug.Log(usedBridge);
-        OnBridgeChanged?.Invoke(usedBridge);
+        _curLine.usedBridgeCount = usedBridge;
+
+        OnBridgeChanged?.Invoke(GetAllBridgeCount());
+        Debug.Log("all bridge count : " + GetAllBridgeCount());
     }
 
     private void OnDestroy()

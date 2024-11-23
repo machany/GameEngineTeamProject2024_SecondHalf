@@ -44,6 +44,9 @@ TagManager:
   - name: Line
     uniqueID: 796694979
     locked: 0
+  - name: Vehicle
+    uniqueID: 2159636169
+    locked: 0
   - name: Building
     uniqueID: 1890240457
     locked: 0
