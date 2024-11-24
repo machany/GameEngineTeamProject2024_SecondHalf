@@ -24,4 +24,6 @@ public class LineSO : ScriptableObject
     public List<Transform> lineInfo = new List<Transform>();
 
     public LineRender render;
+
+    public int usedBridgeCount;
 }

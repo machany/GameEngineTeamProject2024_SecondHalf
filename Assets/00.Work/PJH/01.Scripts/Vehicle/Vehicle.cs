@@ -1,29 +1,34 @@
 using DG.Tweening;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class Vehicle : VehicleStorage
+public class Vehicle : MonoBehaviour
 {
+    // ¹İÅõ¸íÈ­¸¦ À§ÇÔ
+    private SpriteRenderer _spriteRenderer;
+    private VehicleStorage _vehicleStorage;
+
     [SerializeField] private PoolItemSO _me;
     [SerializeField] private float _moveSpeed;
 
-    // ì´ë™ ê´€ë ¨
-    private static Ease ease = Ease.InOutQuad;
+    // ÀÌµ¿ °ü·Ã
+    private static Ease ease = Ease.InOutCubic;
     private Transform _currentTargetTrm;
     [SerializeField] private float stopTime;
 
-    // ë‚´ê°€ ì†í•´ìˆëŠ” ì„ ë¡œ
+    // ³»°¡ ¼ÓÇØÀÖ´Â ¼±·Î
     private LineSO _currentLine;
 
-    // ë‚´ê°€ ê°ˆ ë°©í–¥
-    private sbyte _dir = -1;
+    // ³»°¡ °¥ ¹æÇâ
+    public sbyte _dir { get; private set; } = -1;
     private int _index;
-    // _indexí˜¸ì¤„ì‹œ ì²˜ë¦¬í•´ì•¼ í•  ê³¼ì •ì„ ìœ„í•¨
-    private int index
+    // _indexÈ£ÁÙ½Ã Ã³¸®ÇØ¾ß ÇÒ °úÁ¤À» À§ÇÔ
+    public int index
     {
         get => _index;
-        set
+        private set
         {
             if (value <= 0)
             {
@@ -40,23 +45,23 @@ public class Vehicle : VehicleStorage
         }
     }
 
-    // ë°˜íˆ¬ëª…í™”ë¥¼ ìœ„í•¨
-    private SpriteRenderer _spriteRenderer;
+    private void Start()
+    {
+        Initialize();
+    }
 
-    protected override void Initialize()
+    private void Initialize()
     {
         _spriteRenderer = transform.GetComponent<SpriteRenderer>();
+        _vehicleStorage = transform.GetComponent<VehicleStorage>();
 
-        base.Initialize();
         LineController.Instance.OnLineInfoChanged += HandleLineInfoChanged;
         LineController.Instance.OnLineTypeChanged += HandleLineTypeChange;
 
-        _spriteRenderer = transform.GetComponent<SpriteRenderer>();
-
-        _moveSpeed = vehicleSO.moveSpeed;
+        _moveSpeed = _vehicleStorage.vehicleSO.moveSpeed;
     }
 
-    // ë°˜íˆ¬ëª…í™” ë“± ì²˜ë¦¬
+    // ¹İÅõ¸íÈ­ µî Ã³¸®
     private void HandleLineTypeChange(LineType curLineType)
     {
         Color color = _spriteRenderer.color;
@@ -70,7 +75,7 @@ public class Vehicle : VehicleStorage
 
         if (EqualityComparer<LineSO>.Default.Equals(_currentLine, curLine))
         {
-            // ë³€ê²½ í›„ ë„ì°©í•˜ê¸° ì „ ë‹¤ì‹œ ì—°ê²° ì‹œë¥¼ ìœ„í•œ ì¸ë±ìŠ¤ ë³€ê²½
+            // º¯°æ ÈÄ µµÂøÇÏ±â Àü ´Ù½Ã ¿¬°á ½Ã¸¦ À§ÇÑ ÀÎµ¦½º º¯°æ
             // index = _currentLine.lineInfo.FindValueLocation(_currentTargetTrm);
 
             if (index > value)
@@ -78,7 +83,7 @@ public class Vehicle : VehicleStorage
         }
     }
 
-    // ë¼ì¸ ì„¤ì •
+    // ¶óÀÎ ¼³Á¤
     public void SetLine(LineType lineType, LineGroupType lineGroupType, Vector3? startPos = null)
     {
         _currentLine = LineController.Instance.GetLine(lineType, lineGroupType);
@@ -104,9 +109,9 @@ public class Vehicle : VehicleStorage
         try
         {
             if (!_currentLine.lineInfo.Contains(_currentTargetTrm))
-                throw new Exception("ì˜ë„ëœ ì˜ˆì™¸ì…ë‹ˆë‹¤. í˜„ì¬ ë¼ì¸ì— ë„ì°©ì§€ì ì´ ì—†ìŒ");
+                throw new Exception("ÀÇµµµÈ ¿¹¿ÜÀÔ´Ï´Ù. ÇöÀç ¶óÀÎ¿¡ µµÂøÁöÁ¡ÀÌ ¾øÀ½");
 
-            ArriveBuilding(_currentTargetTrm);
+            _vehicleStorage.ArriveBuilding(_currentTargetTrm);
 
             SetMove(_currentLine.lineInfo[index]);
             index += _dir;
@@ -119,21 +124,28 @@ public class Vehicle : VehicleStorage
         }
     }
 
-    // ì›€ì§ì´ëŠ” ë°©í–¥ ì„¤ì •
+    // ¿òÁ÷ÀÌ´Â ¹æÇâ ¼³Á¤
     private void SetMove(Transform targetTrm)
     {
         Debug.Log(targetTrm.position);
 
         Vector3 dir = targetTrm.position - _currentTargetTrm.position;
 
+        LookAt(targetTrm.position);
         Sequence seq = DOTween.Sequence();
-        seq.Append(transform.DOMove(targetTrm.position, dir.magnitude / _moveSpeed * 10).SetEase(ease)).SetDelay(stopTime);
+        seq.Append(transform.DOMove(targetTrm.position, dir.magnitude / _moveSpeed).SetEase(ease)).SetDelay(stopTime);
         seq.OnComplete(SetMove);
 
         _currentTargetTrm = targetTrm;
     }
 
-    protected override void OnDisable()
+    private void LookAt(Vector3 vector)
+    {
+        Vector3 direction = vector - transform.position;
+        transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
+    }
+
+    private void OnDisable()
     {
         Disable();
     }
