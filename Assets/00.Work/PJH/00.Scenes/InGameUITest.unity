@@ -916,12 +916,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6ba47b1ef7a3fe45a665b6f82969cd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCamera: {fileID: 0}
-  zoomSpeed: 2
-  moveSpeed: 2
-  minZoom: 2
-  maxZoom: 10
-  worldBounds: {x: 50, y: 30}
+  _mainCamera: {fileID: 0}
+  _zoomSpeed: 2
+  _moveSpeed: 10
+  _minZoom: 2
+  _maxZoom: 10
+  _worldBounds: {x: 100, y: 100}
 --- !u!1 &1078608850
 GameObject:
   m_ObjectHideFlags: 0
