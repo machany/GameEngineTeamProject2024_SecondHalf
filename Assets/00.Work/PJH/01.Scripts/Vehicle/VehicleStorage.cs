@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class VehicleStorage : MonoBehaviour, IVehicle
 {
-    [SerializeField] protected VehicleSO vehicleSO;
+    public VehicleSO vehicleSO;
 
     public Action<ResourceType, int> OnResourceChanged;
 
@@ -19,7 +19,7 @@ public class VehicleStorage : MonoBehaviour, IVehicle
     private int _storageResource;
     private int _maxStorageResource;
 
-    protected virtual void OnEnable()
+    private void OnEnable()
     {
         Initialize();
 
@@ -30,7 +30,7 @@ public class VehicleStorage : MonoBehaviour, IVehicle
         OnResourceSend += ResourceSend;
     }
 
-    protected virtual void OnDisable()
+    private void OnDisable()
     {
         OnResourceChanged -= ResourceChange;
         OnCompanyReached -= CompanyReach;
@@ -39,7 +39,7 @@ public class VehicleStorage : MonoBehaviour, IVehicle
         OnResourceSend -= ResourceSend;
     }
 
-    protected void ArriveBuilding(Transform buildingTrm)
+    public void ArriveBuilding(Transform buildingTrm)
     {
         if (buildingTrm.TryGetComponent<Company>(out Company company))
         {
@@ -52,8 +52,8 @@ public class VehicleStorage : MonoBehaviour, IVehicle
             OnCenterReached?.Invoke(center);
         }
     }
-    
-    protected virtual void Initialize()
+
+    private void Initialize()
     {
         _maxStorageResource = vehicleSO.maxStorageResource;
         // 저장소 초기화시켜라 ===============================================================================================================================================================================================

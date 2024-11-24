@@ -1,15 +1,20 @@
 using DG.Tweening;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class Vehicle : VehicleStorage
+public class Vehicle : MonoBehaviour
 {
+    // 반투명화를 위함
+    private SpriteRenderer _spriteRenderer;
+    private VehicleStorage _vehicleStorage;
+
     [SerializeField] private PoolItemSO _me;
     [SerializeField] private float _moveSpeed;
 
     // 이동 관련
-    private static Ease ease = Ease.InOutQuad;
+    private static Ease ease = Ease.InOutCubic;
     private Transform _currentTargetTrm;
     [SerializeField] private float stopTime;
 
@@ -17,13 +22,13 @@ public class Vehicle : VehicleStorage
     private LineSO _currentLine;
 
     // 내가 갈 방향
-    private sbyte _dir = -1;
+    public sbyte _dir { get; private set; } = -1;
     private int _index;
     // _index호줄시 처리해야 할 과정을 위함
-    private int index
+    public int index
     {
         get => _index;
-        set
+        private set
         {
             if (value <= 0)
             {
@@ -40,20 +45,20 @@ public class Vehicle : VehicleStorage
         }
     }
 
-    // 반투명화를 위함
-    private SpriteRenderer _spriteRenderer;
+    private void Start()
+    {
+        Initialize();
+    }
 
-    protected override void Initialize()
+    private void Initialize()
     {
         _spriteRenderer = transform.GetComponent<SpriteRenderer>();
+        _vehicleStorage = transform.GetComponent<VehicleStorage>();
 
-        base.Initialize();
         LineController.Instance.OnLineInfoChanged += HandleLineInfoChanged;
         LineController.Instance.OnLineTypeChanged += HandleLineTypeChange;
 
-        _spriteRenderer = transform.GetComponent<SpriteRenderer>();
-
-        _moveSpeed = vehicleSO.moveSpeed;
+        _moveSpeed = _vehicleStorage.vehicleSO.moveSpeed;
     }
 
     // 반투명화 등 처리
@@ -106,7 +111,7 @@ public class Vehicle : VehicleStorage
             if (!_currentLine.lineInfo.Contains(_currentTargetTrm))
                 throw new Exception("의도된 예외입니다. 현재 라인에 도착지점이 없음");
 
-            ArriveBuilding(_currentTargetTrm);
+            _vehicleStorage.ArriveBuilding(_currentTargetTrm);
 
             SetMove(_currentLine.lineInfo[index]);
             index += _dir;
@@ -126,14 +131,21 @@ public class Vehicle : VehicleStorage
 
         Vector3 dir = targetTrm.position - _currentTargetTrm.position;
 
+        LookAt(targetTrm.position);
         Sequence seq = DOTween.Sequence();
-        seq.Append(transform.DOMove(targetTrm.position, dir.magnitude / _moveSpeed * 10).SetEase(ease)).SetDelay(stopTime);
+        seq.Append(transform.DOMove(targetTrm.position, dir.magnitude / _moveSpeed).SetEase(ease)).SetDelay(stopTime);
         seq.OnComplete(SetMove);
 
         _currentTargetTrm = targetTrm;
     }
 
-    protected override void OnDisable()
+    private void LookAt(Vector3 vector)
+    {
+        Vector3 direction = vector - transform.position;
+        transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
+    }
+
+    private void OnDisable()
     {
         Disable();
     }
