@@ -14,6 +14,8 @@ public class SpeedUI : UIToolkit, IInputable
     private const string _speed1Str = "Button_Speed1";
     private const string _speed2Str = "Button_Speed2";
     private const string _speed3Str = "Button_Speed3";
+    
+    private const string _toggleStyle = "visual-element-speed-toggle";
 
     private VisualElement _speedVisualElement;
 
@@ -91,9 +93,7 @@ public class SpeedUI : UIToolkit, IInputable
 
     private void ClickSpeedToggleButton()
     {
-        _speedVisualElement.style.display = _speedVisualElement.style.display == DisplayStyle.None
-            ? DisplayStyle.Flex
-            : DisplayStyle.None;
+        _speedVisualElement.ToggleInClassList(_toggleStyle);
     }
 
     private void ClickStopButton()

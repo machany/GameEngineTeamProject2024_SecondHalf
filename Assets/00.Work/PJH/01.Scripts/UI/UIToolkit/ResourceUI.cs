@@ -16,6 +16,8 @@ public class ResourceUI : UIToolkit
         "Label_Red", "Label_Yellow", "Label_Green", "Label_Blue", "Label_Purple", "Label_Bridge"
     };
 
+    private const string _toggleStyle = "visual-element-resource-toggle";
+
     private VisualElement _resourceVisualElement;
     
     private Button _toggleButton;
@@ -72,9 +74,6 @@ public class ResourceUI : UIToolkit
     
     private void Toggle()
     {
-        if (_isToggle)
-            _resourceVisualElement.AddToClassList("visual-element-resource-toggle");
-        else
-            _resourceVisualElement.RemoveFromClassList("visual-element-resource-toggle");
+        _resourceVisualElement.ToggleInClassList(_toggleStyle);
     }
 }
