@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CompanyInfo : MonoSingleton<CompanyInfo>
+[CreateAssetMenu(menuName = "SO/CompanyInfo")]
+public class CompanyInfoSO : ScriptableObject
 {
     [Header("Info")]
     [Tooltip("Circle, Triangle, InvertedTriangle, Square, Rhombus순 입니다.")]
@@ -32,19 +33,6 @@ public class CompanyInfo : MonoSingleton<CompanyInfo>
     [Header("SortMark")]
     public float interval;
     public float requestPos, productPos;
-
-    private void Awake()
-    {
-        Initialize();
-    }
-    
-    /// <summary>
-    /// 초기화 함수 입니다.
-    /// </summary>
-    private void Initialize()
-    {
-
-    }
     
     /// <summary>
     /// 자원의 타입에 맞는 색을 반환해주는 함수입니다.
