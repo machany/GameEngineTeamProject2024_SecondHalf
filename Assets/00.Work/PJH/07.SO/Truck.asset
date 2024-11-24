@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Truck
   m_EditorClassIdentifier: 
   moveSpeed: 0.5
-  maxStorageResource: 10
+  maxStorageResourceCapacity: 3
+  maxStorageCapacity: 11

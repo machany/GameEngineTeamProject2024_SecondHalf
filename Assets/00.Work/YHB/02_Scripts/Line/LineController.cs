@@ -8,8 +8,8 @@ public class LineController : MonoSingleton<LineController>
     // 현재 라인이 감지한 모든 강의 갯수
     public Action<int> OnBridgeChanged;
     public Action<LineType> OnLineTypeChanged;
-    // 현재 라인, 변경이 된 인덱스, 추가로 인한 변경 시 true
-    public Action<LineSO, int, bool> OnLineInfoChanged;
+    // 현재 라인
+    public Action<LineSO> OnLineInfoChanged;
 
     public LineType CurrentLineType { get; private set; }
     public LineGroupType CurrentGroupType { get; private set; }
@@ -138,16 +138,15 @@ public class LineController : MonoSingleton<LineController>
                 if (_curLine.lineInfo.Count <= 1)
                 {
                     _curLine.lineInfo.Clear();
-                    OnBridgeChanged?.Invoke(0);
-                    OnLineInfoChanged?.Invoke(_curLine, -1, false);
-
+                    OnBridgeChanged?.Invoke(GetAllBridgeCount());
+                    
                     goto ClearSkip;
                 }
 
-                OnLineInfoChanged?.Invoke(_curLine, removeBefore, false);
                 _currentTrm = null;
 
             ClearSkip:
+                OnLineInfoChanged?.Invoke(_curLine);
                 goto EndProces;
             }
 
@@ -177,9 +176,8 @@ public class LineController : MonoSingleton<LineController>
         else
             _curLine.lineInfo.Add(companyTrm);
 
-        OnLineInfoChanged?.Invoke(_curLine, _curLine.lineInfo.FindValueLocation(companyTrm), true);
-
         _currentTrm = companyTrm;
+        OnLineInfoChanged?.Invoke(_curLine);
 
     EndProces:
         ShotRay();
@@ -244,7 +242,6 @@ public class LineController : MonoSingleton<LineController>
         _curLine.usedBridgeCount = usedBridge;
 
         OnBridgeChanged?.Invoke(GetAllBridgeCount());
-        Debug.Log("all bridge count : " + GetAllBridgeCount());
     }
 
     private void OnDestroy()

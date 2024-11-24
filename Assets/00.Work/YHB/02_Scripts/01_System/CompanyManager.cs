@@ -24,6 +24,8 @@ public class CompanyManager : MonoSingleton<CompanyManager>
     [SerializeField] private float productTime, requestTime;
     private float _lastProductTime, _lastRequestTime;
 
+    public CompanyInfoSO companyInfo;
+
     private void Awake()
     {
         Initialize();
