@@ -22,23 +22,28 @@
 }
 
 .unity-base-slider__tracker {
-    background-image: url("project://database/Assets/00.Work/PJH/04.Sprites/UI/SliderBar.png?fileID=21300000&guid=507fdba2da1fc75419927db86d1b7cb4&type=3#SliderBar");
+    background-image: url("project://database/Assets/00.Work/PJH/04.Sprites/UI/sliderBar2.png?fileID=-1245590669&guid=80a9a45148be4424ca4c07770030f5a1&type=3#sliderBar2_0");
     background-color: rgba(0, 0, 0, 0);
-    -unity-background-image-tint-color: rgb(59, 23, 23);
 }
 
 .unity-base-slider__dragger {
-    background-image: url("project://database/Assets/00.Work/PJH/04.Sprites/UI/SliderHandle2.png?fileID=21300000&guid=5d93a00b1bcde304683ce97cabc01c38&type=3#SliderHandle2");
+    background-image: url("project://database/Assets/00.Work/PJH/04.Sprites/UI/sliderHandler.png?fileID=21300000&guid=905dc5d12893d1a4597ee50623673ddf&type=3#sliderHandler");
     -unity-background-image-tint-color: rgb(255, 255, 255);
+    width: 25px;
+    height: 25px;
+    background-color: rgba(255, 255, 255, 0);
+    border-left-color: rgba(255, 255, 255, 0);
+    border-right-color: rgba(255, 255, 255, 0);
+    border-top-color: rgba(255, 255, 255, 0);
+    border-bottom-color: rgba(255, 255, 255, 0);
 }
 
 .unity-base-slider__dragger-border {
-    background-image: url("project://database/Assets/00.Work/PJH/04.Sprites/UI/SliderHandle1.png?fileID=21300000&guid=8ec8e703b51b5bc4aa13ac4b34330dba&type=3#SliderHandle1");
 }
 
 .unity-base-slider__drag-container {
-    background-image: url("project://database/Assets/00.Work/PJH/04.Sprites/UI/SliderBar.png?fileID=21300000&guid=507fdba2da1fc75419927db86d1b7cb4&type=3#SliderBar");
 }
 
-.unity-base-field__label--with-dragger {
+.unity-popup-field__input {
+    background-color: rgb(255, 255, 255);
 }

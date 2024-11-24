@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 5d93a00b1bcde304683ce97cabc01c38
+guid: 507fdba2da1fc75419927db86d1b7cb4
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SliderHandle2_0
+      name: SliderBar1_0
       rect:
         serializedVersion: 2
-        x: 192
-        y: 39
-        width: 16
-        height: 16
+        x: 4
+        y: 47
+        width: 392
+        height: 6
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,8 +137,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b55c520d242a317488566f1221a48b04
-      internalID: 530705775
+      spriteID: 3353d2b206802844e9c0af41425b00f3
+      internalID: 1837394357
       vertices: []
       indices: 
       edges: []
@@ -154,7 +154,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      SliderHandle2_0: 530705775
+      SliderBar1_0: 1837394357
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
