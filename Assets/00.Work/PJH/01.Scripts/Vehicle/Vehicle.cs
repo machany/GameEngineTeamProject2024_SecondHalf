@@ -57,8 +57,6 @@ public class Vehicle : MonoBehaviour
 
         LineController.Instance.OnLineInfoChanged += HandleLineInfoChanged;
         LineController.Instance.OnLineTypeChanged += HandleLineTypeChange;
-
-        _moveSpeed = _vehicleStorage.vehicleSO.moveSpeed;
     }
 
     // 반투명화 등 처리
@@ -81,6 +79,7 @@ public class Vehicle : MonoBehaviour
     public void SetLine(LineType lineType, LineGroupType lineGroupType, int startIndex = 0)
     {
         _currentLine = LineController.Instance.GetLine(lineType, lineGroupType);
+        _moveSpeed = _vehicleStorage.vehicleSO.moveSpeed;
 
         if (_currentLine.lineInfo.Count <= 0)
             return;
