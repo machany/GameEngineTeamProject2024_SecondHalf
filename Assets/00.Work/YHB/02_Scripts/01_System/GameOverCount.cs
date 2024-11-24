@@ -13,13 +13,12 @@ public class GameOverCount : MonoBehaviour
 
     public GameOverCount()
     {
-        _countDownTime = CompanyInfo.Instance.startCountDownTime;
+        _countDownTime = CompanyManager.Instance.companyInfo.startCountDownTime;
     }
 
     /// <summary>카운트 다운을 시작합니다.</summary>
     public void RequestOverCountDown()
     {
-        Debug.Log("Requesting over countdown");
         StartCoroutine(CountDown());
         if (_countDownTime <= 0) 
         {
@@ -29,9 +28,8 @@ public class GameOverCount : MonoBehaviour
     /// <summary>카운트 다운을 멈춤</summary>
     public void RequestCancelCountDown()
     {
-        Debug.Log("Requesting In countdown");
         StopCoroutine(CountDown());
-        _countDownTime = CompanyInfo.Instance.startCountDownTime;
+        _countDownTime = CompanyManager.Instance.companyInfo.startCountDownTime;
     }
     
     /// <summary>오브젝트를 활성화 요청</summary>

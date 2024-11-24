@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -29,7 +30,7 @@ public class Company : Building
     /// <summary>회사의 필요로 하는 자원, 색</summary>
     public ResourceType requestType;
 
-    private GameOverCount _countDown = new GameOverCount();
+    private GameOverCount _countDown;
 
     public Action<int> OnRequestCostChanged, OnProductCostChanged;
 
@@ -40,12 +41,14 @@ public class Company : Building
         get => _requestCost;
         set
         {
-            if (value > CompanyInfo.Instance.maxRequestCost && !_countDown.countDown)
+            _requestCost = Mathf.Clamp(value, 0, CompanyManager.Instance.companyInfo.maxRequestCost);
+
+            if (_requestCost >= CompanyManager.Instance.companyInfo.limitRequestCost && !_countDown.countDown)
                 _countDown.RequestOverCountDown();
-            else if (_countDown.countDown && value <= CompanyInfo.Instance.maxRequestCost)
+            else if (_countDown.countDown && _requestCost < CompanyManager.Instance.companyInfo.limitRequestCost)
                 _countDown.RequestCancelCountDown();
 
-            _requestCost = value;
+            OnRequestCostChanged?.Invoke(_requestCost);
         }
     }
 
@@ -54,8 +57,11 @@ public class Company : Building
     public int ProductCost
     {
         get => _productCost;
-        set => _productCost = value < 0 ? 0 :
-            value > CompanyInfo.Instance.maxProductCost ? CompanyInfo.Instance.maxProductCost : value;
+        set
+        {
+            _productCost = Mathf.Clamp(value, 0, CompanyManager.Instance.companyInfo.maxProductCost);
+            OnProductCostChanged?.Invoke(_productCost);
+        }
     }
 
     private void OnEnable()
@@ -70,21 +76,40 @@ public class Company : Building
         requestType = CompanyManager.Instance.companyResource.GetValue();
         shapeType = CompanyManager.Instance.companyShape.GetValue();
 
+        CompanyManager.Instance.OnCompanyProduct += HandleProduct;
+        CompanyManager.Instance.OnCompanyRequest += HandleRequest;
+        _countDown = transform.AddComponent<GameOverCount>();
+
         RequestCost = 0;
         ProductCost = 0;
 
-        CompanyManager.Instance.OnCompanyProduct += HandleProduct;
-        CompanyManager.Instance.OnCompanyRequest += HandleRequest;
-
         #region test
 
-        transform.GetComponent<SpriteRenderer>().color = CompanyInfo.Instance.GetResourceColor(requestType);
-        transform.GetComponent<SpriteRenderer>().sprite = CompanyInfo.Instance.GetShapeSprite(shapeType);
+        transform.GetComponent<SpriteRenderer>().color = CompanyManager.Instance.companyInfo.GetResourceColor(requestType);
+        transform.GetComponent<SpriteRenderer>().sprite = CompanyManager.Instance.companyInfo.GetShapeSprite(shapeType);
 
         #endregion
     }
 
-    public ResourceType GetCompanyResourceType() => CompanyManager.Instance.productShape[shapeType];
+    public ResourceType GetProductResourceType() => CompanyManager.Instance.productShape[shapeType];
+    public ResourceType GetRequestResource() => requestType;
+
+    // 남는 값 반환
+    public int ReceiveRequestResource(int n)
+    {
+        int save = n > RequestCost ? n - RequestCost : 0;
+        RequestCost -= n > RequestCost ? RequestCost : n;
+        return save;
+    }
+
+    // 주는 값 반환
+    public int SendProductResource(int n)
+    {
+        int save = n >= ProductCost ? ProductCost : n;
+        ProductCost -= save;
+        return save;
+    }
+
 
     /// <summary>자원을 생산합니다.</summary>
     private void HandleProduct()
@@ -104,18 +129,16 @@ public class Company : Building
     /// <param name="n">추가로 생산할 자원의 개수 기본값 : 1</param>
     private IEnumerator ProductCoe(int n)
     {
-        yield return new WaitForSeconds(Random.Range(CompanyInfo.Instance.minDelayTime, CompanyInfo.Instance.maxDelayTime));
+        yield return new WaitForSeconds(Random.Range(CompanyManager.Instance.companyInfo.minDelayTime, CompanyManager.Instance.companyInfo.maxDelayTime));
         ProductCost += n;
-        OnProductCostChanged?.Invoke(n);
     }
 
     /// <summary>회사가 자원을 n개 더 필요로합니다.</summary>
     /// <param name="n">추가할 필요 자원의 개수 기본값 : 1</param>
     private IEnumerator RequestCoe(int n)
     {
-        yield return new WaitForSeconds(Random.Range(CompanyInfo.Instance.minDelayTime, CompanyInfo.Instance.maxDelayTime));
+        yield return new WaitForSeconds(Random.Range(CompanyManager.Instance.companyInfo.minDelayTime, CompanyManager.Instance.companyInfo.maxDelayTime));
         RequestCost += n;
-        OnRequestCostChanged?.Invoke(n);
     }
 
     /// <summary>회사를 비활성화 할 때 사용합니다.</summary>
