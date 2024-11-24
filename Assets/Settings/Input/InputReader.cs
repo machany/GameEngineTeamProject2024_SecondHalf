@@ -24,6 +24,8 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
     public event Action OnPurpleLineEvent;
 
     public Vector2 InputVector { get; private set; }
+    
+    public Vector2 ScrollValue { get; private set; }
 
     private Controls _controls;
 
@@ -129,5 +131,10 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
     {
         if (context.performed)
             OnPurpleLineEvent?.Invoke();
+    }
+
+    public void OnCameraScroll(InputAction.CallbackContext context)
+    {
+        ScrollValue = context.ReadValue<Vector2>();
     }
 }

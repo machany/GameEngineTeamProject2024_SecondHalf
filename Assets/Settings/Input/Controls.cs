@@ -161,6 +161,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CameraScroll"",
+                    ""type"": ""Value"",
+                    ""id"": ""50a6fbc7-c94c-44ce-961e-b36d98ffe659"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -218,6 +227,17 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""CameraMove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""04e39fd0-b887-4fce-a95e-29fa9cbf00c7"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraMove"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
@@ -372,6 +392,17 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""BlueLine"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e52e4d9c-d0e7-4035-a35f-77d2998c7a44"",
+                    ""path"": ""<Mouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraScroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -401,6 +432,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Player_GreenLine = m_Player.FindAction("GreenLine", throwIfNotFound: true);
         m_Player_BlueLine = m_Player.FindAction("BlueLine", throwIfNotFound: true);
         m_Player_PurpleLine = m_Player.FindAction("PurpleLine", throwIfNotFound: true);
+        m_Player_CameraScroll = m_Player.FindAction("CameraScroll", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -477,6 +509,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_GreenLine;
     private readonly InputAction m_Player_BlueLine;
     private readonly InputAction m_Player_PurpleLine;
+    private readonly InputAction m_Player_CameraScroll;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -496,6 +529,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @GreenLine => m_Wrapper.m_Player_GreenLine;
         public InputAction @BlueLine => m_Wrapper.m_Player_BlueLine;
         public InputAction @PurpleLine => m_Wrapper.m_Player_PurpleLine;
+        public InputAction @CameraScroll => m_Wrapper.m_Player_CameraScroll;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -550,6 +584,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @PurpleLine.started += instance.OnPurpleLine;
             @PurpleLine.performed += instance.OnPurpleLine;
             @PurpleLine.canceled += instance.OnPurpleLine;
+            @CameraScroll.started += instance.OnCameraScroll;
+            @CameraScroll.performed += instance.OnCameraScroll;
+            @CameraScroll.canceled += instance.OnCameraScroll;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -599,6 +636,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @PurpleLine.started -= instance.OnPurpleLine;
             @PurpleLine.performed -= instance.OnPurpleLine;
             @PurpleLine.canceled -= instance.OnPurpleLine;
+            @CameraScroll.started -= instance.OnCameraScroll;
+            @CameraScroll.performed -= instance.OnCameraScroll;
+            @CameraScroll.canceled -= instance.OnCameraScroll;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -642,5 +682,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnGreenLine(InputAction.CallbackContext context);
         void OnBlueLine(InputAction.CallbackContext context);
         void OnPurpleLine(InputAction.CallbackContext context);
+        void OnCameraScroll(InputAction.CallbackContext context);
     }
 }
