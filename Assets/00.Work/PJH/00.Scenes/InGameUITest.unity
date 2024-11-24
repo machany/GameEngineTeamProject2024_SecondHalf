@@ -917,11 +917,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mainCamera: {fileID: 0}
-  _zoomSpeed: 2
   _moveSpeed: 10
+  _zoomSpeed: 2
   _minZoom: 2
   _maxZoom: 10
   _worldBounds: {x: 100, y: 100}
+  inputReader: {fileID: 11400000, guid: 0fe90c4e69d236e4abb64bafd1272308, type: 2}
 --- !u!1 &1078608850
 GameObject:
   m_ObjectHideFlags: 0

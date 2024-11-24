@@ -1,84 +1,59 @@
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CameraControl : MonoBehaviour
 {
-    public Camera _mainCamera;        
-    public float _zoomSpeed = 2.0f;   
-    public float _moveSpeed = 10.0f;  
-    public float _minZoom = 2.0f;     
-    public float _maxZoom = 10.0f;    
-    public Vector2 _worldBounds = new Vector2(20, 20); 
-    private Vector3 _dragOrigin;      
-    private const int RightMouseButton = 1; 
-    private bool _isDragging = false;
+    public Camera _mainCamera;
+
+    public float _moveSpeed = 10.0f;
+    public float _zoomSpeed = 2.0f;
+    
+    public float _minZoom = 2.0f;
+    public float _maxZoom = 10.0f;
+
+    public Vector2 _worldBounds = new(20, 20);
+
+    [SerializeField] private InputReader inputReader;
+
+    private Vector3 _dragOrigin;
 
     private void Start()
     {
         if (_mainCamera == null)
         {
             _mainCamera = Camera.main;
+
             if (_mainCamera == null)
             {
+                Debug.LogWarning("main camera not found!");
                 return;
             }
         }
-        
+
         if (_worldBounds == Vector2.zero)
-        {
             _worldBounds = new Vector2(20, 20);
-        }
     }
 
     private void Update()
     {
         HandleZoom();
-        HandleDrag();
         HandleKeyboardMovement(); // WASD 이동 처리
         ClampCameraPosition();
     }
 
     private void HandleZoom()
     {
-        float scroll = Input.GetAxis("Mouse ScrollWheel");
-        if (Math.Abs(scroll) > 0.01f) 
+        if (inputReader.ScrollValue.y != 0)
         {
-            float newZoom = _mainCamera.orthographicSize - scroll * _zoomSpeed;
-            _mainCamera.orthographicSize = Mathf.Clamp(newZoom, _minZoom, _maxZoom);
+            float newZoomValue = _mainCamera.orthographicSize -
+                                 inputReader.ScrollValue.y * _zoomSpeed * Time.unscaledDeltaTime;
+            _mainCamera.orthographicSize = Mathf.Clamp(newZoomValue, _minZoom, _maxZoom);
         }
     }
 
-    private void HandleDrag()
-    {
-        if (Input.GetMouseButtonDown(RightMouseButton))
-        {
-            _dragOrigin = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
-            _isDragging = true;
-        }
-
-        if (Input.GetMouseButton(RightMouseButton) && _isDragging)
-        {
-            Vector3 currentMousePos = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
-            Vector3 difference = _dragOrigin - currentMousePos;
-            
-            _mainCamera.transform.position += difference;
-        }
-
-        if (Input.GetMouseButtonUp(RightMouseButton))
-        {
-            _isDragging = false;
-        }
-    }
-
-    private void HandleKeyboardMovement()
-    {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-        
-        Vector3 moveDirection = new Vector3(horizontal, vertical, 0).normalized;
-
-        _mainCamera.transform.position += moveDirection * (_moveSpeed * Time.deltaTime);
-    }
+    private void HandleKeyboardMovement() =>
+        _mainCamera.transform.position += (Vector3)inputReader.InputVector * (_moveSpeed * Time.unscaledDeltaTime);
 
     private void ClampCameraPosition()
     {

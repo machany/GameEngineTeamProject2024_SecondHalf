@@ -208,17 +208,6 @@
                 },
                 {
                     "name": "",
-                    "id": "04e39fd0-b887-4fce-a95e-29fa9cbf00c7",
-                    "path": "<Mouse>/delta",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "CameraMove",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "c043beee-8215-4fd0-9d3d-51cd2325e40f",
                     "path": "<Keyboard>/space",
                     "interactions": "",
