@@ -6,7 +6,7 @@ public class StartPoolManager : MonoBehaviour
 {
     [SerializeField] private List<PoolItemSO> items = new List<PoolItemSO>();
 
-    private void Start()
+    private void Awake()
     {
         Initialize();
     }
