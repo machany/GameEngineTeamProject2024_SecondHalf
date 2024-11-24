@@ -1,12 +1,14 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class VehicleUI : UIToolkit, IInputable
 {
     [field: SerializeField] public InputReader InputCompo { get; private set; }
+
+    public static Action<bool> OnCarSelected;
+    public static Action<bool> OnTruckSelected;
+    public static Action<bool> OnTrailerSelected;
     
     private const string _carStr = "Button_Car";
     private const string _truckStr = "Button_Truck";
@@ -56,15 +58,18 @@ public class VehicleUI : UIToolkit, IInputable
     private void OnCarEvent()
     {
         _isCarSelected = !_isCarSelected;
+        OnCarSelected?.Invoke(_isCarSelected);
     }
     
     private void OnTruckEvent()
     {
         _isTruckSelected = !_isTruckSelected;
+        OnTruckSelected?.Invoke(_isTruckSelected);
     }
     
     private void OnTrailerEvent()
     {
         _isTrailerSelected = !_isTrailerSelected;
+        OnTrailerSelected?.Invoke(_isTrailerSelected);
     }
 }
