@@ -1,10 +1,6 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
-using UnityEngine.UI;
-using Image = UnityEngine.UI.Image;
 using DG.Tweening;
 
 public class TutorialManager : MonoBehaviour, ITalk , ITalkImage
