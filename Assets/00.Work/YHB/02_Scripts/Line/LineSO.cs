@@ -6,8 +6,10 @@ using UnityEngine;
 public enum LineGroupType
 {
     Red,
+    Yellow,
+    Green,
     Blue,
-    Green
+    Purple
 }
 
 // 선로 타입 구분

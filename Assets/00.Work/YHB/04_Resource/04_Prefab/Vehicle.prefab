@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6863375254468977105}
   - component: {fileID: 6124709646398510660}
   - component: {fileID: 773173269726625425}
-  - component: {fileID: 5842309085781418056}
+  - component: {fileID: 6391382178582939459}
   m_Layer: 0
   m_Name: Vehicle
   m_TagString: Untagged
@@ -102,7 +102,7 @@ MonoBehaviour:
   _moveSpeed: 2
   minStopTime: 0.25
   maxStopTime: 1
---- !u!114 &5842309085781418056
+--- !u!114 &6391382178582939459
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -111,7 +111,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1886320073993440727}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2a7eeacc38409c438ed8d400d82864c, type: 3}
+  m_Script: {fileID: 11500000, guid: 08a8653a3d0293f47be8285b7639a708, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   vehicleSO: {fileID: 11400000, guid: 1e1c8d09a788d614aa5d2acca6d1ac67, type: 2}
