@@ -10,7 +10,7 @@
 
 .visual-element-resource-toggle {
     transition-duration: 0.25s;
-    translate: 150px 0;
+    translate: 170px 0;
 }
 
 .button-toggle {
