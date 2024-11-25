@@ -8,4 +8,6 @@
     <ui:VisualElement name="VisualElement_Title" style="flex-grow: 1; position: absolute; width: 100%; height: 100%; translate: -2000px 0; justify-content: center;">
         <ui:Label tabindex="-1" text="제목" parse-escape-sequences="true" display-tooltip-when-elided="true" style="align-self: center; width: 30%; height: 20%; -unity-font-definition: url(&quot;project://database/Assets/00.Work/PJH/08.Fonts/Pretendard-Bold%20SDF.asset?fileID=11400000&amp;guid=9a04ffdef7b72414bbbea9737116b924&amp;type=2#Pretendard-Bold SDF&quot;); -unity-text-align: middle-center; font-size: 200px;" />
     </ui:VisualElement>
+    <ui:VisualElement name="VisualElement_Setting" style="flex-grow: 1; translate: 0 1150px; position: absolute; width: 100%; height: 100%;" />
+    <ui:VisualElement name="VisualElement_Stage" style="flex-grow: 1; position: absolute; width: 100%; height: 100%; translate: 0 -1150px;" />
 </ui:UXML>
