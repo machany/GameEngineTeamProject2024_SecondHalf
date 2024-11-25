@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.UI;
 using Image = UnityEngine.UI.Image;
+using DG.Tweening;
 
 public class TutorialManager : MonoBehaviour, ITalk , ITalkImage
 {
@@ -17,11 +18,11 @@ public class TutorialManager : MonoBehaviour, ITalk , ITalkImage
     private int _currentText = 1;
 
     
-    public string[] Texts;
-    public Sprite[] Sprites;
-    
-    
-    public Sprite[] Sprite { get; set; }
+    [SerializeField] private string[] Texts;
+    [SerializeField] private Sprite[] Sprites;
+
+
+    public Sprite[] Sprite { get;  set; }
     public string[] Text { get; set; }
 
     private void Awake()
@@ -36,7 +37,13 @@ public class TutorialManager : MonoBehaviour, ITalk , ITalkImage
 
     private void Start()
     {
-        _text.text = Texts[0];
+        _text.text = string.Empty;
+        
+        DOTween.To(() => _text.text, 
+                value => _text.text = value, 
+                Text[0], 
+                1f) 
+            .SetEase(Ease.InOutQuad);
         _root.style.backgroundImage = Sprite[0].texture;
     }
 
@@ -66,7 +73,14 @@ public class TutorialManager : MonoBehaviour, ITalk , ITalkImage
 
     public void NextText(string text)
     {
-        _text.text = text;
+     
+        _text.text = string.Empty;
+        
+        DOTween.To(() => _text.text, 
+                value => _text.text = value, 
+                text, 
+                1f) 
+            .SetEase(Ease.InOutQuad);
     }
 
     public void NextSprite(Sprite sprite)

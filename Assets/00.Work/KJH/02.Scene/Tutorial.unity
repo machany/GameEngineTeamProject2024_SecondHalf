@@ -170,8 +170,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Texts:
-  - 21321
-  - 213213
+  - "\uD654\uBA74\uC740 WASD\uB85C \uC6C0\uC9C1\uC77C\uC218 \uC788\uC2B5\uB2C8\uB2E4"
+  - "\u3148\u3142"
   - 321
   Sprites:
   - {fileID: 21300000, guid: c66ab0a1ea4913a47b7efc0706d0dbe9, type: 3}
