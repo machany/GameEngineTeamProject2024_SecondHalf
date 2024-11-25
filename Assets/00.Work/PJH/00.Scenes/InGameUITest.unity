@@ -634,13 +634,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6ba47b1ef7a3fe45a665b6f82969cd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mainCamera: {fileID: 0}
-  _moveSpeed: 15
-  _zoomSpeed: 2
-  _minZoom: 2
-  _maxZoom: 10
-  _worldBounds: {x: 48, y: 27}
   inputReader: {fileID: 11400000, guid: 0fe90c4e69d236e4abb64bafd1272308, type: 2}
+  moveSpeed: 10
+  zoomSpeed: 2
+  minZoom: 2
+  maxZoom: 10
+  worldBounds: {x: 50, y: 50}
+  defaultCameraSize: 0.5
 --- !u!1 &866913605
 GameObject:
   m_ObjectHideFlags: 0
