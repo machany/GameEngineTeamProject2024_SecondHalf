@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
+using UnityEngine.UIElements;
 
-public class LineController : MonoSingleton<LineController>
+public class LineController : MonoSingleton<LineController>, IInitialize
 {
     public Action OnLineChanged;
+    public Action OnBridgeFailConnect;
     // 현재 라인이 감지한 모든 강의 갯수
     public Action<int> OnBridgeChanged;
     public Action<LineType> OnLineTypeChanged;
@@ -59,7 +62,7 @@ public class LineController : MonoSingleton<LineController>
         Initialize();
     }
 
-    private void Initialize()
+    public void Initialize()
     {
         LineMouseInput.Instance.OnClickCompany += HandleClickCompany;
 
@@ -127,7 +130,7 @@ public class LineController : MonoSingleton<LineController>
 
     private void HandleCarEvent(bool selected)
     {
-        _dropMode = true;
+        _dropMode = selected;
 
         if (EqualityComparer<VehicleSO>.Default.Equals(_curVehicle, car))
             DropVehicle();
@@ -137,7 +140,7 @@ public class LineController : MonoSingleton<LineController>
 
     private void HandleTruckEvent(bool selected)
     {
-        _dropMode = true;
+        _dropMode = selected;
 
         if (EqualityComparer<VehicleSO>.Default.Equals(_curVehicle, truck))
             DropVehicle();
@@ -147,7 +150,7 @@ public class LineController : MonoSingleton<LineController>
 
     private void HandleTrailerEvent(bool selected)
     {
-        _dropMode = true;
+        _dropMode = selected;
 
         if (EqualityComparer<VehicleSO>.Default.Equals(_curVehicle, trailer))
             DropVehicle();
@@ -165,7 +168,7 @@ public class LineController : MonoSingleton<LineController>
         _currentTrm = null;
     }
 
-    private void Disable()
+    public void Disable()
     {
         // line 관련
         LineUI.OnToggleLineEvent -= HandleToggleLineEvent;
@@ -183,11 +186,22 @@ public class LineController : MonoSingleton<LineController>
 
     #endregion
 
+    public void ClearLine()
+    {
+        _curLine.lineInfo.Clear();
+    }
+
     private void HandleChangedLineType(LineType lineType, LineGroupType lineGroupType)
     {
+        _dropMode = false;
+
+        if (EqualityComparer<LineGroupType>.Default.Equals(CurrentGroupType, lineGroupType) && EqualityComparer<LineType>.Default.Equals(CurrentLineType, lineType))
+        {
+            ClearLine();
+        }
+
         CurrentLineType = lineType;
         CurrentGroupType = lineGroupType;
-
         SetLineType(lineType, lineGroupType);
         OnLineTypeChanged?.Invoke(CurrentLineType);
 
@@ -199,9 +213,7 @@ public class LineController : MonoSingleton<LineController>
     {
         if (_dropMode)
         {
-            Debug.Log("회사 위치에 드롭");
             DropVehicle(_curLine.lineInfo.FindValueLocation(companyTrm) - 1);
-            _dropMode = false;
             return;
         }
 
@@ -218,12 +230,10 @@ public class LineController : MonoSingleton<LineController>
                     _curLine.lineInfo.Clear();
                     OnBridgeChanged?.Invoke(GetAllBridgeCount());
 
-                    goto ClearSkip;
                 }
-
+                else
                 _currentTrm = null;
 
-            ClearSkip:
                 OnLineInfoChanged?.Invoke(_curLine);
                 goto EndProces;
             }
@@ -231,6 +241,8 @@ public class LineController : MonoSingleton<LineController>
             _currentTrm = companyTrm;
             return;
         }
+
+        int curBridge = GetAllBridgeCount();
 
         if (_currentTrm is not null)
         {
@@ -253,6 +265,28 @@ public class LineController : MonoSingleton<LineController>
         }
         else
             _curLine.lineInfo.Add(companyTrm);
+        ShotRay();
+
+        Debug.Log((curBridge != GetAllBridgeCount()) + " && " + !BridgeManager.Instance.CheckBridge(GetAllBridgeCount()));
+        Debug.Log(curBridge != GetAllBridgeCount() && !BridgeManager.Instance.CheckBridge(GetAllBridgeCount()));
+        if (curBridge != GetAllBridgeCount() && !BridgeManager.Instance.CheckBridge(GetAllBridgeCount()))
+        {
+            int removeBefore = _curLine.lineInfo.FindValueLocation(companyTrm);
+
+            _curLine.lineInfo.Remove(companyTrm);
+
+            if (_curLine.lineInfo.Count <= 1)
+            {
+                _curLine.lineInfo.Clear();
+                OnBridgeChanged?.Invoke(GetAllBridgeCount());
+            }
+            else
+            _currentTrm = null;
+
+            OnLineInfoChanged?.Invoke(_curLine);
+            OnBridgeFailConnect?.Invoke();
+            goto EndProces;
+        }
 
         _currentTrm = companyTrm;
         OnLineInfoChanged?.Invoke(_curLine);
@@ -265,8 +299,6 @@ public class LineController : MonoSingleton<LineController>
     // 라인을 설정
     public void SetLineType(LineType lineValue, LineGroupType groupValue)
     {
-        Debug.Log(lineValue + " /lv/gv " + groupValue);
-
         CurrentLineType = lineValue;
         CurrentGroupType = groupValue;
 

@@ -5,19 +5,19 @@ using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class Vehicle : MonoBehaviour
+public class Vehicle : MonoBehaviour, IInitialize
 {
     // 반투명화를 위함
     private SpriteRenderer _spriteRenderer;
     private VehicleStorage _vehicleStorage;
 
     [SerializeField] private PoolItemSO _me;
-    [SerializeField] private float _moveSpeed;
 
     // 이동 관련
     private static Ease ease = Ease.InOutCubic;
     private Transform _currentTargetTrm;
-    [SerializeField] private float minStopTime, maxStopTime;
+    private float _moveSpeed;
+    private float minStopTime, maxStopTime;
 
     // 내가 속해있는 선로
     private LineSO _currentLine;
@@ -50,7 +50,7 @@ public class Vehicle : MonoBehaviour
         Initialize();
     }
 
-    private void Initialize()
+    public void Initialize()
     {
         _spriteRenderer = transform.GetComponent<SpriteRenderer>();
         _vehicleStorage = transform.GetComponent<VehicleStorage>();
@@ -80,6 +80,8 @@ public class Vehicle : MonoBehaviour
     {
         _currentLine = LineController.Instance.GetLine(lineType, lineGroupType);
         _moveSpeed = _vehicleStorage.vehicleSO.moveSpeed;
+        minStopTime = _vehicleStorage.vehicleSO.minStopTime;
+        maxStopTime = _vehicleStorage.vehicleSO.maxStopTime;
 
         if (_currentLine.lineInfo.Count <= 0)
             return;
@@ -142,7 +144,7 @@ public class Vehicle : MonoBehaviour
         Disable();
     }
 
-    private void Disable()
+    public void Disable()
     {
         LineController.Instance.OnLineInfoChanged -= HandleLineInfoChanged;
         LineController.Instance.OnLineTypeChanged -= HandleLineTypeChange;

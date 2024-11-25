@@ -72,10 +72,8 @@ public class CompanyManager : MonoSingleton<CompanyManager>
         int n = Enum.GetValues(typeof(CompanyShapeType)).Length;
         for (sbyte i = 0; i < n; i++)
             productShape.Add((CompanyShapeType)i, (ResourceType)i);
-
-        productShape.Keys.ToList().ForEach(key => Debug.Log(key + " // " + productShape[key]));
     }
-
+    
     private void AskProductAndRequest()
     {
         if (Time.time > _lastProductTime + productTime)

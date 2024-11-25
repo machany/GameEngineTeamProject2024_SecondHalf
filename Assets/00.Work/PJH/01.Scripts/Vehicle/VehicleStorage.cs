@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class VehicleStorage : MonoBehaviour
+public class VehicleStorage : MonoBehaviour, IInitialize
 {
     public VehicleSO vehicleSO;
 
@@ -21,7 +21,7 @@ public class VehicleStorage : MonoBehaviour
         Disable();
     }
 
-    private void Initialize()
+    public void Initialize()
     {
         _maxStorageCapacity = vehicleSO.maxStorageCapacity;
         _maxStorageResourceCapacity = vehicleSO.maxStorageResourceCapacity;
@@ -29,8 +29,9 @@ public class VehicleStorage : MonoBehaviour
         _storage = new Dictionary<ResourceType, int>();
     }
 
-    private void Disable()
+    public void Disable()
     {
+        _storage.Clear();
     }
 
     public void ArriveBuilding(Transform buildingTrm, LineSO line, int index, int dir)

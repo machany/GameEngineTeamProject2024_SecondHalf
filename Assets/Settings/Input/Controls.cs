@@ -170,6 +170,24 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""MousePos"",
+                    ""type"": ""Value"",
+                    ""id"": ""dc118a47-4395-4eba-acd2-9748ceecc20a"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""MouseClick"",
+                    ""type"": ""Button"",
+                    ""id"": ""da0cad20-cd4c-4ecf-94ea-76c478d7e8e8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -392,6 +410,28 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""CameraScroll"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dffcf717-8115-4e41-8dcd-692817789837"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MousePos"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e5b78873-e990-4a9b-8812-3bfa678680a1"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseClick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -422,6 +462,8 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Player_BlueLine = m_Player.FindAction("BlueLine", throwIfNotFound: true);
         m_Player_PurpleLine = m_Player.FindAction("PurpleLine", throwIfNotFound: true);
         m_Player_CameraScroll = m_Player.FindAction("CameraScroll", throwIfNotFound: true);
+        m_Player_MousePos = m_Player.FindAction("MousePos", throwIfNotFound: true);
+        m_Player_MouseClick = m_Player.FindAction("MouseClick", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -499,6 +541,8 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_BlueLine;
     private readonly InputAction m_Player_PurpleLine;
     private readonly InputAction m_Player_CameraScroll;
+    private readonly InputAction m_Player_MousePos;
+    private readonly InputAction m_Player_MouseClick;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -519,6 +563,8 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @BlueLine => m_Wrapper.m_Player_BlueLine;
         public InputAction @PurpleLine => m_Wrapper.m_Player_PurpleLine;
         public InputAction @CameraScroll => m_Wrapper.m_Player_CameraScroll;
+        public InputAction @MousePos => m_Wrapper.m_Player_MousePos;
+        public InputAction @MouseClick => m_Wrapper.m_Player_MouseClick;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -576,6 +622,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @CameraScroll.started += instance.OnCameraScroll;
             @CameraScroll.performed += instance.OnCameraScroll;
             @CameraScroll.canceled += instance.OnCameraScroll;
+            @MousePos.started += instance.OnMousePos;
+            @MousePos.performed += instance.OnMousePos;
+            @MousePos.canceled += instance.OnMousePos;
+            @MouseClick.started += instance.OnMouseClick;
+            @MouseClick.performed += instance.OnMouseClick;
+            @MouseClick.canceled += instance.OnMouseClick;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -628,6 +680,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @CameraScroll.started -= instance.OnCameraScroll;
             @CameraScroll.performed -= instance.OnCameraScroll;
             @CameraScroll.canceled -= instance.OnCameraScroll;
+            @MousePos.started -= instance.OnMousePos;
+            @MousePos.performed -= instance.OnMousePos;
+            @MousePos.canceled -= instance.OnMousePos;
+            @MouseClick.started -= instance.OnMouseClick;
+            @MouseClick.performed -= instance.OnMouseClick;
+            @MouseClick.canceled -= instance.OnMouseClick;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -672,5 +730,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnBlueLine(InputAction.CallbackContext context);
         void OnPurpleLine(InputAction.CallbackContext context);
         void OnCameraScroll(InputAction.CallbackContext context);
+        void OnMousePos(InputAction.CallbackContext context);
+        void OnMouseClick(InputAction.CallbackContext context);
     }
 }
