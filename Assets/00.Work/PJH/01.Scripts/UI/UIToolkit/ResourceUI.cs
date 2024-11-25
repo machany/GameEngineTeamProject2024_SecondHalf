@@ -15,6 +15,7 @@ public class ResourceUI : UIToolkit
     };
 
     private const string _toggleStyle = "visual-element-resource-toggle";
+    private const string _toggleButtonStyle = "button-toggle-2";
 
     private VisualElement _resourceVisualElement;
     
@@ -73,5 +74,6 @@ public class ResourceUI : UIToolkit
     private void Toggle()
     {
         _resourceVisualElement.ToggleInClassList(_toggleStyle);
+        _toggleButton.ToggleInClassList(_toggleButtonStyle);
     }
 }
