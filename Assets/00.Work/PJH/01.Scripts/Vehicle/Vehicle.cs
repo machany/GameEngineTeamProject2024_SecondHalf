@@ -112,6 +112,7 @@ public class Vehicle : MonoBehaviour
         catch (Exception ex)
         {
             Debug.LogException(ex);
+            _vehicleStorage.SendResource();
             PoolManager.Instance.Push(_me, gameObject);
             return;
         }

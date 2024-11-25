@@ -46,7 +46,7 @@ public class VehicleStorage : MonoBehaviour
         }
         else if (buildingTrm.TryGetComponent<DistributionCenter>(out DistributionCenter center))
         {
-            SendResource(center);
+            SendResource();
             if (EqualityComparer<LineType>.Default.Equals(line.type, LineType.Output))
                 ReceiveResource(center, line, index, dir);
         }
@@ -86,9 +86,9 @@ public class VehicleStorage : MonoBehaviour
     }
 
     // 자원을 물류 센터에 넣음 (입품)
-    private void SendResource(DistributionCenter center)
+    public void SendResource()
     {
-        _storage.Keys.ToList().ForEach(key => { center.Storage[key] += _storage[key]; });
+        _storage.Keys.ToList().ForEach(key => { DistributionCenter.Storage[key] += _storage[key]; });
         _storage.Clear();
     }
 
@@ -99,7 +99,7 @@ public class VehicleStorage : MonoBehaviour
         {
             for (int i = index; i < line.lineInfo.Count; i++)
             {
-                ReceiveResource(center, line, i);
+                ReceiveResource(line, i);
 
                 if (_storage.Count >= _maxStorageResourceCapacity)
                     break;
@@ -109,28 +109,28 @@ public class VehicleStorage : MonoBehaviour
         {
             for (int i = index; i >= 0; i--)
             {
-                ReceiveResource(center, line, i);
+                ReceiveResource(line, i);
 
                 if (_storage.Count >= _maxStorageResourceCapacity)
                     break;
             }
         }
 
-        center.OnStorageChanged?.Invoke(center.Storage);
+        center.OnStorageChanged?.Invoke(DistributionCenter.Storage);
     }
 
     // 자원을 물류 센터에서 받음 (출품)
-    private void ReceiveResource(DistributionCenter center, LineSO line, int i)
+    private void ReceiveResource(LineSO line, int i)
     {
         if (line.lineInfo[i].transform.TryGetComponent(out Company company))
         {
             ResourceType resource = company.GetRequestResource();
             _storage.TryAddMaxCount(resource, 0, _maxStorageResourceCapacity);
 
-            int requestCost = Mathf.Clamp(company.RequestCost, 0, center.Storage[resource]);
+            int requestCost = Mathf.Clamp(company.RequestCost, 0, DistributionCenter.Storage[resource]);
 
             _storage[resource] += requestCost;
-            center.Storage[resource] -= requestCost;
+            DistributionCenter.Storage[resource] -= requestCost;
 
             if (_storage[resource] <= 0)
                 _storage.Remove(resource);
