@@ -1,0 +1,14 @@
+.visual-element-resource {
+    flex-grow: 0;
+    width: 8%;
+    height: 40%;
+    align-self: flex-end;
+    top: 300px;
+    justify-content: space-around;
+    transition-duration: 0.25s;
+}
+
+.visual-element-resource-toggle {
+    transition-duration: 0.25s;
+    translate: 150px 0;
+}

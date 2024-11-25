@@ -1,0 +1,30 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/00.Work/PJH/09.UIToolkits/StyleSheets/ResourceStyleSheet.uss?fileID=7433441132597879392&amp;guid=797587b6ed8785641837598e15a34cca&amp;type=3#ResourceStyleSheet" />
+    <ui:VisualElement name="VisualElement_Resource" class="visual-element-resource" style="height: 50%;">
+        <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="Button_Toggle" style="position: absolute; right: 175px; top: 257px;" />
+        <ui:GroupBox name="GroupBox_Red" style="flex-direction: row; justify-content: space-around; align-self: auto;">
+            <ui:VisualElement name="VisualElement_Red" style="flex-grow: 0; background-color: rgb(0, 0, 0); align-self: auto; flex-shrink: 0; width: 60px;" />
+            <ui:Label tabindex="-1" text="100" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Label_Red" style="-unity-text-align: middle-center; align-self: center; font-size: 40px;" />
+        </ui:GroupBox>
+        <ui:GroupBox name="GroupBox_Yellow" style="flex-direction: row; justify-content: space-around; align-self: auto;">
+            <ui:VisualElement name="VisualElement_Yellow" style="flex-grow: 0; background-color: rgb(0, 0, 0); align-self: auto; flex-shrink: 0; width: 60px;" />
+            <ui:Label tabindex="-1" text="100" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Label_Yellow" style="-unity-text-align: middle-center; align-self: center; font-size: 40px;" />
+        </ui:GroupBox>
+        <ui:GroupBox name="GroupBox_Green" style="flex-direction: row; justify-content: space-around; align-self: auto;">
+            <ui:VisualElement name="VisualElement_Green" style="flex-grow: 0; background-color: rgb(0, 0, 0); align-self: auto; flex-shrink: 0; width: 60px;" />
+            <ui:Label tabindex="-1" text="100" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Label_Green" style="-unity-text-align: middle-center; align-self: center; font-size: 40px;" />
+        </ui:GroupBox>
+        <ui:GroupBox name="GroupBox_Blue" style="flex-direction: row; justify-content: space-around; align-self: auto;">
+            <ui:VisualElement name="VisualElement_Blue" style="flex-grow: 0; background-color: rgb(0, 0, 0); align-self: auto; flex-shrink: 0; width: 60px;" />
+            <ui:Label tabindex="-1" text="100" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Label_Blue" style="-unity-text-align: middle-center; align-self: center; font-size: 40px;" />
+        </ui:GroupBox>
+        <ui:GroupBox name="GroupBox_Purple" style="flex-direction: row; justify-content: space-around; align-self: auto;">
+            <ui:VisualElement name="VisualElement_Purple" style="flex-grow: 0; background-color: rgb(0, 0, 0); align-self: auto; flex-shrink: 0; width: 60px;" />
+            <ui:Label tabindex="-1" text="100" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Label_Purple" style="-unity-text-align: middle-center; align-self: center; font-size: 40px;" />
+        </ui:GroupBox>
+        <ui:GroupBox name="GroupBox_Bridge" style="flex-direction: row; justify-content: space-around; align-self: auto;">
+            <ui:VisualElement name="VisualElement_Bridge" style="flex-grow: 0; background-color: rgb(0, 0, 0); align-self: auto; flex-shrink: 0; width: 60px;" />
+            <ui:Label tabindex="-1" text="100" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Label_Bridge" style="-unity-text-align: middle-center; align-self: center; font-size: 40px;" />
+        </ui:GroupBox>
+    </ui:VisualElement>
+</ui:UXML>

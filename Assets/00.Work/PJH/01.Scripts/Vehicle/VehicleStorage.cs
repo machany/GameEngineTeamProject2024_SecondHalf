@@ -1,125 +1,139 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class VehicleStorage : MonoBehaviour, IVehicle
+public class VehicleStorage : MonoBehaviour
 {
     public VehicleSO vehicleSO;
 
-    public Action<ResourceType, int> OnResourceChanged;
-
-    public Action<Company> OnCompanyReached;
-    public Action<DistributionCenter> OnCenterReached;
-
-    public Action<Building> OnResourceReceive;
-    public Action<Building> OnResourceSend;
-
-    private ResourceType _storageResourceType;
-    private int _storageResource;
-    private int _maxStorageResource;
+    private Dictionary<ResourceType, int> _storage;
+    private int _maxStorageResourceCapacity;
+    private int _maxStorageCapacity;
+    private int _curStorageCapacity;
 
     private void OnEnable()
     {
         Initialize();
-
-        OnResourceChanged += ResourceChange;
-        OnCompanyReached += CompanyReach;
-        OnCenterReached += CenterReach;
-        OnResourceReceive += ResourceReceive;
-        OnResourceSend += ResourceSend;
     }
 
     private void OnDisable()
     {
-        OnResourceChanged -= ResourceChange;
-        OnCompanyReached -= CompanyReach;
-        OnCenterReached -= CenterReach;
-        OnResourceReceive -= ResourceReceive;
-        OnResourceSend -= ResourceSend;
-    }
-
-    public void ArriveBuilding(Transform buildingTrm)
-    {
-        if (buildingTrm.TryGetComponent<Company>(out Company company))
-        {
-            Debug.Log("회사");
-            OnCompanyReached?.Invoke(company);
-        }
-        else if (buildingTrm.TryGetComponent<DistributionCenter>(out DistributionCenter center))
-        {
-            Debug.Log("센터");
-            OnCenterReached?.Invoke(center);
-        }
+        Disable();
     }
 
     private void Initialize()
     {
-        _maxStorageResource = vehicleSO.maxStorageResource;
-        // 저장소 초기화시켜라 ===============================================================================================================================================================================================
+        _maxStorageCapacity = vehicleSO.maxStorageCapacity;
+        _maxStorageResourceCapacity = vehicleSO.maxStorageResourceCapacity;
+        _curStorageCapacity = 0;
+        _storage = new Dictionary<ResourceType, int>();
     }
 
-    public void ResourceChange(ResourceType resourceType, int resource)
+    private void Disable()
     {
-        _storageResourceType = resourceType;
-        _storageResource = resource;
     }
 
-    public void CompanyReach(Company company)
+    public void ArriveBuilding(Transform buildingTrm, LineSO line, int index, int dir)
     {
-        if (_storageResourceType == ResourceType.None)
-            OnResourceReceive?.Invoke(company);
-        else
-            OnResourceSend?.Invoke(company);
-    }
-
-    public void CenterReach(DistributionCenter center)
-    {
-        if (_storageResourceType == ResourceType.None)
-            OnResourceReceive?.Invoke(center);
-        else
-            OnResourceSend?.Invoke(center);
-    }
-
-    private void ResourceReceive(Building building)
-    {
-        switch (building)
+        // -1등 범위 밖의 index예외 처리
+        if (index < 0 || index > line.lineInfo.Count - 1) return;
+        if (buildingTrm.TryGetComponent<Company>(out Company company))
         {
-            case Company company:
-                _storageResource = company.ProductCost;
-                _storageResourceType = company.GetCompanyResourceType();
-                break;
-
-            case DistributionCenter center:
-                //if (center.GetCenterResource())
-            {
-                // 리퀘스트 한 자원의 타입을 알아내서 넣어줘야 함
-                //_storageResource = center.Storage[]
-                break;
-            }
+            if (EqualityComparer<LineType>.Default.Equals(line.type, LineType.Input))
+                ReceiveResource(company);
+            else
+                SendResource(company);
+        }
+        else if (buildingTrm.TryGetComponent<DistributionCenter>(out DistributionCenter center))
+        {
+            SendResource();
+            if (EqualityComparer<LineType>.Default.Equals(line.type, LineType.Output))
+                ReceiveResource(center, line, index, dir);
         }
     }
 
-    private void ResourceSend(Building building)
+    // 자원을 보냄 (출품)
+    private void SendResource(Company company)
     {
-        switch (building)
+        ResourceType resourceType = company.GetRequestResource();
+        if (!_storage.ContainsKey(resourceType)) return;
+
+        _curStorageCapacity -= _storage[resourceType];
+
+        _storage[resourceType] = company.ReceiveRequestResource(_storage[resourceType]);
+
+        _curStorageCapacity += _storage[resourceType];
+    }
+
+    // 자원을 받음 (입품)
+    private void ReceiveResource(Company company)
+    {
+        ResourceType resourceType = company.GetProductResourceType();
+        // 키가 없고 딕셔너리에 키를 추가하는데에 실패했으면 반환
+        if (!_storage.ContainsKey(resourceType) && !_storage.TryAddMaxCount(resourceType, 0, _maxStorageResourceCapacity)) return;
+
+        _curStorageCapacity -= _storage[resourceType];
+
+        // 자원이 현재 수용 가능 용량보다 작으면 전부 가져옴
+        int value = company.ProductCost < _maxStorageCapacity - _curStorageCapacity ? company.ProductCost : _maxStorageCapacity - _curStorageCapacity;
+        _storage[resourceType] = company.SendProductResource(value);
+
+        _curStorageCapacity += _storage[resourceType];
+
+        // 비어있으면 해당 자원 공간 제거 (위에서 추가를 했지만, 받은게 없는 경우도 있음.)
+        if (_storage.Count <= 0)
+            _storage.Remove(resourceType);
+    }
+
+    // 자원을 물류 센터에 넣음 (입품)
+    public void SendResource()
+    {
+        _storage.Keys.ToList().ForEach(key => { DistributionCenter.Storage[key] += _storage[key]; });
+        _storage.Clear();
+    }
+
+    // 자원을 물류 센터에서 받음 (출품)
+    private void ReceiveResource(DistributionCenter center, LineSO line, int index, int dir)
+    {
+        if (dir == 1)
         {
-            case Company company:
-                if (company.requestType == _storageResourceType)
-                {
-                    company.RequestCost = _storageResource;
-                    _storageResourceType = ResourceType.None;
-                    _storageResource = 0;
-                }
+            for (int i = index; i < line.lineInfo.Count; i++)
+            {
+                ReceiveResource(line, i);
 
-                break;
+                if (_storage.Count >= _maxStorageResourceCapacity)
+                    break;
+            }
+        }
+        else
+        {
+            for (int i = index; i >= 0; i--)
+            {
+                ReceiveResource(line, i);
 
-            case DistributionCenter center:
-                center.AddCenterResource(_storageResourceType, _storageResource);
-                _storageResourceType = ResourceType.None;
-                _storageResource = 0;
+                if (_storage.Count >= _maxStorageResourceCapacity)
+                    break;
+            }
+        }
 
-                break;
+        center.OnStorageChanged?.Invoke(DistributionCenter.Storage);
+    }
+
+    // 자원을 물류 센터에서 받음 (출품)
+    private void ReceiveResource(LineSO line, int i)
+    {
+        if (line.lineInfo[i].transform.TryGetComponent(out Company company))
+        {
+            ResourceType resource = company.GetRequestResource();
+            _storage.TryAddMaxCount(resource, 0, _maxStorageResourceCapacity);
+
+            int requestCost = Mathf.Clamp(company.RequestCost, 0, DistributionCenter.Storage[resource]);
+
+            _storage[resource] += requestCost;
+            DistributionCenter.Storage[resource] -= requestCost;
+
+            if (_storage[resource] <= 0)
+                _storage.Remove(resource);
         }
     }
 }

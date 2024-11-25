@@ -18,10 +18,14 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
     public event Action OnTrailerEvent;
 
     public event Action OnRedLineEvent;
-    public event Action OnBlueLineEvent;
+    public event Action OnYellowLineEvent;
     public event Action OnGreenLineEvent;
+    public event Action OnBlueLineEvent;
+    public event Action OnPurpleLineEvent;
 
     public Vector2 InputVector { get; private set; }
+    
+    public Vector2 ScrollValue { get; private set; }
 
     private Controls _controls;
 
@@ -106,15 +110,31 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
             OnRedLineEvent?.Invoke();
     }
 
+    public void OnYellowLine(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+            OnYellowLineEvent?.Invoke();
+    }
+    public void OnGreenLine(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+            OnGreenLineEvent?.Invoke();
+    }
+
     public void OnBlueLine(InputAction.CallbackContext context)
     {
         if (context.performed)
             OnBlueLineEvent?.Invoke();
     }
 
-    public void OnGreenLine(InputAction.CallbackContext context)
+    public void OnPurpleLine(InputAction.CallbackContext context)
     {
         if (context.performed)
-            OnGreenLineEvent?.Invoke();
+            OnPurpleLineEvent?.Invoke();
+    }
+
+    public void OnCameraScroll(InputAction.CallbackContext context)
+    {
+        ScrollValue = context.ReadValue<Vector2>();
     }
 }

@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Car
   m_EditorClassIdentifier: 
   moveSpeed: 0.75
-  maxStorageResource: 10
+  maxStorageResourceCapacity: 2
+  maxStorageCapacity: 6

@@ -33,6 +33,14 @@ public static class Library
 
         col[at] = value;
     }
+
+    public static bool TryAddMaxCount<K, V>(this Dictionary<K, V> dict, K key, V value, int maxCount)
+    {
+        if (dict.Count > maxCount || dict.ContainsKey(key)) return false;
+
+        dict.Add(key, value);
+        return true;
+    }
 }
 
 public class NotOverlapValue<T>

@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class LineRender : MonoBehaviour
 {
     [SerializeField] private float width = 1f;
+    private static readonly int _multier = Enum.GetValues(typeof(LineGroupType)).Length;
 
     private LineSO _lineInfo;
     private LineRenderer _lineRenderer;
@@ -15,7 +16,7 @@ public class LineRender : MonoBehaviour
     {
         _lineInfo = line;
         _lineRenderer = transform.GetComponent<LineRenderer>();
-        float lineWidth = ((int)line.group + 1) * width / 2;
+        float lineWidth = ((int)line.group + 1) * width / (int)(_multier / 2);
         _lineRenderer.startWidth = lineWidth;
         _lineRenderer.endWidth = lineWidth;
     }

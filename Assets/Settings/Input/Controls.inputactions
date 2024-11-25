@@ -105,9 +105,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "BlueLine",
+                    "name": "YellowLine",
                     "type": "Button",
-                    "id": "74cfd3ca-9c97-4737-88f7-2a29ee6daaff",
+                    "id": "8d396cc6-555d-4858-b33a-e28f743ede8e",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -121,6 +121,33 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "BlueLine",
+                    "type": "Button",
+                    "id": "74cfd3ca-9c97-4737-88f7-2a29ee6daaff",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PurpleLine",
+                    "type": "Button",
+                    "id": "afffb2a0-be8f-4efa-8ad2-8df7bcdb35cd",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CameraScroll",
+                    "type": "Value",
+                    "id": "50a6fbc7-c94c-44ce-961e-b36d98ffe659",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -248,7 +275,7 @@
                 {
                     "name": "",
                     "id": "0da2281e-4393-4f5a-9979-f384b481706e",
-                    "path": "<Keyboard>/1",
+                    "path": "<Keyboard>/c",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -259,7 +286,7 @@
                 {
                     "name": "",
                     "id": "09b23e1e-001a-4b59-b73a-254ac15a50b4",
-                    "path": "<Keyboard>/2",
+                    "path": "<Keyboard>/v",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -270,7 +297,7 @@
                 {
                     "name": "",
                     "id": "68a0c20a-04df-46a6-95bb-9351a1ee2406",
-                    "path": "<Keyboard>/3",
+                    "path": "<Keyboard>/b",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -281,7 +308,7 @@
                 {
                     "name": "",
                     "id": "004d5992-1b0a-4905-9982-ebf17b1d9612",
-                    "path": "<Keyboard>/4",
+                    "path": "<Keyboard>/1",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -291,8 +318,41 @@
                 },
                 {
                     "name": "",
-                    "id": "8abb8d89-3016-4c4c-89c7-9cbd31ca11c9",
+                    "id": "5e8a2e7c-8ae6-4685-a884-358d010219bc",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GreenLine",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ee6322dd-6402-402d-8b21-08e2e366a0d8",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "YellowLine",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5c30ad08-8f8b-4d4b-b463-7471ee9ae99e",
                     "path": "<Keyboard>/5",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PurpleLine",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8abb8d89-3016-4c4c-89c7-9cbd31ca11c9",
+                    "path": "<Keyboard>/4",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -302,12 +362,12 @@
                 },
                 {
                     "name": "",
-                    "id": "5e8a2e7c-8ae6-4685-a884-358d010219bc",
-                    "path": "<Keyboard>/6",
+                    "id": "e52e4d9c-d0e7-4035-a35f-77d2998c7a44",
+                    "path": "<Mouse>/scroll",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "GreenLine",
+                    "action": "CameraScroll",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

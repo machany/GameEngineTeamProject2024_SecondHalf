@@ -1,0 +1,22 @@
+.visual-element-speed {
+    flex-grow: 0;
+    background-color: rgb(121, 194, 203);
+    height: 150px;
+    width: 500px;
+    flex-direction: row;
+    justify-content: space-around;
+    transition-duration: 0.25s;
+}
+
+.visual-element-data {
+    flex-grow: 0;
+    background-color: rgb(201, 79, 79);
+    height: 200px;
+    flex-shrink: 1;
+    width: 200px;
+}
+
+.visual-element-speed-toggle {
+    translate: 500px 0;
+    transition-duration: 0.25s;
+}

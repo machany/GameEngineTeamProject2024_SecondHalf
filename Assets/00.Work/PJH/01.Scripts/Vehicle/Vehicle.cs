@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Vehicle : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class Vehicle : MonoBehaviour
     // 이동 관련
     private static Ease ease = Ease.InOutCubic;
     private Transform _currentTargetTrm;
-    [SerializeField] private float stopTime;
+    [SerializeField] private float minStopTime, maxStopTime;
 
     // 내가 속해있는 선로
     private LineSO _currentLine;
@@ -28,24 +29,23 @@ public class Vehicle : MonoBehaviour
     public int index
     {
         get => _index;
-        private set
+        set
         {
-            if (value <= 0)
+            _index = value;
+            if (_index < 0)
             {
                 _index = 0;
                 _dir = 1;
             }
-            else if (value >= _currentLine.lineInfo.Count)
+            else if (_index >= _currentLine.lineInfo.Count)
             {
                 _index = _currentLine.lineInfo.Count - 1;
                 _dir = -1;
             }
-            else
-                _index = value;
         }
     }
 
-    private void Start()
+    private void OnEnable()
     {
         Initialize();
     }
@@ -57,8 +57,6 @@ public class Vehicle : MonoBehaviour
 
         LineController.Instance.OnLineInfoChanged += HandleLineInfoChanged;
         LineController.Instance.OnLineTypeChanged += HandleLineTypeChange;
-
-        _moveSpeed = _vehicleStorage.vehicleSO.moveSpeed;
     }
 
     // 반투명화 등 처리
@@ -69,39 +67,35 @@ public class Vehicle : MonoBehaviour
         _spriteRenderer.color = color;
     }
 
-    private void HandleLineInfoChanged(LineSO curLine, int value, bool isAdd)
+    private void HandleLineInfoChanged(LineSO curLine)
     {
-        if (value > 0) return;
-
         if (EqualityComparer<LineSO>.Default.Equals(_currentLine, curLine))
         {
-            // 변경 후 도착하기 전 다시 연결 시를 위한 인덱스 변경
-            // index = _currentLine.lineInfo.FindValueLocation(_currentTargetTrm);
-
-            if (index > value)
-                index += isAdd ? 1 : -1;
+            index = _currentLine.lineInfo.FindValueLocation(_currentTargetTrm);
         }
     }
 
     // 라인 설정
-    public void SetLine(LineType lineType, LineGroupType lineGroupType, Vector3? startPos = null)
+    public void SetLine(LineType lineType, LineGroupType lineGroupType, int startIndex = 0)
     {
         _currentLine = LineController.Instance.GetLine(lineType, lineGroupType);
+        _moveSpeed = _vehicleStorage.vehicleSO.moveSpeed;
 
         if (_currentLine.lineInfo.Count <= 0)
             return;
-        else if (startPos is null)
+        else if (startIndex >= _currentLine.lineInfo.Count)
+        {
             transform.position = _currentLine.lineInfo[0].transform.position;
+            startIndex = 0;
+        }
         else
-            transform.position = (Vector3)startPos;
+            transform.position = _currentLine.lineInfo[startIndex].position;
 
-        index = 0;
+        index = startIndex;
         _dir = 1;
 
         _currentTargetTrm = _currentLine.lineInfo[index];
-        index += _dir;
-        SetMove(_currentLine.lineInfo[index]);
-        index += _dir;
+        SetMove();
     }
 
     private void SetMove()
@@ -111,14 +105,14 @@ public class Vehicle : MonoBehaviour
             if (!_currentLine.lineInfo.Contains(_currentTargetTrm))
                 throw new Exception("의도된 예외입니다. 현재 라인에 도착지점이 없음");
 
-            _vehicleStorage.ArriveBuilding(_currentTargetTrm);
-
+            _vehicleStorage.ArriveBuilding(_currentTargetTrm, _currentLine, index - _dir, _dir);
             SetMove(_currentLine.lineInfo[index]);
             index += _dir;
         }
         catch (Exception ex)
         {
             Debug.LogException(ex);
+            _vehicleStorage.SendResource();
             PoolManager.Instance.Push(_me, gameObject);
             return;
         }
@@ -127,13 +121,11 @@ public class Vehicle : MonoBehaviour
     // 움직이는 방향 설정
     private void SetMove(Transform targetTrm)
     {
-        Debug.Log(targetTrm.position);
-
         Vector3 dir = targetTrm.position - _currentTargetTrm.position;
 
         LookAt(targetTrm.position);
         Sequence seq = DOTween.Sequence();
-        seq.Append(transform.DOMove(targetTrm.position, dir.magnitude / _moveSpeed).SetEase(ease)).SetDelay(stopTime);
+        seq.Append(transform.DOMove(targetTrm.position, dir.magnitude / _moveSpeed).SetEase(ease)).SetDelay(Random.Range(minStopTime, maxStopTime));
         seq.OnComplete(SetMove);
 
         _currentTargetTrm = targetTrm;
