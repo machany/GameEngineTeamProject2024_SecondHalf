@@ -27,6 +27,8 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
     
     public Vector2 ScrollValue { get; private set; }
 
+    public Vector2 MousePositionValue { get; private set; }
+
     private Controls _controls;
 
     private void OnEnable()
@@ -136,5 +138,20 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
     public void OnCameraScroll(InputAction.CallbackContext context)
     {
         ScrollValue = context.ReadValue<Vector2>();
+    }
+
+    public void OnMousePos(InputAction.CallbackContext context)
+    {
+        MousePositionValue = context.ReadValue<Vector2>();
+    }
+
+    public void OnMouseClick(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+            Debug.Log("Start");
+        else if (context.canceled)
+            Debug.Log("End");
+        else
+            Debug.Log(MousePositionValue);
     }
 }

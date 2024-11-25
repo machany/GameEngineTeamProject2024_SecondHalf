@@ -9,11 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06cda06411191db45a136165caad2a74, type: 3}
-  m_Name: Car
+  m_Script: {fileID: 11500000, guid: 4cafbadef466cac4fbcead4b69f1acf4, type: 3}
+  m_Name: Company
   m_EditorClassIdentifier: 
-  moveSpeed: 1.5
-  maxStorageResourceCapacity: 2
-  maxStorageCapacity: 8
-  minStopTime: 0.5
-  maxStopTime: 2
+  key: Company
+  prefab: {fileID: 1545663593479575007, guid: 1fa0ee676c6b2bd429af3642a621349a, type: 3}

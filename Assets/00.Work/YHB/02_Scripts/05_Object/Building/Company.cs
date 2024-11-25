@@ -23,7 +23,7 @@ public enum CompanyShapeType // 회사의 모양을 나타냅니다.
     Rhombus = 4
 }
 
-public class Company : Building
+public class Company : Building, IInitialize
 {
     /// <summary>회사의 모양</summary>
     public CompanyShapeType shapeType;
@@ -70,7 +70,7 @@ public class Company : Building
     }
 
     /// <summary>초기화 함수 입니다.</summary>
-    private void Initialize()
+    public void Initialize()
     {
         buildingType = BuildingType.Company;
         requestType = CompanyManager.Instance.companyResource.GetValue();
@@ -142,7 +142,7 @@ public class Company : Building
     }
 
     /// <summary>회사를 비활성화 할 때 사용합니다.</summary>
-    private void DisableCompany()
+    public void Disable()
     {
         CompanyManager.Instance.OnCompanyProduct -= HandleProduct;
         CompanyManager.Instance.OnCompanyRequest -= HandleRequest;
@@ -150,7 +150,7 @@ public class Company : Building
 
     private void OnDisable()
     {
-        DisableCompany();
+        Disable();
     }
 
 }

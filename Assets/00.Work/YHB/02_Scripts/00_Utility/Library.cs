@@ -43,6 +43,14 @@ public static class Library
     }
 }
 
+public class res<T> : IComparer<T>
+{
+    public int Compare(T x, T y)
+    {
+        throw new NotImplementedException();
+    }
+}
+
 public class NotOverlapValue<T>
 {
     public event Action? OnReset;

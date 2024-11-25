@@ -15,15 +15,12 @@ public class CameraControl : MonoSingleton<CameraControl>
     [Header("Zoom")]
     [SerializeField] private float zoomSpeed = 2.0f;
     [SerializeField] private float minZoom = 2.0f;
-    [SerializeField] private float maxZoom = 10.0f;
 
     [Header("Setting")]
-    public Vector2 worldBounds = Vector2.zero;
-    [Range(0.1f, 1f)]
-    [SerializeField] private float defaultCameraSize = 0.5f;
+    public Vector2 maxWorldBounds = Vector2.zero;
+    [HideInInspector] public Vector2 curWorldBounds = Vector2.zero;
 
     private Camera _mainCamera;
-    private Vector3 _dragOrigin;
 
     private void Awake()
     {
@@ -37,12 +34,10 @@ public class CameraControl : MonoSingleton<CameraControl>
 
         try
         {
-            _mainCamera.orthographicSize = Mathf.Lerp(minZoom, maxZoom, defaultCameraSize);
+            _mainCamera.orthographicSize = minZoom;
         }
-        catch (Exception ex)
+        catch (NullReferenceException)
         {
-            Debug.LogError(ex);
-
             GameObject camera = new GameObject();
             camera.name = "Camera";
             camera.transform.parent = transform;
@@ -50,11 +45,15 @@ public class CameraControl : MonoSingleton<CameraControl>
             camera.AddComponent<UniversalAdditionalCameraData>();
             camera.AddComponent<CinemachineBrain>();
             _mainCamera = Camera.main;
-            _mainCamera.orthographicSize = Mathf.Lerp(minZoom, maxZoom, defaultCameraSize);
+            _mainCamera.orthographicSize = minZoom;
         }
+        finally
+        {
+            if (EqualityComparer<Vector2>.Default.Equals(maxWorldBounds, Vector2.zero))
+                maxWorldBounds = new Vector2(100, 100);
 
-        if (EqualityComparer<Vector2>.Default.Equals(worldBounds, Vector2.zero))
-            worldBounds = new Vector2(10, 10);
+            curWorldBounds = maxWorldBounds;
+        }
     }
 
     private void LateUpdate()
@@ -70,12 +69,14 @@ public class CameraControl : MonoSingleton<CameraControl>
         {
             float newZoomValue = _mainCamera.orthographicSize -
                                  inputReader.ScrollValue.y * zoomSpeed * Time.unscaledDeltaTime;
-            _mainCamera.orthographicSize = Mathf.Clamp(newZoomValue, minZoom, maxZoom);
+
+            // 이동범위보다 작고, 카메라 줌 범위내로 카메라를 설정
+            _mainCamera.orthographicSize = Mathf.Clamp(newZoomValue, minZoom, Mathf.Min(curWorldBounds.x / 3 * (Screen.width / Screen.height), curWorldBounds.y / 3)); // 카메라 줌 범위
         }
     }
 
-    private void HandleKeyboardMovement() =>
-        _mainCamera.transform.position += (Vector3)inputReader.InputVector * (moveSpeed * Time.unscaledDeltaTime);
+    private void HandleKeyboardMovement()
+        => _mainCamera.transform.position += (Vector3)inputReader.InputVector * (moveSpeed * Time.unscaledDeltaTime);
 
     private void ClampCameraPosition()
     {
@@ -84,10 +85,10 @@ public class CameraControl : MonoSingleton<CameraControl>
 
         Vector3 camPos = _mainCamera.transform.position;
 
-        float minX = -worldBounds.x / 2 + camWidth;
-        float maxX = worldBounds.x / 2 - camWidth;
-        float minY = -worldBounds.y / 2 + camHeight;
-        float maxY = worldBounds.y / 2 - camHeight;
+        float minX = -curWorldBounds.x / 2 + camWidth;
+        float maxX = curWorldBounds.x / 2 - camWidth;
+        float minY = -curWorldBounds.y / 2 + camHeight;
+        float maxY = curWorldBounds.y / 2 - camHeight;
 
         camPos.x = Mathf.Clamp(camPos.x, minX, maxX);
         camPos.y = Mathf.Clamp(camPos.y, minY, maxY);
@@ -98,8 +99,10 @@ public class CameraControl : MonoSingleton<CameraControl>
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(Vector3.zero, new Vector3(maxWorldBounds.x, maxWorldBounds.y, 0));
         Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(Vector3.zero, new Vector3(worldBounds.x, worldBounds.y, 0));
+        Gizmos.DrawWireCube(Vector3.zero, new Vector3(curWorldBounds.x, curWorldBounds.y, 0));
     }
 #endif
 }

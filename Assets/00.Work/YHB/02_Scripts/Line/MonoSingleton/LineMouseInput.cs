@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LineMouseInput : MonoSingleton<LineMouseInput>
+public class LineMouseInput : MonoSingleton<LineMouseInput>, IInitialize
 {
     public Action<Transform> OnClickCompany;
 
@@ -15,15 +15,21 @@ public class LineMouseInput : MonoSingleton<LineMouseInput>
         Initialize();
     }
 
-    private void Initialize()
+    public void Initialize()
     {
         //inputReader.OnMouseClick += HandleMouseClick;
+    }
+
+    public void Disable()
+    {
+
     }
 
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
+            Debug.Log("수정 필요");
             HandleMouseClick(Camera.main.ScreenToWorldPoint(Input.mousePosition));
         }
     }

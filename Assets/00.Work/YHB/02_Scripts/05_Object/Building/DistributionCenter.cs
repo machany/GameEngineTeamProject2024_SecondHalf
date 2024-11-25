@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DistributionCenter : Building
+public class DistributionCenter : Building, IInitialize
 {
     public Action<Dictionary<ResourceType, int>> OnStorageChanged;
 
@@ -15,7 +15,7 @@ public class DistributionCenter : Building
     }
 
     /// <summary>초기화 함수 입니다.</summary>
-    private void Initialize()
+    public void Initialize()
     {
         buildingType = BuildingType.Center;
         StorageInit();
@@ -52,5 +52,15 @@ public class DistributionCenter : Building
 
         Storage[resource]--;
         return true;
+    }
+
+    private void OnDisable()
+    {
+        Disable();
+    }
+
+    public void Disable()
+    {
+        Storage.Clear();
     }
 }
