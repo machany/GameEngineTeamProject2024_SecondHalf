@@ -47,3 +47,10 @@
 .unity-popup-field__input {
     background-color: rgb(255, 255, 255);
 }
+
+.label-title {
+    color: rgb(255, 255, 255);
+    -unity-text-align: middle-center;
+    align-self: center;
+    font-size: 75px;
+}
