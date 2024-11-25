@@ -28,7 +28,7 @@ Material:
     - _QueueControl: 0
     - _Vignette_darkening: -2.09
     - _Vignette_radious: 0.22
-    - _Vignette_softness: 0.4843157
+    - _Vignette_softness: 0.52838033
     m_Colors:
     - _Color: {r: 1, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6863375254468977105}
   - component: {fileID: 6124709646398510660}
-  - component: {fileID: 773173269726625425}
+  - component: {fileID: 5817867896871896880}
   - component: {fileID: 6391382178582939459}
   m_Layer: 0
   m_Name: Vehicle
@@ -86,7 +86,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &773173269726625425
+--- !u!114 &5817867896871896880
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -95,13 +95,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1886320073993440727}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21899e1e7f11a1448bdee3c181f65347, type: 3}
+  m_Script: {fileID: 11500000, guid: a2a7eeacc38409c438ed8d400d82864c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _me: {fileID: 11400000, guid: 6d488ded90540214da960406d3c85952, type: 2}
-  _moveSpeed: 2
-  minStopTime: 0.25
-  maxStopTime: 1
 --- !u!114 &6391382178582939459
 MonoBehaviour:
   m_ObjectHideFlags: 0

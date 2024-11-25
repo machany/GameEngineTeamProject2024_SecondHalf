@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06cda06411191db45a136165caad2a74, type: 3}
   m_Name: TestSurperCar
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveSpeed: 10
   maxStorageResourceCapacity: 5
   maxStorageCapacity: 100
+  minStopTime: 0
+  maxStopTime: 0

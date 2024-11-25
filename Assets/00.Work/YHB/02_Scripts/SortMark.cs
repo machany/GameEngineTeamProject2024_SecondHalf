@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using VHierarchy.Libs;
 
-public class SortMark : MonoBehaviour
+public class SortMark : MonoBehaviour, IInitialize
 {
     private List<GameObject> _sortRequestTargets = new List<GameObject>();
     private List<GameObject> _sortProductTargets = new List<GameObject>();
@@ -24,13 +24,13 @@ public class SortMark : MonoBehaviour
         Disable();
     }
 
-    private void Initialize()
+    public void Initialize()
     {
         transform.GetComponentInParent<Company>().OnRequestCostChanged += ChangeRequestSortMark;
         transform.GetComponentInParent<Company>().OnProductCostChanged += ChangeProductSortMark;
     }
 
-    private void Disable()
+    public void Disable()
     {
         transform.GetComponentInParent<Company>().OnRequestCostChanged -= ChangeRequestSortMark;
         transform.GetComponentInParent<Company>().OnProductCostChanged -= ChangeProductSortMark;
