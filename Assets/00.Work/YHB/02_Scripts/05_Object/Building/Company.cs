@@ -6,21 +6,21 @@ using Random = UnityEngine.Random;
 
 public enum ResourceType
 {
-    None,
-    Red,
-    Yellow,
-    Green,
-    Blue,
-    Purple
+    None = 9,
+    Red = 0,
+    Yellow = 1,
+    Green = 2,
+    Blue = 3,
+    Purple = 4
 }
 
 public enum CompanyShapeType // 회사의 모양을 나타냅니다.
 {
-    Circle,
-    Triangle,
-    InvertedTriangle,
-    Square,
-    Rhombus
+    Circle = 0,
+    Triangle = 1,
+    InvertedTriangle = 2,
+    Square = 3,
+    Rhombus = 4
 }
 
 public class Company : Building

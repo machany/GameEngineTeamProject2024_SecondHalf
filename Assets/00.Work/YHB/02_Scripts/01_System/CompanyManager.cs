@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
@@ -67,8 +68,12 @@ public class CompanyManager : MonoSingleton<CompanyManager>
     private void ResetProductShape()
     {
         productShape.Clear();
-        for (int i = 0; i < 5; i++)
-            productShape.Add(companyShape.GetValue(), companyResource.GetValue());
+
+        int n = Enum.GetValues(typeof(CompanyShapeType)).Length;
+        for (sbyte i = 0; i < n; i++)
+            productShape.Add((CompanyShapeType)i, (ResourceType)i);
+
+        productShape.Keys.ToList().ForEach(key => Debug.Log(key + " // " + productShape[key]));
     }
 
     private void AskProductAndRequest()

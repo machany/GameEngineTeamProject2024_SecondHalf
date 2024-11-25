@@ -318,7 +318,7 @@ MonoBehaviour:
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 256
-  maxLineCount: 0
+  maxLineCount: 5
   linerender: {fileID: 11400000, guid: 7198d1eb0c691c54f9655aab62584556, type: 2}
   invisibleValue: 0.3
   lines: []
