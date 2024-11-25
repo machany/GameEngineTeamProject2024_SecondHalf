@@ -17,6 +17,6 @@
 }
 
 .visual-element-speed-toggle {
-    translate: 500px 0;
+    translate: 0 -200px;
     transition-duration: 0.25s;
 }
