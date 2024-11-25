@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 06cda06411191db45a136165caad2a74, type: 3}
-  m_Name: Car
+  m_Name: TestSurperCar
   m_EditorClassIdentifier: 
-  moveSpeed: 0.75
-  maxStorageResourceCapacity: 2
-  maxStorageCapacity: 6
+  moveSpeed: 5
+  maxStorageResourceCapacity: 5
+  maxStorageCapacity: 100

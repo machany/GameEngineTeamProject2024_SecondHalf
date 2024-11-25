@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6863375254468977105}
   - component: {fileID: 6124709646398510660}
   - component: {fileID: 773173269726625425}
-  - component: {fileID: 8175163965471187368}
+  - component: {fileID: 6391382178582939459}
   m_Layer: 0
   m_Name: Vehicle
   m_TagString: Untagged
@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 0.75, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -73,10 +73,10 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -2135331127
-  m_SortingLayer: 3
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 0, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -100,8 +100,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _me: {fileID: 11400000, guid: 6d488ded90540214da960406d3c85952, type: 2}
   _moveSpeed: 2
-  stopTime: 0.5
---- !u!114 &8175163965471187368
+  minStopTime: 0.25
+  maxStopTime: 1
+--- !u!114 &6391382178582939459
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -110,7 +111,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1886320073993440727}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2a7eeacc38409c438ed8d400d82864c, type: 3}
+  m_Script: {fileID: 11500000, guid: 08a8653a3d0293f47be8285b7639a708, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vehicleSO: {fileID: 11400000, guid: 91021720b8a204941a16b0cfbfcf3186, type: 2}
+  vehicleSO: {fileID: 11400000, guid: 1e1c8d09a788d614aa5d2acca6d1ac67, type: 2}
