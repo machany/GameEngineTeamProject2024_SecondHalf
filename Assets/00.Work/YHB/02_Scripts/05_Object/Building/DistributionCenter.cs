@@ -6,7 +6,7 @@ public class DistributionCenter : Building
 {
     public Action<Dictionary<ResourceType, int>> OnStorageChanged;
 
-    public Dictionary<ResourceType, int> Storage;
+    public static Dictionary<ResourceType, int> Storage;
     [SerializeField] private int earlyStartResource;
 
     private void OnEnable()

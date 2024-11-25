@@ -10,7 +10,7 @@ public class LineController : MonoSingleton<LineController>
     public Action<LineType> OnLineTypeChanged;
     // 현재 라인
     public Action<LineSO> OnLineInfoChanged;
-
+    
     public LineType CurrentLineType { get; private set; }
     public LineGroupType CurrentGroupType { get; private set; }
 
@@ -18,7 +18,7 @@ public class LineController : MonoSingleton<LineController>
     [SerializeField] private LayerMask obstacleLayer;
 
     [Header("Line")]
-    [SerializeField] private int maxLineCount;
+    [SerializeField] private int maxLineCount = 1;
     [SerializeField] private PoolItemSO linerender;
     public float invisibleValue = 0.3f;
 
@@ -63,7 +63,11 @@ public class LineController : MonoSingleton<LineController>
     {
         LineMouseInput.Instance.OnClickCompany += HandleClickCompany;
 
+        maxLineCount = Mathf.Clamp(maxLineCount, 1, Enum.GetValues(typeof(LineGroupType)).Length);
+
         foreach (LineType type in Enum.GetValues(typeof(LineType)))
+        {
+            int count = 0;
             foreach (LineGroupType group in Enum.GetValues(typeof(LineGroupType)))
             {
                 LineSO line = new LineSO();
@@ -74,9 +78,10 @@ public class LineController : MonoSingleton<LineController>
                 line.usedBridgeCount = 0;
                 lines.Add(line);
 
-                if (lines.Count >= maxLineCount * 2)
+                if (count++ >= maxLineCount)
                     break;
             }
+        }
 
         _curLine = lines[0];
         SetLineColor();
@@ -122,29 +127,32 @@ public class LineController : MonoSingleton<LineController>
 
     private void HandleCarEvent(bool selected)
     {
-        _dropMode = selected;
+        _dropMode = true;
 
-        _curVehicle = car;
         if (EqualityComparer<VehicleSO>.Default.Equals(_curVehicle, car))
             DropVehicle();
+
+        _curVehicle = car;
     }
 
     private void HandleTruckEvent(bool selected)
     {
-        _dropMode = selected;
+        _dropMode = true;
 
-        _curVehicle = truck;
         if (EqualityComparer<VehicleSO>.Default.Equals(_curVehicle, truck))
             DropVehicle();
+
+        _curVehicle = truck;
     }
 
     private void HandleTrailerEvent(bool selected)
     {
-        _dropMode = selected;
+        _dropMode = true;
 
-        _curVehicle = truck;
-        if (EqualityComparer<VehicleSO>.Default.Equals(_curVehicle, truck))
+        if (EqualityComparer<VehicleSO>.Default.Equals(_curVehicle, trailer))
             DropVehicle();
+
+        _curVehicle = trailer;
     }
 
     private void DropVehicle(int index = 0)
@@ -153,6 +161,8 @@ public class LineController : MonoSingleton<LineController>
         vehicle.GetComponent<VehicleStorage>().vehicleSO = _curVehicle;
         vehicle.SetLine(CurrentLineType, CurrentGroupType, index);
         _curVehicle = null;
+        _dropMode = false;
+        _currentTrm = null;
     }
 
     private void Disable()
@@ -189,7 +199,8 @@ public class LineController : MonoSingleton<LineController>
     {
         if (_dropMode)
         {
-            DropVehicle(_curLine.lineInfo.FindValueLocation(companyTrm));
+            Debug.Log("회사 위치에 드롭");
+            DropVehicle(_curLine.lineInfo.FindValueLocation(companyTrm) - 1);
             _dropMode = false;
             return;
         }
@@ -261,7 +272,7 @@ public class LineController : MonoSingleton<LineController>
 
         foreach (LineSO lineInfo in lines)
         {
-            if (!EqualityComparer<LineSO>.Default.Equals(_curLine, lineInfo) && EqualityComparer<LineGroupType>.Default.Equals(lineInfo.group, groupValue) && EqualityComparer<LineType>.Default.Equals(lineInfo.type, lineValue))
+            if (EqualityComparer<LineGroupType>.Default.Equals(lineInfo.group, groupValue) && EqualityComparer<LineType>.Default.Equals(lineInfo.type, lineValue))
             {
                 _curLine = lineInfo;
                 OnLineChanged?.Invoke();

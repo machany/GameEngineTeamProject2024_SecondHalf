@@ -6,8 +6,6 @@ using UnityEngine.UIElements;
 
 public class ResourceUI : UIToolkit
 {
-    [SerializeField] private DistributionCenter center;
-    
     private const string _resourceStr = "VisualElement_Resource";
     private const string _toggleStr = "Button_Toggle";
     
@@ -57,11 +55,11 @@ public class ResourceUI : UIToolkit
     
     private void SetReSourceLabel()
     {
-        _countLabels[0].text = center.Storage[ResourceType.Red].ToString();
-        _countLabels[1].text = center.Storage[ResourceType.Yellow].ToString();
-        _countLabels[2].text = center.Storage[ResourceType.Green].ToString();
-        _countLabels[3].text = center.Storage[ResourceType.Blue].ToString();
-        _countLabels[4].text = center.Storage[ResourceType.Purple].ToString();
+        _countLabels[0].text = DistributionCenter.Storage[ResourceType.Red].ToString();
+        _countLabels[1].text = DistributionCenter.Storage[ResourceType.Yellow].ToString();
+        _countLabels[2].text = DistributionCenter.Storage[ResourceType.Green].ToString();
+        _countLabels[3].text = DistributionCenter.Storage[ResourceType.Blue].ToString();
+        _countLabels[4].text = DistributionCenter.Storage[ResourceType.Purple].ToString();
         //_countLabels[5].text = 브릿지 정보 가져오기
     }
     
