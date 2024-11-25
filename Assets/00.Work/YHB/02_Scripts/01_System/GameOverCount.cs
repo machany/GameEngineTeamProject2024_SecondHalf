@@ -6,7 +6,9 @@ public class GameOverCount : MonoBehaviour
 {
     public bool countDown;
     private float _countDownTime;
-    
+
+    public GameObject target;
+
     private int _referenceCount;
     /// <summary>게임오버시 발생되는 이벤트</summary>
     public Action OnGameOver;
@@ -33,7 +35,7 @@ public class GameOverCount : MonoBehaviour
     }
     
     /// <summary>오브젝트를 활성화 요청</summary>
-    public void RequestEnableObject(GameObject target)
+    public void RequestEnableObject()
     {
         _referenceCount++;
         if (!target.activeSelf)
@@ -42,7 +44,7 @@ public class GameOverCount : MonoBehaviour
         }
     }
     /// <summary>오브젝트를 비활성화 요청</summary>
-    public void RequestDisableObject(GameObject target)
+    public void RequestDisableObject()
     {
         _referenceCount = Mathf.Max(0, _referenceCount - 1);
         if (_referenceCount == 0 && target.activeSelf)
