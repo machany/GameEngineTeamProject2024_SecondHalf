@@ -130,7 +130,7 @@ public class LineController : MonoSingleton<LineController>, IInitialize
     {
         _dropMode = selected;
 
-        if (EqualityComparer<VehicleSO>.Default.Equals(_curVehicle, car))
+        if (_dropMode && EqualityComparer<VehicleSO>.Default.Equals(_curVehicle, car))
             DropVehicle();
 
         _curVehicle = car;
@@ -140,7 +140,7 @@ public class LineController : MonoSingleton<LineController>, IInitialize
     {
         _dropMode = selected;
 
-        if (EqualityComparer<VehicleSO>.Default.Equals(_curVehicle, truck))
+        if (_dropMode && EqualityComparer<VehicleSO>.Default.Equals(_curVehicle, truck))
             DropVehicle();
 
         _curVehicle = truck;
@@ -150,7 +150,7 @@ public class LineController : MonoSingleton<LineController>, IInitialize
     {
         _dropMode = selected;
 
-        if (EqualityComparer<VehicleSO>.Default.Equals(_curVehicle, trailer))
+        if (_dropMode && EqualityComparer<VehicleSO>.Default.Equals(_curVehicle, trailer))
             DropVehicle();
 
         _curVehicle = trailer;
@@ -231,7 +231,6 @@ public class LineController : MonoSingleton<LineController>, IInitialize
                 {
                     _curLine.lineInfo.Clear();
                     OnBridgeChanged?.Invoke(GetAllBridgeCount());
-
                 }
                 else
                     _currentTrm = null;
@@ -267,9 +266,9 @@ public class LineController : MonoSingleton<LineController>, IInitialize
         }
         else
             _curLine.lineInfo.Add(companyTrm);
-        ShotRay();
 
-        if (curBridge != GetAllBridgeCount() && !BridgeManager.Instance.CheckBridge(GetAllBridgeCount()))
+        ShotRay();
+        if (curBridge < GetAllBridgeCount() && !BridgeManager.Instance.CheckBridge(GetAllBridgeCount()))
         {
             int removeBefore = _curLine.lineInfo.FindValueLocation(companyTrm);
 
@@ -365,11 +364,11 @@ public class LineController : MonoSingleton<LineController>, IInitialize
     // »ö ¾òÀ½
     private Color GetLineGroupColor(LineGroupType type) => type switch
     {
-        LineGroupType.Red => new Color(225, 136, 138) / 255,
-        LineGroupType.Yellow => new Color(245, 208, 166) / 255,
-        LineGroupType.Green => new Color(193, 209, 199) / 255,
-        LineGroupType.Blue => new Color(208, 223, 230) / 255,
-        LineGroupType.Purple => new Color(152, 156, 194) / 255,
+        LineGroupType.Red => new Color(205, 30, 30) / 255,
+        LineGroupType.Yellow => new Color(205, 205, 30) / 255,
+        LineGroupType.Green => new Color(30, 205, 30) / 255,
+        LineGroupType.Blue => new Color(30, 30, 205) / 255,
+        LineGroupType.Purple => new Color(155, 30, 195) / 255,
         _ => Color.black
     };
 }

@@ -51,7 +51,15 @@ public class SoundManager : MonoSingleton<SoundManager>
             if (audioSources[i].isPlaying)
                 continue;
 
-            audioSources[i].clip = channels[type].clips[value];
+            try
+            {
+                audioSources[i].clip = channels[type].clips[value];
+            }
+            catch (KeyNotFoundException)
+            {
+                Debug.LogError("Can't found key. key Value :" + value);
+                return;
+            }
             audioSources[i].Play();
             break;
         }
