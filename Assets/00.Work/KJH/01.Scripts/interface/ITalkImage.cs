@@ -4,7 +4,6 @@ using UnityEngine;
 
 public interface ITalkImage
 {
-    Sprite[] Sprite { get;  set; }
-
+    List<Sprite> Sprite { get; set; }
     void NextSprite(Sprite sprite);
 }
