@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="BG" style="flex-grow: 1;">
+        <ui:Button text="재도전" parse-escape-sequences="true" display-tooltip-when-elided="true" style="left: 40%; top: 25%; right: 0; bottom: 0; width: 20%; max-width: 20%; min-width: 10%; min-height: 0; max-height: 10%; height: 10%;" />
+        <ui:Button text="나가기" parse-escape-sequences="true" display-tooltip-when-elided="true" enable-rich-text="true" style="left: 40%; top: 40%; right: 0; bottom: 0; width: 20%; max-width: 20%; min-width: 10%; min-height: 0; max-height: 10%; height: 10%;" />
+    </ui:VisualElement>
+</ui:UXML>
