@@ -35,7 +35,7 @@ public class CompanyDragChecker : MonoBehaviour
             }
             else
             {
-                StartCoroutine(BuildingCoolTime(collision.gameObject));
+                    StartCoroutine(BuildingCoolTime(collision.gameObject));
                 OnBuilding?.Invoke(collision.gameObject);
             }
         }

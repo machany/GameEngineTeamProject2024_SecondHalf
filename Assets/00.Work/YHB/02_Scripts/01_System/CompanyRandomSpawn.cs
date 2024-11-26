@@ -73,6 +73,7 @@ public class CompanyRandomSpawn : MonoBehaviour, IInitialize
     private IEnumerator SpawnProcces()
     {
         Vector2 addRange = new Vector2(Mathf.Lerp(0, _spawnRange.x - firstRange.x, 2f / maxCompanyCount), Mathf.Lerp(0, _spawnRange.y - firstRange.y, 2f / maxCompanyCount));
+        Debug.Log(addRange);
         CameraControl.Instance.curWorldBounds = firstRange * 2;
 
 
