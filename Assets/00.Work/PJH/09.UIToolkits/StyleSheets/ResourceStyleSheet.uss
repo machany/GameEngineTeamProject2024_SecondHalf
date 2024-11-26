@@ -28,8 +28,15 @@
     border-right-color: rgba(255, 255, 255, 0);
     border-top-color: rgba(255, 255, 255, 0);
     border-bottom-color: rgba(255, 255, 255, 0);
+    transition-duration: 0.25s;
 }
 
 .button-toggle-2 {
     background-image: url("project://database/Assets/00.Work/PJH/04.Sprites/UI/tog2.png?fileID=-1205837879&guid=5848d12eeb66d7a41a3006454b59193e&type=3#tog2_0");
+}
+
+.button-toggle:hover {
+    width: 35px;
+    height: 45px;
+    transition-duration: 0.25s;
 }
