@@ -61,7 +61,7 @@ public class ResourceUI : UIToolkit
         _countLabels[2].text = DistributionCenter.Storage[ResourceType.Green].ToString();
         _countLabels[3].text = DistributionCenter.Storage[ResourceType.Blue].ToString();
         _countLabels[4].text = DistributionCenter.Storage[ResourceType.Purple].ToString();
-        //_countLabels[5].text = 브릿지 정보 가져오기
+        _countLabels[5].text = BridgeManager.Instance.AvailableBridge.ToString();
     }
     
     private void ClickToggleButton()

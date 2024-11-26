@@ -638,9 +638,8 @@ MonoBehaviour:
   moveSpeed: 10
   zoomSpeed: 2
   minZoom: 2
-  maxZoom: 10
-  worldBounds: {x: 50, y: 50}
-  defaultCameraSize: 0.5
+  maxWorldBounds: {x: 0, y: 0}
+  curWorldBounds: {x: 0, y: 0}
 --- !u!1 &866913605
 GameObject:
   m_ObjectHideFlags: 0
@@ -1024,7 +1023,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1071319271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1681,6 +1680,7 @@ MonoBehaviour:
   - 1
   - 1.5
   - 2
+  _dateTime: 90
 --- !u!114 &1582430695
 MonoBehaviour:
   m_ObjectHideFlags: 0
