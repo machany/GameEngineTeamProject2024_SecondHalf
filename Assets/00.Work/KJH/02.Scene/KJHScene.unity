@@ -11624,7 +11624,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!199 &1497259048
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -11690,7 +11690,7 @@ ParticleSystemRenderer:
   m_VertexStreams: 00010304
   m_UseCustomTrailVertexStreams: 0
   m_TrailVertexStreams: 00010304
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
@@ -12646,7 +12646,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 30
+        scalar: 1
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -13102,7 +13102,7 @@ ParticleSystem:
   UVModule:
     serializedVersion: 2
     enabled: 0
-    mode: 0
+    mode: 1
     timeMode: 0
     fps: 30
     frameOverTime:
@@ -13212,7 +13212,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     speedRange: {x: 0, y: 1}
-    tilesX: 1
+    tilesX: 8
     tilesY: 1
     animationType: 0
     rowIndex: 0
@@ -13220,7 +13220,14 @@ ParticleSystem:
     uvChannelMask: -1
     rowMode: 1
     sprites:
-    - sprite: {fileID: 0}
+    - sprite: {fileID: -752445620, guid: 228eeffe77251cf459be3da630812942, type: 3}
+    - sprite: {fileID: -1080141081, guid: 228eeffe77251cf459be3da630812942, type: 3}
+    - sprite: {fileID: 534552966, guid: 228eeffe77251cf459be3da630812942, type: 3}
+    - sprite: {fileID: -975329238, guid: 228eeffe77251cf459be3da630812942, type: 3}
+    - sprite: {fileID: 1557568900, guid: 228eeffe77251cf459be3da630812942, type: 3}
+    - sprite: {fileID: -1193571167, guid: 228eeffe77251cf459be3da630812942, type: 3}
+    - sprite: {fileID: -936578757, guid: 228eeffe77251cf459be3da630812942, type: 3}
+    - sprite: {fileID: -1438927843, guid: 228eeffe77251cf459be3da630812942, type: 3}
     flipU: 0
     flipV: 0
   VelocityModule:
