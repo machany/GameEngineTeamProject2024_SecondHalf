@@ -4,7 +4,7 @@ using UnityEngine;
 public class PoolManager : MonoSingleton<PoolManager>
 {
     private Dictionary<PoolItemSO, Stack<GameObject>> _pool = new Dictionary<PoolItemSO, Stack<GameObject>>();
-
+    
     public void AddPoolItem(PoolItemSO poolItemSO)
     {
         if (_pool.ContainsKey(poolItemSO))

@@ -23,6 +23,9 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
     public event Action OnBlueLineEvent;
     public event Action OnPurpleLineEvent;
 
+    public event Action OnMouseClickEvent;
+    public event Action OnMouseClickRealseEvent;
+
     public Vector2 InputVector { get; private set; }
     
     public Vector2 ScrollValue { get; private set; }
@@ -148,10 +151,8 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
     public void OnMouseClick(InputAction.CallbackContext context)
     {
         if (context.performed)
-            Debug.Log("Start");
+            OnMouseClickEvent?.Invoke();
         else if (context.canceled)
-            Debug.Log("End");
-        else
-            Debug.Log(MousePositionValue);
+            OnMouseClickRealseEvent?.Invoke();
     }
 }

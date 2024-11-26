@@ -208,6 +208,8 @@ public class LineController : MonoSingleton<LineController>, IInitialize
         ShotRay();
     }
 
+    public void ResetCurTrm() => _currentTrm = null;
+
     // 회사 클릭시
     private void HandleClickCompany(Transform companyTrm)
     {
@@ -267,8 +269,6 @@ public class LineController : MonoSingleton<LineController>, IInitialize
             _curLine.lineInfo.Add(companyTrm);
         ShotRay();
 
-        Debug.Log((curBridge != GetAllBridgeCount()) + " && " + !BridgeManager.Instance.CheckBridge(GetAllBridgeCount()));
-        Debug.Log(curBridge != GetAllBridgeCount() && !BridgeManager.Instance.CheckBridge(GetAllBridgeCount()));
         if (curBridge != GetAllBridgeCount() && !BridgeManager.Instance.CheckBridge(GetAllBridgeCount()))
         {
             int removeBefore = _curLine.lineInfo.FindValueLocation(companyTrm);
