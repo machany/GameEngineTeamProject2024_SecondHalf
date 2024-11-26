@@ -6,7 +6,7 @@ using UnityEngine;
 public class CompanyChecker : MonoBehaviour
 {
     public Action<GameObject> OnBuilding;
-    public Action<GameObject> OnDestroy;
+    public Action<CompanyChecker> OnDestroy;
 
     [SerializeField] private float radius = 0.1f;
     [SerializeField] private LayerMask buildingLayer;
@@ -26,6 +26,6 @@ public class CompanyChecker : MonoBehaviour
 
         yield return null; // ªË¡¶
 
-        OnDestroy?.Invoke(gameObject);
+        OnDestroy?.Invoke(this);
     }
 }
