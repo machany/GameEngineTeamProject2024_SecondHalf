@@ -5,6 +5,8 @@ using UnityEngine.UIElements;
 
 public class OptionUI : UIToolkit, IInputable, IDraggable
 {
+    public static Action<bool> OnOptionPanel;
+    
     [field: SerializeField] public InputReader InputCompo { get; private set; }
 
     private const string _optionStr = "Button_Option";
@@ -114,6 +116,7 @@ public class OptionUI : UIToolkit, IInputable, IDraggable
     {
         _settingVisualElement.style.display = DisplayStyle.Flex;
         Time.timeScale = 0;
+        OnOptionPanel?.Invoke(true);
     }
 
     private void ClickExitButton()
@@ -121,20 +124,15 @@ public class OptionUI : UIToolkit, IInputable, IDraggable
         _settingVisualElement.style.display = DisplayStyle.None;
         _isDrag = false;
         Time.timeScale = 1;
+        OnOptionPanel?.Invoke(false);
     }
 
     private void OnOptionEvent()
     {
         if (_settingVisualElement.style.display == DisplayStyle.Flex)
-        {
-            _settingVisualElement.style.display = DisplayStyle.None;
-            Time.timeScale = 1;
-        }
+            ClickExitButton();
         else
-        {
-            _settingVisualElement.style.display = DisplayStyle.Flex;
-            Time.timeScale = 0;
-        }
+            ClickOptionButton();
     }
 
     public void OnMouseDown(MouseDownEvent downEvent)

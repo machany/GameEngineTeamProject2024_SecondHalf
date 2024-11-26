@@ -14,7 +14,7 @@ public class LineMouseInput : MonoSingleton<LineMouseInput>, IInitialize
 
     private Camera _mainCam;
 
-    // µå·¡±× ÁßÀÎÁö
+    // ï¿½å·¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     private bool _dragMode;
 
     private void Awake()
@@ -27,6 +27,8 @@ public class LineMouseInput : MonoSingleton<LineMouseInput>, IInitialize
         // inputReader.OnMouseClickEvent += HandleMouseClick;
         inputReader.OnMouseClickEvent += HandleMouseClickDragMode;
         inputReader.OnMouseClickRealseEvent += HandleMouseRealseDragMode;
+
+        OptionUI.OnOptionPanel += HandleOptionEvent;
 
         if (dragChecker is null)
         {
@@ -43,6 +45,8 @@ public class LineMouseInput : MonoSingleton<LineMouseInput>, IInitialize
         // inputReader.OnMouseClickEvent -= HandleMouseClick;
         inputReader.OnMouseClickEvent -= HandleMouseClickDragMode;
         inputReader.OnMouseClickRealseEvent -= HandleMouseRealseDragMode;
+        
+        OptionUI.OnOptionPanel -= HandleOptionEvent;
 
         dragChecker.Destroy();
     }
@@ -68,15 +72,29 @@ public class LineMouseInput : MonoSingleton<LineMouseInput>, IInitialize
         dragChecker.gameObject.SetActive(false);
     }
 
-    // ±¸µ¶¿ë
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     private void HandleBuling(GameObject go)
     {
         OnClickCompany?.Invoke(go.transform);
     }
+    
+    private void HandleOptionEvent(bool isOnPanel)
+    {
+        if (isOnPanel)
+        {
+            inputReader.OnMouseClickEvent -= HandleMouseClickDragMode;
+            inputReader.OnMouseClickRealseEvent -= HandleMouseRealseDragMode;
+        }
+        else
+        {
+            inputReader.OnMouseClickEvent += HandleMouseClickDragMode;
+            inputReader.OnMouseClickRealseEvent += HandleMouseRealseDragMode;
+        }
+    }
 
     /*#region 
 
-    // (Àü) ¸¶¿ì½º Å¬’
+    // (ï¿½ï¿½) ï¿½ï¿½ï¿½ì½º Å¬ï¿½ï¿½
     private void HandleMouseClick()
     {
         CompanyChecker gameObject = PoolManager.Instance.Pop(checker).GetComponent<CompanyChecker>();
@@ -85,7 +103,7 @@ public class LineMouseInput : MonoSingleton<LineMouseInput>, IInitialize
         gameObject.OnDestroy += HandleCheckerDestroy;
     }
 
-    // ±¸µ¶ Ãë¼Ò
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
     private void HandleCheckerDestroy(CompanyChecker go)
     {
         PoolManager.Instance.Push(checker, go.gameObject);
