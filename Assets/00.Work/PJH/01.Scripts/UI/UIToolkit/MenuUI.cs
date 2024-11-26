@@ -61,6 +61,6 @@ public class MenuUI : UIToolkit
 
     private void ClickExitButton()
     {
-        FadeManager.FadeIn(Application.Quit);
+        FadeManager.FadeOut(Application.Quit);
     }
 }
