@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using DG.Tweening;
@@ -13,22 +14,18 @@ public class TutorialManager : MonoBehaviour, ITalk , ITalkImage
 
     private int _currentText = 1;
 
+    [SerializeField] private List<Sprite> _sprites = new();
+    [SerializeField] private List<string> _texts = new();
+
+    public List<Sprite> Sprite {get; set; }
+    public List<string> Text {get; set; }
     
-    [SerializeField] private string[] Texts;
-    [SerializeField] private Sprite[] Sprites;
-
-
-    public Sprite[] Sprite { get;  set; }
-    public string[] Text { get; set; }
-
     private void Awake()
     {
-        Text = Texts;
-        Sprite = Sprites;
+        Text = _texts;
+        Sprite = _sprites;
         _root = transform.GetChild(0).GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>("Image");
         _text = transform.GetChild(1).GetComponent<UIDocument>().rootVisualElement.Q<Label>("Text");
-
-        
     }
 
     private void Start()
@@ -67,6 +64,7 @@ public class TutorialManager : MonoBehaviour, ITalk , ITalkImage
         }
     }
 
+
     public void NextText(string text)
     {
      
@@ -78,6 +76,7 @@ public class TutorialManager : MonoBehaviour, ITalk , ITalkImage
                 1f) 
             .SetEase(Ease.InOutQuad);
     }
+
 
     public void NextSprite(Sprite sprite)
     {

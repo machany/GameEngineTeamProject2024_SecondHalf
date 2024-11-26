@@ -169,14 +169,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ff76215fc34d34408f5e1d782d85fad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Texts:
-  - "\uD654\uBA74\uC740 WASD\uB85C \uC6C0\uC9C1\uC77C\uC218 \uC788\uC2B5\uB2C8\uB2E4"
-  - "\u3148\u3142"
-  - 321
-  Sprites:
-  - {fileID: 21300000, guid: c66ab0a1ea4913a47b7efc0706d0dbe9, type: 3}
+  _sprites:
+  - {fileID: 21300000, guid: 80809a2ddb10dc942864489073ba50f8, type: 3}
   - {fileID: 21300000, guid: 2a6c11928520742409b930ea7a47ec5f, type: 3}
-  - {fileID: 21300000, guid: c66ab0a1ea4913a47b7efc0706d0dbe9, type: 3}
+  - {fileID: 21300000, guid: 63a7676c74ba6d24f9c72a91e8224b64, type: 3}
+  _texts:
+  - 2424234
+  - 423423423423
+  - 23423423434
 --- !u!1 &462030348
 GameObject:
   m_ObjectHideFlags: 0

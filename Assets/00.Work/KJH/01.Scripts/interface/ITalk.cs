@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface ITalk
 {
-    string[] Text { get; set; }
+    List<string> Text { get; set; }
 
     void NextText(string text);
     
