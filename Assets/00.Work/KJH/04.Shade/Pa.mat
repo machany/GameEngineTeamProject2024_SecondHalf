@@ -56,7 +56,7 @@ Material:
     - _CircleSize: 0
     - _EnableExternalAlpha: 0
     - _Hight: 1
-    - _LineThick: 0
+    - _LineThick: 0.5
     - _Width: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
