@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public enum SoundType
 {
@@ -12,6 +13,7 @@ public enum SoundType
 public class SoundChannelSO : ScriptableObject
 {
     public SoundType channelType;
+    public AudioMixerGroup mixerGroup;
     [Range(1, sbyte.MaxValue)]
     public sbyte channel = 1;
     public bool loop = false;

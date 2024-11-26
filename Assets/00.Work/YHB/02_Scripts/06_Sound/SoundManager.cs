@@ -16,10 +16,14 @@ public class SoundManager : MonoSingleton<SoundManager>
 
     private void Initialize()
     {
+        channels = new Dictionary<SoundType, SoundChannelSO>();
+
         foreach (SoundChannelSO soundChannel in soundChannels)
         {
             GameObject obj = new GameObject(soundChannel.name);
             obj.transform.parent = transform;
+
+            soundChannel.clips = new Dictionary<string, AudioClip>();
 
             foreach (SoundSO sound in soundChannel.sounds)
                 soundChannel.clips.Add(sound.key, sound.clip);
@@ -28,6 +32,7 @@ public class SoundManager : MonoSingleton<SoundManager>
             for (int i = 0; i < soundChannel.players.Length; i++)
             {
                 soundChannel.players[i] = obj.AddComponent<AudioSource>();
+                soundChannel.players[i].outputAudioMixerGroup = soundChannel.mixerGroup;
                 soundChannel.players[i].playOnAwake = soundChannel.playOnAwake;
                 soundChannel.players[i].loop = soundChannel.loop;
                 soundChannel.players[i].volume = soundChannel.volume;
@@ -65,36 +70,4 @@ public class SoundManager : MonoSingleton<SoundManager>
             break;
         }
     }
-
-#if UNITY_EDITOR
-
-    private void OnValidate()
-    {
-        SoundType[] list = new SoundType[soundChannels.Count];
-        int i = 0;
-
-        foreach (SoundChannelSO soundChannel in soundChannels)
-        {
-            if (list.Contains(soundChannel.channelType))
-            {
-                Debug.LogError("Warring!! SoundType of the currently entered soundChannel overlaps!");
-                return;
-            }
-            else
-                list[i++] = soundChannel.channelType;
-
-            List<string> keies = new List<string>();
-            for (int j = 0; j < soundChannel.sounds.Length; j++)
-            {
-                if (soundChannel.sounds[j])
-                {
-                    Debug.LogError("Warring!! key of the currently entered soundChannel'SoundSO's key overlaps!");
-                    return;
-                }
-                keies.Add(soundChannel.sounds[j].key);
-            }
-        }
-    }
-
-#endif
 }
