@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 83d88c77a0610fd4390a792df9a508ac, type: 3}
-  m_Name: CompanyCreationSoundEffect
+  m_Name: LineConnectionFail
   m_EditorClassIdentifier: 
-  key: Click 1
-  clip: {fileID: 8300000, guid: 61cf2f64d90e0fc4381b7b25ca4ffc91, type: 3}
+  key: StageSelection 1
+  clip: {fileID: 8300000, guid: 7022db96d8b1b7c49b3eac386afb1a58, type: 3}

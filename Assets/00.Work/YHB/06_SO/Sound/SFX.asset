@@ -27,4 +27,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: da1c06f3d5ad35d47b921fa93d348264, type: 2}
   - {fileID: 11400000, guid: 1590318c3c7b51d4588a92e293fe3405, type: 2}
   - {fileID: 11400000, guid: fc1b1c2f8270dc544ad7e6bbc0140e4c, type: 2}
-  players: []
+  players:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

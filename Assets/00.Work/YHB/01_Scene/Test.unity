@@ -820,7 +820,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -896,7 +896,6 @@ MonoBehaviour:
   items:
   - {fileID: 11400000, guid: a14c9eeeef8123a4ab72526d54c3837e, type: 2}
   - {fileID: 11400000, guid: 08be7555d5d75dd41a846fa58cb104b2, type: 2}
-  - {fileID: 11400000, guid: 514d27a5ce690454dbee190711ff9e91, type: 2}
   - {fileID: 11400000, guid: 7198d1eb0c691c54f9655aab62584556, type: 2}
   - {fileID: 11400000, guid: 6d488ded90540214da960406d3c85952, type: 2}
   - {fileID: 11400000, guid: b556b593d780cc046ad6c7c6526086cc, type: 2}
@@ -1283,7 +1282,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 0.1
-  equalsBuildingCoolTime: 3
+  equalsBuildingCoolTime: 2
   buildingLayer:
     serializedVersion: 2
     m_Bits: 128

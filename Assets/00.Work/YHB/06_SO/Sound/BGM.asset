@@ -17,7 +17,8 @@ MonoBehaviour:
   channel: 1
   loop: 1
   playOnAwake: 1
-  volume: 1
+  volume: 0.5
   sounds:
   - {fileID: 11400000, guid: 19a0f90025606fa4e8f27e31155b490d, type: 2}
-  players: []
+  players:
+  - {fileID: 0}

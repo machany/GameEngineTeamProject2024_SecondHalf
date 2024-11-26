@@ -12,11 +12,6 @@ public class VehicleStorage : MonoBehaviour, IInitialize
     private int _maxStorageCapacity;
     private int _curStorageCapacity;
 
-    private void OnEnable()
-    {
-        Initialize();
-    }
-
     private void OnDisable()
     {
         Disable();
@@ -27,6 +22,9 @@ public class VehicleStorage : MonoBehaviour, IInitialize
         _maxStorageCapacity = vehicleSO.maxStorageCapacity;
         _maxStorageResourceCapacity = vehicleSO.maxStorageResourceCapacity;
         _curStorageCapacity = 0;
+        transform.GetComponent<SpriteRenderer>().sprite = vehicleSO.sprite;
+
+        Debug.Log(_maxStorageCapacity + " // " + vehicleSO.name);
         _storage = new Dictionary<ResourceType, int>();
     }
 
@@ -81,6 +79,7 @@ public class VehicleStorage : MonoBehaviour, IInitialize
         _storage[resourceType] = company.SendProductResource(value);
 
         _curStorageCapacity += _storage[resourceType];
+        Debug.Log($"{_maxStorageCapacity} / {_curStorageCapacity}");
 
         // 비어있으면 해당 자원 공간 제거 (위에서 추가를 했지만, 받은게 없는 경우도 있음.)
         if (_storage.Count <= 0)

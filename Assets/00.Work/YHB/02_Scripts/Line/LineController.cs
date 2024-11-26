@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class LineController : MonoSingleton<LineController>, IInitialize
 {
@@ -13,7 +11,7 @@ public class LineController : MonoSingleton<LineController>, IInitialize
     public Action<LineType> OnLineTypeChanged;
     // 현재 라인
     public Action<LineSO> OnLineInfoChanged;
-    
+
     public LineType CurrentLineType { get; private set; }
     public LineGroupType CurrentGroupType { get; private set; }
 
@@ -161,7 +159,9 @@ public class LineController : MonoSingleton<LineController>, IInitialize
     private void DropVehicle(int index = 0)
     {
         Vehicle vehicle = PoolManager.Instance.Pop(vehile).GetComponent<Vehicle>();
+        vehicle.gameObject.name = _curVehicle.name;
         vehicle.GetComponent<VehicleStorage>().vehicleSO = _curVehicle;
+        vehicle.GetComponent<VehicleStorage>().Initialize();
         vehicle.SetLine(CurrentLineType, CurrentGroupType, index);
         _curVehicle = null;
         _dropMode = false;
@@ -234,7 +234,7 @@ public class LineController : MonoSingleton<LineController>, IInitialize
 
                 }
                 else
-                _currentTrm = null;
+                    _currentTrm = null;
 
                 OnLineInfoChanged?.Invoke(_curLine);
                 goto EndProces;
@@ -281,7 +281,7 @@ public class LineController : MonoSingleton<LineController>, IInitialize
                 OnBridgeChanged?.Invoke(GetAllBridgeCount());
             }
             else
-            _currentTrm = null;
+                _currentTrm = null;
 
             OnLineInfoChanged?.Invoke(_curLine);
             OnBridgeFailConnect?.Invoke();
@@ -365,11 +365,11 @@ public class LineController : MonoSingleton<LineController>, IInitialize
     // 색 얻음
     private Color GetLineGroupColor(LineGroupType type) => type switch
     {
-        LineGroupType.Red => Color.red,
-        LineGroupType.Green => Color.green,
-        LineGroupType.Blue => Color.blue,
-        LineGroupType.Yellow => Color.yellow,
-        LineGroupType.Purple => Color.magenta,
+        LineGroupType.Red => new Color(225, 136, 138) / 255,
+        LineGroupType.Yellow => new Color(245, 208, 166) / 255,
+        LineGroupType.Green => new Color(193, 209, 199) / 255,
+        LineGroupType.Blue => new Color(208, 223, 230) / 255,
+        LineGroupType.Purple => new Color(152, 156, 194) / 255,
         _ => Color.black
     };
 }

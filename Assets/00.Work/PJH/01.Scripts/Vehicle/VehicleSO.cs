@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "SO/Vehicle/VehicleSO")]
 public class VehicleSO : ScriptableObject
 {
+    public Sprite sprite;
+
     [Header("[ Stat ]")]
     public float moveSpeed;
     [Tooltip("자원 종류 최대 개수")]
