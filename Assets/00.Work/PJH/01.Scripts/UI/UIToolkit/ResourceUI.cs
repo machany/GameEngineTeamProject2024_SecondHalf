@@ -1,3 +1,4 @@
+using UnityEngine;
 using UnityEngine.UIElements;
 
 public class ResourceUI : UIToolkit
@@ -18,8 +19,6 @@ public class ResourceUI : UIToolkit
     private Button _toggleButton;
 
     private Label[] _countLabels = new Label[6];
-
-    private bool _isToggle;
 
     private void OnEnable()
     {
@@ -62,8 +61,6 @@ public class ResourceUI : UIToolkit
 
     private void ClickToggleButton()
     {
-        _isToggle = !_isToggle;
-
         _resourceVisualElement.ToggleInClassList(_toggleStyle);
         _toggleButton.ToggleInClassList(_toggleButtonStyle);
     }
