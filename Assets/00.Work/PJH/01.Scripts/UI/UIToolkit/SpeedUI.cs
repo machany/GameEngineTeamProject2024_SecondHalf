@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -8,6 +10,8 @@ public class SpeedUI : UIToolkit, IInputable
     
     [SerializeField] private List<float> speedValueList = new();
 
+    public Action OnDateChanged;
+    
     private const string _speedStr = "VisualElement_Speed";
     private const string _speedToggleStr = "Button_SpeedToggle";
     private const string _stopStr = "Button_Stop";
@@ -27,9 +31,16 @@ public class SpeedUI : UIToolkit, IInputable
 
     private int _beforeTime;
 
+    [SerializeField] private int _dateTime = 90;
+    private int _currentDate;
+    
+    private float _currentTime;
+    
     private void OnEnable()
     {
         GetUIElements();
+
+        StartCoroutine(CalculateDateCoroutine());
 
         _speedToggleButton.clicked += ClickSpeedToggleButton;
         _stopButton.clicked += ClickStopButton;
@@ -44,6 +55,8 @@ public class SpeedUI : UIToolkit, IInputable
 
     private void OnDisable()
     {
+        StopCoroutine(CalculateDateCoroutine());
+        
         _speedToggleButton.clicked -= ClickSpeedToggleButton;
         _stopButton.clicked -= ClickStopButton;
         _speed1Button.clicked -= ClickSpeed1Button;
@@ -53,6 +66,11 @@ public class SpeedUI : UIToolkit, IInputable
         InputCompo.OnTimeStopEvent -= OnTimeStopEvent;
         InputCompo.OnTimeSpeedUpEvent -= OnTimeSpeedUpEvent;
         InputCompo.OnTimeSpeedDownEvent -= OnTimeSpeedDownEvent;
+    }
+
+    private void Update()
+    {
+        //CalculateDate();
     }
 
     protected override void GetUIElements()
@@ -117,5 +135,38 @@ public class SpeedUI : UIToolkit, IInputable
     {
         Time.timeScale = speedValueList[2];
         _beforeTime = 2;
+    }
+    
+    private void CalculateDate()
+    {
+        _currentTime += Time.deltaTime;
+        
+        if (_currentTime > _dateTime)
+        {
+            _currentTime = 0;
+            ++_currentDate;
+            _speedToggleButton.text = _currentDate.ToString();
+            
+            OnDateChanged?.Invoke();
+        }
+    }
+
+    private IEnumerator CalculateDateCoroutine()
+    {
+        while (true)
+        {
+            _currentTime += Time.deltaTime;
+            
+            if (_currentTime > _dateTime)
+            {
+                _currentTime = 0;
+                ++_currentDate;
+                _speedToggleButton.text = _currentDate.ToString();
+            
+                OnDateChanged?.Invoke();
+            }
+
+            yield return null;
+        }
     }
 }

@@ -208,6 +208,8 @@ public class LineController : MonoSingleton<LineController>, IInitialize
         ShotRay();
     }
 
+    public void ResetCurTrm() => _currentTrm = null;
+
     // 회사 클릭시
     private void HandleClickCompany(Transform companyTrm)
     {

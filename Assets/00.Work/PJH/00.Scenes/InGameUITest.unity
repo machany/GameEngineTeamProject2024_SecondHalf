@@ -479,6 +479,7 @@ MonoBehaviour:
   - 1
   - 1.5
   - 2
+  _dateTime: 90
 --- !u!1 &596964285
 GameObject:
   m_ObjectHideFlags: 0
@@ -916,13 +917,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6ba47b1ef7a3fe45a665b6f82969cd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mainCamera: {fileID: 0}
-  _moveSpeed: 10
-  _zoomSpeed: 2
-  _minZoom: 2
-  _maxZoom: 10
-  _worldBounds: {x: 100, y: 100}
   inputReader: {fileID: 11400000, guid: 0fe90c4e69d236e4abb64bafd1272308, type: 2}
+  moveSpeed: 10
+  zoomSpeed: 2
+  minZoom: 2
+  maxWorldBounds: {x: 0, y: 0}
+  curWorldBounds: {x: 0, y: 0}
 --- !u!1 &1078608850
 GameObject:
   m_ObjectHideFlags: 0
@@ -2312,7 +2312,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b7c57f13ad5f5a4d98b0e3da4e1a34f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  center: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

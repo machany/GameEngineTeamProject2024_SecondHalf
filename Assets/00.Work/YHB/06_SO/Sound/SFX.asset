@@ -13,9 +13,18 @@ MonoBehaviour:
   m_Name: SFX
   m_EditorClassIdentifier: 
   channelType: 1
+  mixerGroup: {fileID: 4844075046712268790, guid: 75b9aa39ce51c8345a88ce0c47700e26, type: 2}
   channel: 10
   loop: 0
   playOnAwake: 0
   volume: 1
-  sounds: []
+  sounds:
+  - {fileID: 11400000, guid: 43a3a70d7009c7041b7bcc2caa763990, type: 2}
+  - {fileID: 11400000, guid: 3670e887a4368f34a8bbccb503ba4966, type: 2}
+  - {fileID: 11400000, guid: 4b3b775176e0d664184da597a9c37fad, type: 2}
+  - {fileID: 11400000, guid: 1638508ca333ebb46beba907219cf5bc, type: 2}
+  - {fileID: 11400000, guid: 46a7b15aef7d2c74aba73c1343a50651, type: 2}
+  - {fileID: 11400000, guid: da1c06f3d5ad35d47b921fa93d348264, type: 2}
+  - {fileID: 11400000, guid: 1590318c3c7b51d4588a92e293fe3405, type: 2}
+  - {fileID: 11400000, guid: fc1b1c2f8270dc544ad7e6bbc0140e4c, type: 2}
   players: []

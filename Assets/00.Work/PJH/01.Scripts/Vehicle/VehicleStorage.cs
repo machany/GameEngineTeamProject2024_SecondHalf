@@ -7,6 +7,7 @@ public class VehicleStorage : MonoBehaviour, IInitialize
     public VehicleSO vehicleSO;
 
     private Dictionary<ResourceType, int> _storage;
+    
     private int _maxStorageResourceCapacity;
     private int _maxStorageCapacity;
     private int _curStorageCapacity;

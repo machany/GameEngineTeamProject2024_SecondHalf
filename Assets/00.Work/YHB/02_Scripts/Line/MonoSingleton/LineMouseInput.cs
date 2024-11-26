@@ -16,17 +16,10 @@ public class LineMouseInput : MonoSingleton<LineMouseInput>, IInitialize
 
     // 드래그 중인지
     private bool _dragMode;
-    // 라인 제거 모드
-    private bool _destroyMode;
 
     private void Awake()
     {
         Initialize();
-    }
-
-    private void Start()
-    {
-        _mainCam = Camera.main;
     }
 
     public void Initialize()
@@ -41,6 +34,8 @@ public class LineMouseInput : MonoSingleton<LineMouseInput>, IInitialize
             Debug.LogWarning("NullRef");
         }
         dragChecker.transform.parent = transform;
+
+        _mainCam = Camera.main;
     }
 
     public void Disable()
@@ -62,7 +57,7 @@ public class LineMouseInput : MonoSingleton<LineMouseInput>, IInitialize
     {
         _dragMode = true;
         dragChecker.gameObject.SetActive(true);
-        dragChecker.SetMouseClick();
+        dragChecker.SetMouseClick(inputReader.MousePositionValue);
         dragChecker.OnBuilding += HandleBuling;
     }
 
