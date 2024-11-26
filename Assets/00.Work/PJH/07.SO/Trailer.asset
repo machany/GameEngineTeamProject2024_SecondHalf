@@ -13,4 +13,7 @@ MonoBehaviour:
   m_Name: Trailer
   m_EditorClassIdentifier: 
   moveSpeed: 0.25
-  maxStorageResource: 10
+  maxStorageResourceCapacity: 4
+  maxStorageCapacity: 20
+  minStopTime: 1.5
+  maxStopTime: 2.5

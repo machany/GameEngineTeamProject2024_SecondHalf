@@ -1,9 +1,13 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
-public class DistributionCenter : Building
+public class DistributionCenter : Building, IInitialize
 {
-    public Dictionary<ResourceType, int> Storage = new Dictionary<ResourceType, int>();
+    public Action<Dictionary<ResourceType, int>> OnStorageChanged;
+
+    public static Dictionary<ResourceType, int> Storage;
+    [SerializeField] private int earlyStartResource;
 
     private void OnEnable()
     {
@@ -11,7 +15,7 @@ public class DistributionCenter : Building
     }
 
     /// <summary>초기화 함수 입니다.</summary>
-    private void Initialize()
+    public void Initialize()
     {
         buildingType = BuildingType.Center;
         StorageInit();
@@ -20,9 +24,10 @@ public class DistributionCenter : Building
     /// <summary> 창고 초기화 </summary>
     private void StorageInit()
     {
-        Storage.Clear();
+        Storage = new Dictionary<ResourceType, int>();
         foreach (ResourceType item in Enum.GetValues(typeof(ResourceType)))
-            Storage.Add(item, 0);
+            Storage.Add(item, earlyStartResource);
+        Storage.Remove(ResourceType.None);
     }
 
     /// <summary>
@@ -47,5 +52,15 @@ public class DistributionCenter : Building
 
         Storage[resource]--;
         return true;
+    }
+
+    private void OnDisable()
+    {
+        Disable();
+    }
+
+    public void Disable()
+    {
+        Storage.Clear();
     }
 }

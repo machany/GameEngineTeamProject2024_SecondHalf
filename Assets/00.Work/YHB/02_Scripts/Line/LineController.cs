@@ -1,16 +1,19 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
+using UnityEngine.UIElements;
 
-public class LineController : MonoSingleton<LineController>
+public class LineController : MonoSingleton<LineController>, IInitialize
 {
     public Action OnLineChanged;
+    public Action OnBridgeFailConnect;
     // 현재 라인이 감지한 모든 강의 갯수
     public Action<int> OnBridgeChanged;
     public Action<LineType> OnLineTypeChanged;
-    // 현재 라인, 변경이 된 인덱스, 추가로 인한 변경 시 true
-    public Action<LineSO, int, bool> OnLineInfoChanged;
-
+    // 현재 라인
+    public Action<LineSO> OnLineInfoChanged;
+    
     public LineType CurrentLineType { get; private set; }
     public LineGroupType CurrentGroupType { get; private set; }
 
@@ -18,6 +21,7 @@ public class LineController : MonoSingleton<LineController>
     [SerializeField] private LayerMask obstacleLayer;
 
     [Header("Line")]
+    [SerializeField] private int maxLineCount = 1;
     [SerializeField] private PoolItemSO linerender;
     public float invisibleValue = 0.3f;
 
@@ -25,46 +29,11 @@ public class LineController : MonoSingleton<LineController>
     private Transform _currentTrm;
     [HideInInspector] public List<LineSO> lines = new List<LineSO>();
 
-    // Test
-    [Header("Test")]
+    [Header("Vehicle")]
     [SerializeField] private PoolItemSO vehile;
-
-    // Test
-    private void Update()
-    {
-        LineType TLT = CurrentLineType;
-        LineGroupType TGT = CurrentGroupType;
-
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            TLT = LineType.Input;
-        }
-        else if (Input.GetKeyDown(KeyCode.P))
-        {
-            TLT = LineType.Output;
-        }
-
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            TGT = LineGroupType.Red;
-        }
-        else if (Input.GetKeyDown(KeyCode.K))
-        {
-            TGT = LineGroupType.Blue;
-        }
-        else if (Input.GetKeyDown(KeyCode.L))
-        {
-            TGT = LineGroupType.Green;
-        }
-        
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            Vehicle vehicle = PoolManager.Instance.Pop(vehile).GetComponent<Vehicle>();
-            vehicle.SetLine(CurrentLineType, CurrentGroupType);
-        }
-
-        HandleChangedLineType(TLT, TGT);
-    }
+    [SerializeField] private VehicleSO car, truck, trailer;
+    private VehicleSO _curVehicle;
+    private bool _dropMode;
 
     public LineType GetLineType() => CurrentLineType;
     public LineGroupType GetGroupType() => CurrentGroupType;
@@ -93,11 +62,15 @@ public class LineController : MonoSingleton<LineController>
         Initialize();
     }
 
-    private void Initialize()
+    public void Initialize()
     {
         LineMouseInput.Instance.OnClickCompany += HandleClickCompany;
 
+        maxLineCount = Mathf.Clamp(maxLineCount, 1, Enum.GetValues(typeof(LineGroupType)).Length);
+
         foreach (LineType type in Enum.GetValues(typeof(LineType)))
+        {
+            int count = 0;
             foreach (LineGroupType group in Enum.GetValues(typeof(LineGroupType)))
             {
                 LineSO line = new LineSO();
@@ -107,17 +80,128 @@ public class LineController : MonoSingleton<LineController>
                 line.render.Initialize(line);
                 line.usedBridgeCount = 0;
                 lines.Add(line);
+
+                if (count++ >= maxLineCount)
+                    break;
             }
+        }
 
         _curLine = lines[0];
         SetLineColor();
+
+        Enable();
+    }
+
+    #region UIConnection
+
+    private void Enable()
+    {
+        // line 관련
+        LineUI.OnToggleLineEvent += HandleToggleLineEvent;
+        LineUI.OnRedLineEvent += HandleRedLineEvent;
+        LineUI.OnGreenLineEvent += HandleGreenLineEvent;
+        LineUI.OnYellowLineEvent += HandleYellowLineEvent;
+        LineUI.OnBlueLineEvent += HandleBlueLineEvent;
+        LineUI.OnPurpleLineEvent += HandlePurpleLineEvent;
+
+        // vehicle 관련
+        VehicleUI.OnCarSelected += HandleCarEvent;
+        VehicleUI.OnTruckSelected += HandleTruckEvent;
+        VehicleUI.OnTrailerSelected += HandleTrailerEvent;
+    }
+
+    private void HandleToggleLineEvent()
+        => HandleChangedLineType(CurrentLineType == LineType.Input ? LineType.Output : LineType.Input, CurrentGroupType);
+
+    private void HandleRedLineEvent()
+        => HandleChangedLineType(CurrentLineType, LineGroupType.Red);
+
+    private void HandleBlueLineEvent()
+        => HandleChangedLineType(CurrentLineType, LineGroupType.Blue);
+
+    private void HandleGreenLineEvent()
+        => HandleChangedLineType(CurrentLineType, LineGroupType.Green);
+
+    private void HandleYellowLineEvent()
+        => HandleChangedLineType(CurrentLineType, LineGroupType.Yellow);
+
+    private void HandlePurpleLineEvent()
+        => HandleChangedLineType(CurrentLineType, LineGroupType.Purple);
+
+    private void HandleCarEvent(bool selected)
+    {
+        _dropMode = selected;
+
+        if (EqualityComparer<VehicleSO>.Default.Equals(_curVehicle, car))
+            DropVehicle();
+
+        _curVehicle = car;
+    }
+
+    private void HandleTruckEvent(bool selected)
+    {
+        _dropMode = selected;
+
+        if (EqualityComparer<VehicleSO>.Default.Equals(_curVehicle, truck))
+            DropVehicle();
+
+        _curVehicle = truck;
+    }
+
+    private void HandleTrailerEvent(bool selected)
+    {
+        _dropMode = selected;
+
+        if (EqualityComparer<VehicleSO>.Default.Equals(_curVehicle, trailer))
+            DropVehicle();
+
+        _curVehicle = trailer;
+    }
+
+    private void DropVehicle(int index = 0)
+    {
+        Vehicle vehicle = PoolManager.Instance.Pop(vehile).GetComponent<Vehicle>();
+        vehicle.GetComponent<VehicleStorage>().vehicleSO = _curVehicle;
+        vehicle.SetLine(CurrentLineType, CurrentGroupType, index);
+        _curVehicle = null;
+        _dropMode = false;
+        _currentTrm = null;
+    }
+
+    public void Disable()
+    {
+        // line 관련
+        LineUI.OnToggleLineEvent -= HandleToggleLineEvent;
+        LineUI.OnRedLineEvent -= HandleRedLineEvent;
+        LineUI.OnGreenLineEvent -= HandleGreenLineEvent;
+        LineUI.OnYellowLineEvent -= HandleYellowLineEvent;
+        LineUI.OnBlueLineEvent -= HandleBlueLineEvent;
+        LineUI.OnPurpleLineEvent -= HandlePurpleLineEvent;
+
+        // vehicle 관련
+        VehicleUI.OnCarSelected -= HandleCarEvent;
+        VehicleUI.OnTruckSelected -= HandleTruckEvent;
+        VehicleUI.OnTrailerSelected -= HandleTrailerEvent;
+    }
+
+    #endregion
+
+    public void ClearLine()
+    {
+        _curLine.lineInfo.Clear();
     }
 
     private void HandleChangedLineType(LineType lineType, LineGroupType lineGroupType)
     {
-        if (EqualityComparer<LineType>.Default.Equals(CurrentLineType, lineType) && EqualityComparer<LineGroupType>.Default.Equals(CurrentGroupType, lineGroupType))
-            return;
+        _dropMode = false;
 
+        if (EqualityComparer<LineGroupType>.Default.Equals(CurrentGroupType, lineGroupType) && EqualityComparer<LineType>.Default.Equals(CurrentLineType, lineType))
+        {
+            ClearLine();
+        }
+
+        CurrentLineType = lineType;
+        CurrentGroupType = lineGroupType;
         SetLineType(lineType, lineGroupType);
         OnLineTypeChanged?.Invoke(CurrentLineType);
 
@@ -127,6 +211,12 @@ public class LineController : MonoSingleton<LineController>
     // 회사 클릭시
     private void HandleClickCompany(Transform companyTrm)
     {
+        if (_dropMode)
+        {
+            DropVehicle(_curLine.lineInfo.FindValueLocation(companyTrm) - 1);
+            return;
+        }
+
         if (_curLine.lineInfo.Contains(companyTrm))
         {
             if (_currentTrm is not null && EqualityComparer<Transform>.Default.Equals(companyTrm, _currentTrm))
@@ -138,22 +228,21 @@ public class LineController : MonoSingleton<LineController>
                 if (_curLine.lineInfo.Count <= 1)
                 {
                     _curLine.lineInfo.Clear();
-                    OnBridgeChanged?.Invoke(0);
-                    OnLineInfoChanged?.Invoke(_curLine, -1, false);
+                    OnBridgeChanged?.Invoke(GetAllBridgeCount());
 
-                    goto ClearSkip;
                 }
-
-                OnLineInfoChanged?.Invoke(_curLine, removeBefore, false);
+                else
                 _currentTrm = null;
 
-            ClearSkip:
+                OnLineInfoChanged?.Invoke(_curLine);
                 goto EndProces;
             }
 
             _currentTrm = companyTrm;
             return;
         }
+
+        int curBridge = GetAllBridgeCount();
 
         if (_currentTrm is not null)
         {
@@ -176,10 +265,31 @@ public class LineController : MonoSingleton<LineController>
         }
         else
             _curLine.lineInfo.Add(companyTrm);
+        ShotRay();
 
-        OnLineInfoChanged?.Invoke(_curLine, _curLine.lineInfo.FindValueLocation(companyTrm), true);
+        Debug.Log((curBridge != GetAllBridgeCount()) + " && " + !BridgeManager.Instance.CheckBridge(GetAllBridgeCount()));
+        Debug.Log(curBridge != GetAllBridgeCount() && !BridgeManager.Instance.CheckBridge(GetAllBridgeCount()));
+        if (curBridge != GetAllBridgeCount() && !BridgeManager.Instance.CheckBridge(GetAllBridgeCount()))
+        {
+            int removeBefore = _curLine.lineInfo.FindValueLocation(companyTrm);
+
+            _curLine.lineInfo.Remove(companyTrm);
+
+            if (_curLine.lineInfo.Count <= 1)
+            {
+                _curLine.lineInfo.Clear();
+                OnBridgeChanged?.Invoke(GetAllBridgeCount());
+            }
+            else
+            _currentTrm = null;
+
+            OnLineInfoChanged?.Invoke(_curLine);
+            OnBridgeFailConnect?.Invoke();
+            goto EndProces;
+        }
 
         _currentTrm = companyTrm;
+        OnLineInfoChanged?.Invoke(_curLine);
 
     EndProces:
         ShotRay();
@@ -194,7 +304,7 @@ public class LineController : MonoSingleton<LineController>
 
         foreach (LineSO lineInfo in lines)
         {
-            if (!EqualityComparer<LineSO>.Default.Equals(_curLine, lineInfo) && EqualityComparer<LineGroupType>.Default.Equals(lineInfo.group, groupValue) && EqualityComparer<LineType>.Default.Equals(lineInfo.type, lineValue))
+            if (EqualityComparer<LineGroupType>.Default.Equals(lineInfo.group, groupValue) && EqualityComparer<LineType>.Default.Equals(lineInfo.type, lineValue))
             {
                 _curLine = lineInfo;
                 OnLineChanged?.Invoke();
@@ -244,12 +354,12 @@ public class LineController : MonoSingleton<LineController>
         _curLine.usedBridgeCount = usedBridge;
 
         OnBridgeChanged?.Invoke(GetAllBridgeCount());
-        Debug.Log("all bridge count : " + GetAllBridgeCount());
     }
 
     private void OnDestroy()
     {
         LineMouseInput.Instance.OnClickCompany -= HandleClickCompany;
+        Disable();
     }
 
     // 색 얻음
@@ -258,6 +368,8 @@ public class LineController : MonoSingleton<LineController>
         LineGroupType.Red => Color.red,
         LineGroupType.Green => Color.green,
         LineGroupType.Blue => Color.blue,
+        LineGroupType.Yellow => Color.yellow,
+        LineGroupType.Purple => Color.magenta,
         _ => Color.black
     };
 }

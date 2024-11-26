@@ -1,0 +1,79 @@
+.visual-element-setting {
+    flex-grow: 1;
+    translate: 0 1150px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    margin-top: 50px;
+    transition-duration: 0.5s;
+}
+
+.visual-element-menu {
+    flex-grow: 1;
+    justify-content: space-around;
+    padding-top: 100px;
+    padding-right: 100px;
+    padding-bottom: 100px;
+    padding-left: 100px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transition-duration: 0.5s;
+}
+
+.visual-element-stage {
+    flex-grow: 1;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    translate: 0 -1150px;
+    transition-duration: 0.5s;
+}
+
+.visual-element-setting-1 {
+    translate: 0 0;
+    transition-duration: 0.5s;
+}
+
+.visual-element-setting-2 {
+    translate: 0 2300px;
+    transition-duration: 0.5s;
+}
+
+.visual-element-menu-1 {
+    transition-duration: 0.5s;
+    translate: 0 -1150px;
+}
+
+.visual-element-menu-2 {
+    translate: 0 1150px;
+    transition-duration: 0.5s;
+}
+
+.visual-element-stage-1 {
+    transition-duration: 0.5s;
+    translate: 0 0;
+}
+
+.visual-element-stage-2 {
+    translate: 0 -2300px;
+    transition-duration: 0.5s;
+}
+
+.visual-element-title {
+    flex-grow: 1;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    translate: -2000px 0;
+    justify-content: center;
+    transition-duration: 0.5s;
+}
+
+.visual-element-title-1 {
+    translate: 0 0;
+}
+
+.visual-element-menu-3 {
+    translate: 2000px 0;
+}

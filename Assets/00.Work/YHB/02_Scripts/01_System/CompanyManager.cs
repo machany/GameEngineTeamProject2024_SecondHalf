@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
@@ -23,6 +24,8 @@ public class CompanyManager : MonoSingleton<CompanyManager>
     /// 생성 주기입니다.
     [SerializeField] private float productTime, requestTime;
     private float _lastProductTime, _lastRequestTime;
+
+    public CompanyInfoSO companyInfo;
 
     private void Awake()
     {
@@ -65,10 +68,12 @@ public class CompanyManager : MonoSingleton<CompanyManager>
     private void ResetProductShape()
     {
         productShape.Clear();
-        for (int i = 0; i < 5; i++)
-            productShape.Add(companyShape.GetValue(), companyResource.GetValue());
-    }
 
+        int n = Enum.GetValues(typeof(CompanyShapeType)).Length;
+        for (sbyte i = 0; i < n; i++)
+            productShape.Add((CompanyShapeType)i, (ResourceType)i);
+    }
+    
     private void AskProductAndRequest()
     {
         if (Time.time > _lastProductTime + productTime)

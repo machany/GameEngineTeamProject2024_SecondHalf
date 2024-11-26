@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e16f5f80544ea2c42b864e6778e099a0, type: 3}
+  m_Name: CompanyInfo
+  m_EditorClassIdentifier: 
+  companySprites:
+  - {fileID: 21300000, guid: f90331b08812ec8439aa18e002faceaa, type: 3}
+  - {fileID: 21300000, guid: bee597f809d780a4a88f07a60c16f4b0, type: 3}
+  - {fileID: 21300000, guid: dd3e2c9c153c5604ab40624c97b25f63, type: 3}
+  - {fileID: 21300000, guid: f73f7f632bc3ed140b2eb28e20300fa2, type: 3}
+  - {fileID: 21300000, guid: 7b2b82e92d1efad49bbcf347bbd13bb5, type: 3}
+  companyColor:
+  - {r: 1, g: 0, b: 0, a: 1}
+  - {r: 1, g: 1, b: 0, a: 1}
+  - {r: 0, g: 1, b: 0, a: 1}
+  - {r: 0, g: 0, b: 1, a: 1}
+  - {r: 0.46734, g: 0, b: 1, a: 1}
+  limitRequestCost: 5
+  maxProductCost: 10
+  maxRequestCost: 10
+  minDelayTime: 0
+  maxDelayTime: 3
+  DuringTime: 0.5
+  startCountDownTime: 5.7
+  RequestMark: {fileID: 3304131765039805723, guid: ff16daaa34c54a046a23639b6dd3ed52, type: 3}
+  ProductMark: {fileID: 471025050125259887, guid: 98a6b2b924e8d3e43b7f9e3f71f67072, type: 3}
+  interval: 0.2
+  requestPos: -1
+  productPos: 1

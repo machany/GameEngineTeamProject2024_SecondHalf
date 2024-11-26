@@ -1,0 +1,42 @@
+.button-car {
+    background-image: url("project://database/Assets/00.Work/PJH/04.Sprites/UI/CarButton.png?fileID=21300000&guid=011fc529f41d8a8448bded78026865e5&type=3#CarButton");
+    background-color: rgba(255, 255, 255, 0);
+    width: 100px;
+    height: 100px;
+    border-left-color: rgba(255, 255, 255, 0);
+    border-right-color: rgba(255, 255, 255, 0);
+    border-top-color: rgba(255, 255, 255, 0);
+    border-bottom-color: rgba(255, 255, 255, 0);
+}
+
+.button-truck {
+    width: 100px;
+    height: 100px;
+    background-color: rgba(255, 255, 255, 0);
+    background-image: url("project://database/Assets/00.Work/PJH/04.Sprites/UI/TruckButton.png?fileID=21300000&guid=273d2dc5be59b5e4d9113d000b0092e7&type=3#TruckButton");
+    border-left-color: rgba(255, 255, 255, 0);
+    border-right-color: rgba(255, 255, 255, 0);
+    border-top-color: rgba(255, 255, 255, 0);
+    border-bottom-color: rgba(255, 255, 255, 0);
+}
+
+.button-trailer {
+    width: 100px;
+    height: 100px;
+    background-color: rgba(255, 255, 255, 0);
+    background-image: url("project://database/Assets/00.Work/PJH/04.Sprites/UI/TrailerButton.png?fileID=21300000&guid=82617f1ab50e7c148aad97f71a4e3fb9&type=3#TrailerButton");
+    border-left-color: rgba(255, 255, 255, 0);
+    border-right-color: rgba(255, 255, 255, 0);
+    border-top-color: rgba(255, 255, 255, 0);
+    border-bottom-color: rgba(255, 255, 255, 0);
+}
+
+.button-car:hover {
+    color: rgb(166, 65, 65);
+    transition-duration: 0.25s;
+}
+
+.button-car:active {
+    -unity-background-image-tint-color: rgb(53, 194, 207);
+    transition-duration: 0.25s;
+}
