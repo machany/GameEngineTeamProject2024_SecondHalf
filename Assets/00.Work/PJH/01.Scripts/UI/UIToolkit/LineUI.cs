@@ -22,6 +22,8 @@ public class LineUI : UIToolkit, IInputable
         "Button_Red", "Button_Yellow", "Button_Green", "Button_Blue", "Button_Purple"
     };
 
+    private const string _toggleStyle = "button-toggle-2";
+
     private Button _toggleButton;
 
     private Button[] _lineButtons = new Button[5];
@@ -78,6 +80,7 @@ public class LineUI : UIToolkit, IInputable
     private void ClickToggleButton()
     {
         _isInput = !_isInput;
+        _toggleButton.ToggleInClassList(_toggleStyle);
         OnToggleLineEvent?.Invoke();
     }
 

@@ -1,0 +1,22 @@
+.visual-element-setting {
+    flex-grow: 1;
+    translate: 0 1150px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    margin-top: 50px;
+    transition-duration: 0.5s;
+}
+
+.visual-element-menu {
+    flex-grow: 1;
+    justify-content: space-around;
+    padding-top: 100px;
+    padding-right: 100px;
+    padding-bottom: 100px;
+    padding-left: 100px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transition-duration: 0.5s;
+}

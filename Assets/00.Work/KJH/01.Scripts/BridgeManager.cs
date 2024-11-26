@@ -9,11 +9,13 @@ public class BridgeManager : MonoSingleton<BridgeManager>, IInitialize
 
     //최대 사용 가능 다리
     private int _availableBridge;
-    public int availableBridge
+    
+    public int AvailableBridge
     {
         get => _availableBridge;
         set => _availableBridge = Mathf.Clamp(value, 0, maxBridge);
     }
+    
     //현재 사용하고 있는 다리 수량
     private int curUsedBridge = 0;
     
@@ -25,7 +27,7 @@ public class BridgeManager : MonoSingleton<BridgeManager>, IInitialize
     public void Initialize()
     {
         LineController.Instance.OnBridgeChanged += HandleUpdateCurrentBridge;
-        availableBridge = startBridge;
+        AvailableBridge = startBridge;
     }
 
     /// <summary>
@@ -43,10 +45,10 @@ public class BridgeManager : MonoSingleton<BridgeManager>, IInitialize
     /// <param name="allBridge">현재 다리에서 쓰고 있는 모든 다리의 수</param>
     /// <returns>현재 사용 가능한 다리의 수보다 매개변수가 크면 false를 아니면 true</returns>
     public bool CheckBridge(int allBridge)
-        => availableBridge >= allBridge;
+        => AvailableBridge >= allBridge;
 
     public int AvailableBridgeCount()
-        => availableBridge - curUsedBridge;
+        => AvailableBridge - curUsedBridge;
 
     private void OnDisable()
     {
