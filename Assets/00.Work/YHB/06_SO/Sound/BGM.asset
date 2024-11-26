@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: BGM
   m_EditorClassIdentifier: 
   channelType: 0
+  mixerGroup: {fileID: 788812029194349068, guid: 75b9aa39ce51c8345a88ce0c47700e26, type: 2}
   channel: 1
   loop: 1
-  playOnAwake: 0
+  playOnAwake: 1
   volume: 1
-  sounds: []
+  sounds:
+  - {fileID: 11400000, guid: 19a0f90025606fa4e8f27e31155b490d, type: 2}
   players: []
