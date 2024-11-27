@@ -4,9 +4,9 @@ using UnityEngine.UIElements;
 
 public class MenuUI : UIToolkit
 {
-    private readonly string[] _stageGroupStr = { "GroupBox_Korea", "GroupBox_China" };
-    private readonly string[] _stageLabelStr = {"Label_Korea", "Label_China"};
-    private readonly string[] _stageButtonStr = {"Button_Korea", "Button_China"};
+    private readonly string[] _stageGroupStr = { "GroupBox_Korea", "GroupBox_China", "GroupBox_Russia" };
+    private readonly string[] _stageLabelStr = { "Label_Korea", "Label_China", "Label_Russia" };
+    private readonly string[] _stageButtonStr = { "Button_Korea", "Button_China", "Button_Russia" };
 
     // 타이틀
     private VisualElement _titleVisualElement;
@@ -39,11 +39,11 @@ public class MenuUI : UIToolkit
     private void OnEnable()
     {
         GetUIElements();
-        
+
         LoadHighScore();
-        
+
         LoadStageInformation();
-        
+
         Initialize();
 
         _stageScrollView.AddToClassList("hidden-scrollbars");
@@ -85,7 +85,7 @@ public class MenuUI : UIToolkit
         _screenDropdown.UnregisterValueChangedCallback(ScreenDropdown);
 
         _stageExitButton.clicked -= ClickStageExitButton;
-        
+
         _stageButtons[0].clicked -= ClickKoreaButton;
         _stageButtons[1].clicked -= ClickChinaButton;
     }
@@ -122,7 +122,7 @@ public class MenuUI : UIToolkit
             _stageButtons[i] = root.Q<Button>(_stageButtonStr[i]);
         }
     }
-    
+
     private void Initialize()
     {
         float masterVolume = PlayerPrefs.GetFloat("MasterVolume", 50);
@@ -135,7 +135,7 @@ public class MenuUI : UIToolkit
         _effectVolumeSlider.value = effectVolume;
 
         // 사운드 매니저 값 세팅
-        
+
         string screenValue = PlayerPrefs.GetString("ScreenSetting", "전체 화면");
 
         if (_screenDropdown.choices.Contains(screenValue))
@@ -203,7 +203,7 @@ public class MenuUI : UIToolkit
         _menuVisualElement.RemoveFromClassList("visual-element-menu-1");
         _settingVisualElement.RemoveFromClassList("visual-element-setting-1");
     }
-    
+
     private void MasterSlider(ChangeEvent<float> changeEvent)
     {
         // 사운드 세팅
@@ -230,7 +230,7 @@ public class MenuUI : UIToolkit
                 Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
                 PlayerPrefs.SetString("ScreenSetting", changeEvent.newValue);
                 break;
-            
+
             case "창 화면":
                 Screen.fullScreenMode = FullScreenMode.Windowed;
                 PlayerPrefs.SetString("ScreenSetting", changeEvent.newValue);
@@ -248,26 +248,26 @@ public class MenuUI : UIToolkit
         _settingVisualElement.RemoveFromClassList("visual-element-setting-2");
         _stageVisualElement.RemoveFromClassList("visual-element-stage-1");
     }
-    
+
     private void ClickKoreaButton()
     {
         // 씬이동
     }
-    
+
     private void ClickChinaButton()
     {
         // 씬이동
     }
-    
+
     private void LoadStageInformation()
     {
         //SaveGame.Instance.Save();
     }
-    
+
     private void LoadHighScore()
     {
         // 파일 입출력으로 스코어 업데이트
-        SaveGame.Instance.Load(1,5);
+        //SaveGame.Instance.Load(1,5);
     }
 
     #endregion
