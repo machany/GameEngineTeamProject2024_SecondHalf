@@ -131,7 +131,7 @@ public class LineController : MonoSingleton<LineController>, IInitialize
         _dropMode = selected;
 
         if (_dropMode && EqualityComparer<VehicleSO>.Default.Equals(_curVehicle, car))
-            DropVehicle();
+            DropVehicle(true);
 
         _curVehicle = car;
     }
@@ -141,7 +141,7 @@ public class LineController : MonoSingleton<LineController>, IInitialize
         _dropMode = selected;
 
         if (_dropMode && EqualityComparer<VehicleSO>.Default.Equals(_curVehicle, truck))
-            DropVehicle();
+            DropVehicle(true);
 
         _curVehicle = truck;
     }
@@ -151,21 +151,23 @@ public class LineController : MonoSingleton<LineController>, IInitialize
         _dropMode = selected;
 
         if (_dropMode && EqualityComparer<VehicleSO>.Default.Equals(_curVehicle, trailer))
-            DropVehicle();
+            DropVehicle(true);
 
         _curVehicle = trailer;
     }
 
-    private void DropVehicle(int index = 0)
+    private void DropVehicle(bool doubleClick = false, int index = 0)
     {
+        Debug.Log("s" + _dropMode);
         Vehicle vehicle = PoolManager.Instance.Pop(vehile).GetComponent<Vehicle>();
         vehicle.gameObject.name = _curVehicle.name;
         vehicle.GetComponent<VehicleStorage>().vehicleSO = _curVehicle;
         vehicle.GetComponent<VehicleStorage>().Initialize();
         vehicle.SetLine(CurrentLineType, CurrentGroupType, index);
         _curVehicle = null;
-        _dropMode = false;
+        _dropMode = doubleClick;
         _currentTrm = null;
+        Debug.Log(_dropMode);
     }
 
     public void Disable()
@@ -215,7 +217,8 @@ public class LineController : MonoSingleton<LineController>, IInitialize
     {
         if (_dropMode)
         {
-            DropVehicle(_curLine.lineInfo.FindValueLocation(companyTrm) - 1);
+            if (_curLine.lineInfo.Contains(companyTrm))
+                DropVehicle(false, _curLine.lineInfo.FindValueLocation(companyTrm) - 1);
             return;
         }
 

@@ -58,18 +58,24 @@ public class VehicleUI : UIToolkit, IInputable
     private void OnCarEvent()
     {
         _isCarSelected = !_isCarSelected;
+        _isTruckSelected = false;
+        _isTrailerSelected = false;
         OnCarSelected?.Invoke(_isCarSelected);
     }
     
     private void OnTruckEvent()
     {
         _isTruckSelected = !_isTruckSelected;
+        _isCarSelected = false;
+        _isTrailerSelected = false;
         OnTruckSelected?.Invoke(_isTruckSelected);
     }
     
     private void OnTrailerEvent()
     {
         _isTrailerSelected = !_isTrailerSelected;
+        _isCarSelected = false;
+        _isTruckSelected = false;
         OnTrailerSelected?.Invoke(_isTrailerSelected);
     }
 }

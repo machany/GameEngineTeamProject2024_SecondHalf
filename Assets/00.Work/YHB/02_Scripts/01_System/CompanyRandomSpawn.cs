@@ -68,7 +68,7 @@ public class CompanyRandomSpawn : MonoBehaviour, IInitialize
         }
 
         SoundManager.Instance.PlaySound(SoundType.SFX, "GameStart");
-        SoundManager.Instance.PlaySound(SoundType.BGM, "BGM");
+        SoundManager.Instance.PlaySoundLoopInChannel(SoundType.BGM);
         StartCoroutine(SpawnProcces());
     }
 
