@@ -267,7 +267,7 @@ public class MenuUI : UIToolkit
     private void LoadHighScore()
     {
         // 파일 입출력으로 스코어 업데이트
-        //SaveGame.Instance.Load();
+        SaveGame.Instance.Load(1,5);
     }
 
     #endregion

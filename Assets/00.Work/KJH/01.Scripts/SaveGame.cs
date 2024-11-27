@@ -1,45 +1,76 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-public class SaveGame : MonoBehaviour
+public class SaveGame : MonoSingleton<SaveGame>
 {
-    public string savePath;
+    // 상대 경로
+    private const string savePath = "saveData.txt";
 
-    public int[] a;
-    public int[] b;
-
-    public int[] loada;
-    public int[] loadb;
-    private void Awake()
-    {
-        savePath = Path.Combine(Directory.GetCurrentDirectory(), "Save.txt");
-    }
-    
-    public void Save(int[] arr1, int[] arr2)
+    public void Save(string saveData)
     {
         using StreamWriter sw = new StreamWriter(File.Open(savePath, FileMode.OpenOrCreate));
 
-        for (int i = 0; i < arr1.Length; i++)
-            sw.WriteLine(arr1[i]);
-        for (int i = 0; i < arr2.Length; i++)
-            sw.WriteLine(arr2[i]);
+        sw.WriteLine(saveData);
     }
 
-    public void Load(int[] arr1, int[] arr2)
+    public void Save(string[] saveData)
     {
-        loada = new int[arr1.Length];
-        loadb = new int[arr2.Length];
-        
+        using StreamWriter sw = new StreamWriter(File.Open(savePath, FileMode.OpenOrCreate));
+
+        foreach (var data in saveData)
+            sw.WriteLine(data);
+    }
+
+    private string ReadLineAt(StreamReader sr, int targetLine)
+    {
+        string lineData = null;
+
+        for (int i = 0; i < targetLine; ++i)
+        {
+            lineData = sr.ReadLine();
+
+            if (lineData == null)
+            {
+                Debug.Log($"지정한 dataLine({targetLine})보다 파일이 작습니다. null 리턴");
+                return null;
+            }
+        }
+
+        return lineData;
+    }
+
+    /// <summary>
+    /// 한 줄을 읽는 Load
+    /// </summary>
+    /// <param name="dataLine">읽을 줄</param>
+    public string Load(int dataLine)
+    {
         using StreamReader sr = new StreamReader(File.Open(savePath, FileMode.Open));
+
+        return ReadLineAt(sr, dataLine);
+    }
+    
+    /// <summary>
+    /// 여러 줄을 읽는 Load
+    /// </summary>
+    /// <param name="dataLine">처음 읽을 줄</param>
+    /// <param name="repeatNum">반복 횟수</param>
+    public string[] Load(int dataLine, int repeatNum)
+    {
+        using StreamReader sr = new StreamReader(File.Open(savePath, FileMode.Open));
+        string[] lineData = new string[repeatNum];
         
-        for (int i = 0; i < arr1.Length; i++)
-            if (int.TryParse(sr.ReadLine(), out int value))
-                loada[i] = value;
-        for (int i = 0; i < arr2.Length; i++)
-            if (int.TryParse(sr.ReadLine(), out int value))
-                loadb[i] = value;
+        for (int i = 0; i < repeatNum; ++i)
+        {
+            lineData[i] = ReadLineAt(sr, dataLine + i);
+            
+            if (lineData[i] == null)
+            {
+                Debug.Log($"dataLine + repeatNum({dataLine + i})보다 파일이 작습니다. null 배열 리턴");
+                return null;
+            }
+        }
+
+        return lineData;
     }
 }
