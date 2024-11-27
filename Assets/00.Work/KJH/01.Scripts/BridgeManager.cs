@@ -45,7 +45,14 @@ public class BridgeManager : MonoSingleton<BridgeManager>, IInitialize
     /// <param name="allBridge">현재 다리에서 쓰고 있는 모든 다리의 수</param>
     /// <returns>현재 사용 가능한 다리의 수보다 매개변수가 크면 false를 아니면 true</returns>
     public bool CheckBridge(int allBridge)
-        => AvailableBridge >= allBridge;
+    {
+        bool re = AvailableBridge >= allBridge;
+
+        if (!re)
+            SoundManager.Instance.PlaySound(SoundType.SFX, "LineConnectionFail");
+
+        return re;
+    }
 
     public int AvailableBridgeCount()
         => AvailableBridge - curUsedBridge;

@@ -1,13 +1,12 @@
-using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class SoundManager : MonoSingleton<SoundManager>
 {
     [SerializeField] private List<SoundChannelSO> soundChannels;
-    public Dictionary<SoundType, SoundChannelSO> channels;
+    public Dictionary<SoundType, SoundChannelSO> _channels;
 
     private void Awake()
     {
@@ -16,7 +15,7 @@ public class SoundManager : MonoSingleton<SoundManager>
 
     private void Initialize()
     {
-        channels = new Dictionary<SoundType, SoundChannelSO>();
+        _channels = new Dictionary<SoundType, SoundChannelSO>();
 
         foreach (SoundChannelSO soundChannel in soundChannels)
         {
@@ -39,19 +38,27 @@ public class SoundManager : MonoSingleton<SoundManager>
                 soundChannel.players[i].clip = soundChannel.sounds[0].clip;
             }
 
-            channels.Add(soundChannel.channelType, soundChannel);
+            _channels.Add(soundChannel.channelType, soundChannel);
         }
     }
 
     public void PlaySound(SoundType type, string value)
     {
-        AudioSource[] audioSources = channels[type].players;
+        AudioSource[] audioSources = _channels[type].players;
         for (int i = 0; i < audioSources.Length; i++)
         {
             if (audioSources[i].isPlaying)
                 continue;
 
-            audioSources[i].clip = channels[type].clips[value];
+            try
+            {
+                audioSources[i].clip = _channels[type].clips[value];
+            }
+            catch (KeyNotFoundException)
+            {
+                Debug.LogError("Can't found key. key Value :" + value);
+                return;
+            }
             audioSources[i].Play();
             break;
         }
@@ -59,10 +66,10 @@ public class SoundManager : MonoSingleton<SoundManager>
 
     public void StopSound(SoundType type, string value)
     {
-        AudioSource[] audioSources = channels[type].players;
+        AudioSource[] audioSources = _channels[type].players;
         for (int i = 0; i < audioSources.Length; i++)
         {
-            if (EqualityComparer<AudioClip>.Default.Equals(audioSources[i].clip, channels[type].clips[value]))
+            if (EqualityComparer<AudioClip>.Default.Equals(audioSources[i].clip, _channels[type].clips[value]))
                 continue;
 
             audioSources[i].clip = null;
@@ -70,4 +77,27 @@ public class SoundManager : MonoSingleton<SoundManager>
             break;
         }
     }
+
+    public void PlaySoundLoopInChannel(SoundType type, float waitTime = 0f)
+        => StartCoroutine(PlaySoundLoopInChannelCoroutine(type, waitTime));
+    
+    public void StopSoundLoopInChannel(SoundType type)
+        => StopCoroutine(PlaySoundLoopInChannelCoroutine(type, 0f));
+
+    private IEnumerator PlaySoundLoopInChannelCoroutine(SoundType type, float waitTime)
+    {
+        NotOverlapValue<AudioClip> clips = new NotOverlapValue<AudioClip>(_channels[type].clips.Values);
+        _channels[type].players[0].loop = false;
+
+        while (true)
+        {
+            _channels[type].players[0].clip = clips.GetValue();
+            _channels[type].players[0].Play();
+            yield return new WaitUntil(() => !_channels[type].players[0].isPlaying);
+            yield return new WaitForSeconds(waitTime);
+        }
+    }
+
+    public void StopSoundInChannel(SoundType type)
+        => _channels[type].players.ToList().ForEach(player => player.Stop());
 }

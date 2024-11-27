@@ -2,7 +2,6 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using VHierarchy.Libs;
 
 public class SortMark : MonoBehaviour, IInitialize
 {
@@ -13,6 +12,7 @@ public class SortMark : MonoBehaviour, IInitialize
     [SerializeField] private PoolItemSO RequestMark;
 
     private int _beforeRequestCount, _beforeProductCount;
+    private float _invisibleValue;
 
     private void OnEnable()
     {
@@ -28,12 +28,45 @@ public class SortMark : MonoBehaviour, IInitialize
     {
         transform.GetComponentInParent<Company>().OnRequestCostChanged += ChangeRequestSortMark;
         transform.GetComponentInParent<Company>().OnProductCostChanged += ChangeProductSortMark;
+
+
+        LineUI.OnToggleLineEvent += ToggleColorRequest;
+        LineUI.OnToggleLineEvent += ToggleColorRroduct;
+        _invisibleValue = LineController.Instance.invisibleValue * 1.5f;
     }
 
     public void Disable()
     {
         transform.GetComponentInParent<Company>().OnRequestCostChanged -= ChangeRequestSortMark;
         transform.GetComponentInParent<Company>().OnProductCostChanged -= ChangeProductSortMark;
+
+        LineUI.OnToggleLineEvent -= ToggleColorRequest;
+        LineUI.OnToggleLineEvent -= ToggleColorRroduct;
+    }
+
+    public void ToggleColorRequest()
+    {
+        float req = LineController.Instance.CurrentLineType == LineType.Output ? 1f : _invisibleValue;
+
+        _sortRequestTargets.ForEach(obj =>
+        {
+            SpriteRenderer sr = obj.GetComponent<SpriteRenderer>();
+            Color color = sr.color;
+            color.a = req;
+            sr.color = color;
+        });
+    }
+    
+    public void ToggleColorRroduct()
+    {
+        float req = LineController.Instance.CurrentLineType == LineType.Input ? 1f : _invisibleValue;
+        _sortProductTargets.ForEach(obj =>
+        {
+            SpriteRenderer sr = obj.GetComponent<SpriteRenderer>();
+            Color color = sr.color;
+            color.a = req;
+            sr.color = color;
+        });
     }
 
     public void ChangeRequestSortMark(int n = 1)
@@ -97,6 +130,7 @@ public class SortMark : MonoBehaviour, IInitialize
 
     private void SortRequest()
     {
+        ToggleColorRequest();
         float interval = CompanyManager.Instance.companyInfo.interval * _sortRequestTargets.Count;
 
         if (_sortRequestTargets.Count <= 0)
@@ -115,6 +149,7 @@ public class SortMark : MonoBehaviour, IInitialize
 
     private void SortProduct()
     {
+        ToggleColorRroduct();
         float interval = CompanyManager.Instance.companyInfo.interval * _sortProductTargets.Count;
 
         if (_sortProductTargets.Count <= 0)

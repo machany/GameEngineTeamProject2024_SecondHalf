@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class LineController : MonoSingleton<LineController>, IInitialize
 {
@@ -13,7 +11,7 @@ public class LineController : MonoSingleton<LineController>, IInitialize
     public Action<LineType> OnLineTypeChanged;
     // 현재 라인
     public Action<LineSO> OnLineInfoChanged;
-    
+
     public LineType CurrentLineType { get; private set; }
     public LineGroupType CurrentGroupType { get; private set; }
 
@@ -132,8 +130,8 @@ public class LineController : MonoSingleton<LineController>, IInitialize
     {
         _dropMode = selected;
 
-        if (EqualityComparer<VehicleSO>.Default.Equals(_curVehicle, car))
-            DropVehicle();
+        if (_dropMode && EqualityComparer<VehicleSO>.Default.Equals(_curVehicle, car))
+            DropVehicle(true);
 
         _curVehicle = car;
     }
@@ -142,8 +140,8 @@ public class LineController : MonoSingleton<LineController>, IInitialize
     {
         _dropMode = selected;
 
-        if (EqualityComparer<VehicleSO>.Default.Equals(_curVehicle, truck))
-            DropVehicle();
+        if (_dropMode && EqualityComparer<VehicleSO>.Default.Equals(_curVehicle, truck))
+            DropVehicle(true);
 
         _curVehicle = truck;
     }
@@ -152,20 +150,24 @@ public class LineController : MonoSingleton<LineController>, IInitialize
     {
         _dropMode = selected;
 
-        if (EqualityComparer<VehicleSO>.Default.Equals(_curVehicle, trailer))
-            DropVehicle();
+        if (_dropMode && EqualityComparer<VehicleSO>.Default.Equals(_curVehicle, trailer))
+            DropVehicle(true);
 
         _curVehicle = trailer;
     }
 
-    private void DropVehicle(int index = 0)
+    private void DropVehicle(bool doubleClick = false, int index = 0)
     {
+        Debug.Log("s" + _dropMode);
         Vehicle vehicle = PoolManager.Instance.Pop(vehile).GetComponent<Vehicle>();
+        vehicle.gameObject.name = _curVehicle.name;
         vehicle.GetComponent<VehicleStorage>().vehicleSO = _curVehicle;
+        vehicle.GetComponent<VehicleStorage>().Initialize();
         vehicle.SetLine(CurrentLineType, CurrentGroupType, index);
         _curVehicle = null;
-        _dropMode = false;
+        _dropMode = doubleClick;
         _currentTrm = null;
+        Debug.Log(_dropMode);
     }
 
     public void Disable()
@@ -215,7 +217,8 @@ public class LineController : MonoSingleton<LineController>, IInitialize
     {
         if (_dropMode)
         {
-            DropVehicle(_curLine.lineInfo.FindValueLocation(companyTrm) - 1);
+            if (_curLine.lineInfo.Contains(companyTrm))
+                DropVehicle(false, _curLine.lineInfo.FindValueLocation(companyTrm) - 1);
             return;
         }
 
@@ -231,10 +234,9 @@ public class LineController : MonoSingleton<LineController>, IInitialize
                 {
                     _curLine.lineInfo.Clear();
                     OnBridgeChanged?.Invoke(GetAllBridgeCount());
-
                 }
                 else
-                _currentTrm = null;
+                    _currentTrm = null;
 
                 OnLineInfoChanged?.Invoke(_curLine);
                 goto EndProces;
@@ -267,9 +269,9 @@ public class LineController : MonoSingleton<LineController>, IInitialize
         }
         else
             _curLine.lineInfo.Add(companyTrm);
-        ShotRay();
 
-        if (curBridge != GetAllBridgeCount() && !BridgeManager.Instance.CheckBridge(GetAllBridgeCount()))
+        ShotRay();
+        if (curBridge < GetAllBridgeCount() && !BridgeManager.Instance.CheckBridge(GetAllBridgeCount()))
         {
             int removeBefore = _curLine.lineInfo.FindValueLocation(companyTrm);
 
@@ -281,7 +283,7 @@ public class LineController : MonoSingleton<LineController>, IInitialize
                 OnBridgeChanged?.Invoke(GetAllBridgeCount());
             }
             else
-            _currentTrm = null;
+                _currentTrm = null;
 
             OnLineInfoChanged?.Invoke(_curLine);
             OnBridgeFailConnect?.Invoke();
@@ -365,11 +367,11 @@ public class LineController : MonoSingleton<LineController>, IInitialize
     // 색 얻음
     private Color GetLineGroupColor(LineGroupType type) => type switch
     {
-        LineGroupType.Red => Color.red,
-        LineGroupType.Green => Color.green,
-        LineGroupType.Blue => Color.blue,
-        LineGroupType.Yellow => Color.yellow,
-        LineGroupType.Purple => Color.magenta,
+        LineGroupType.Red => new Color(205, 30, 30) / 255,
+        LineGroupType.Yellow => new Color(205, 205, 30) / 255,
+        LineGroupType.Green => new Color(30, 205, 30) / 255,
+        LineGroupType.Blue => new Color(30, 30, 205) / 255,
+        LineGroupType.Purple => new Color(155, 30, 195) / 255,
         _ => Color.black
     };
 }

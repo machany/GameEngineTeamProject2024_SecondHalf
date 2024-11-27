@@ -21,6 +21,7 @@ public class GameOverCount : MonoBehaviour
     /// <summary>카운트 다운을 시작합니다.</summary>
     public void RequestOverCountDown()
     {
+        SoundManager.Instance.PlaySound(SoundType.GameOver, "GameOverCountDown");
         countDown = true;
         OnGameOverEffectStart?.Invoke();
         _countDownTime = CompanyManager.Instance.companyInfo.startCountDownTime;  
@@ -29,6 +30,7 @@ public class GameOverCount : MonoBehaviour
     /// <summary>카운트 다운을 멈춤</summary>
     public void RequestCancelCountDown()
     {
+        SoundManager.Instance.StopSound(SoundType.GameOver, "GameOverCountDown");
         countDown = false;
         OnGameOverEffectEnd?.Invoke();
         StopCoroutine(CountDown());

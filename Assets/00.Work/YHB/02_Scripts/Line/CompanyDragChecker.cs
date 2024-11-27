@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class CompanyDragChecker : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class CompanyDragChecker : MonoBehaviour
     [SerializeField] private LayerMask buildingLayer;
 
     private bool _equalsBuildingCool;
-    private bool _destroyMod;
+    private bool _destoryMod;
     private GameObject _building;
 
     public void SetMouseClick(Vector3 position)
@@ -22,20 +23,27 @@ public class CompanyDragChecker : MonoBehaviour
         _equalsBuildingCool = false;
 
         Collider2D collision = Physics2D.OverlapCircle(position, radius, buildingLayer);
-        _destroyMod = collision is not null;
+        _destoryMod = collision is not null;
     }
-
+    
     public void CheckBuilding(Vector3 position)
     {
         Collider2D collision = Physics2D.OverlapCircle(position, radius, buildingLayer);
         if (collision is not null)
         {
-            if (EqualityComparer<GameObject>.Default.Equals(_building, collision.gameObject)
-                && _equalsBuildingCool && !_destroyMod)
-                return;
-
-            StartCoroutine(BuildingCoolTime(collision.gameObject));
-            OnBuilding?.Invoke(collision.gameObject);
+            if (EqualityComparer<GameObject>.Default.Equals(_building, collision.gameObject))
+            {
+                if (_destoryMod || !_equalsBuildingCool)
+                {
+                    StartCoroutine(BuildingCoolTime(collision.gameObject));
+                    OnBuilding?.Invoke(collision.gameObject);
+                }
+            }
+            else
+            {
+                StartCoroutine(BuildingCoolTime(collision.gameObject));
+                OnBuilding?.Invoke(collision.gameObject);
+            }
         }
     }
 
