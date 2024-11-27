@@ -135,15 +135,17 @@ public class MenuUI : UIToolkit
         _effectVolumeSlider.value = effectVolume;
 
         // 사운드 매니저 값 세팅
-
-        _screenDropdown.choices = new List<string> { "전체 화면", "창 화면" };
-
+        
         string screenValue = PlayerPrefs.GetString("ScreenSetting", "전체 화면");
 
         if (_screenDropdown.choices.Contains(screenValue))
             _screenDropdown.value = screenValue;
         else
+        {
+            _screenDropdown.choices = new List<string> { "전체 화면", "창 화면" };
+            _screenDropdown.value = screenValue;
             Debug.LogWarning($"screen value {screenValue} is not found in choices.");
+        }
     }
 
     #region 타이틀
@@ -224,7 +226,7 @@ public class MenuUI : UIToolkit
     {
         switch (changeEvent.newValue)
         {
-            case "전체화면":
+            case "전체 화면":
                 Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
                 PlayerPrefs.SetString("ScreenSetting", changeEvent.newValue);
                 break;
