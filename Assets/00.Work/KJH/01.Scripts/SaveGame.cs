@@ -1,7 +1,10 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-public class SaveGame : MonoSingleton<SaveGame>
+public class SaveGame : MonoBehaviour
 {
     public string savePath;
 
@@ -10,36 +13,33 @@ public class SaveGame : MonoSingleton<SaveGame>
 
     public int[] loada;
     public int[] loadb;
-
     private void Awake()
     {
         savePath = Path.Combine(Directory.GetCurrentDirectory(), "Save.txt");
-        
-        Save();
+    }
+    
+    public void Save(int[] arr1, int[] arr2)
+    {
+        using StreamWriter sw = new StreamWriter(File.Open(savePath, FileMode.OpenOrCreate));
+
+        for (int i = 0; i < arr1.Length; i++)
+            sw.WriteLine(arr1[i]);
+        for (int i = 0; i < arr2.Length; i++)
+            sw.WriteLine(arr2[i]);
     }
 
-    public void Save()
+    public void Load(int[] arr1, int[] arr2)
     {
-        StreamWriter sw = new StreamWriter(File.Open(savePath, FileMode.OpenOrCreate));
+        loada = new int[arr1.Length];
+        loadb = new int[arr2.Length];
         
-        sw.WriteLine(string.Join(",", a));
-        sw.WriteLine(string.Join(",", b));
-    }
-
-    public void Load()
-    {
-        StreamReader sr = new StreamReader(File.Open(savePath, FileMode.Open));
-            
-        string[] arrayData1 = sr.ReadLine().Split(',');
-        loada = new int[arrayData1.Length];
+        using StreamReader sr = new StreamReader(File.Open(savePath, FileMode.Open));
         
-        for (int i = 0; i < arrayData1.Length; i++)
-            loada[i] = int.Parse(arrayData1[i]);
-
-        string[] arrayData2 = sr.ReadLine().Split(',');
-        loadb = new int[arrayData2.Length];
-        
-        for (int i = 0; i < arrayData2.Length; i++)
-            loadb[i] = int.Parse(arrayData2[i]);
+        for (int i = 0; i < arr1.Length; i++)
+            if (int.TryParse(sr.ReadLine(), out int value))
+                loada[i] = value;
+        for (int i = 0; i < arr2.Length; i++)
+            if (int.TryParse(sr.ReadLine(), out int value))
+                loadb[i] = value;
     }
 }
