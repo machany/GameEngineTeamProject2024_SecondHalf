@@ -41,6 +41,16 @@ public static class Library
         dict.Add(key, value);
         return true;
     }
+
+    /// <summary>
+    /// 지정된 값과 일치하는 값이 있는 모든 키-값을 딕셔너리에서 제거합니다.
+    /// </summary>
+    /// <param name="value">제거할 값입니다.</param>
+    /// <remarks>
+    /// 이 메서드는 지정된 값과 일치하는 키와 해당 키의 값을 딕셔너리에서 모두 제거합니다.
+    /// </remarks>
+    public static void DeleteByValue<K, V>(this Dictionary<K, V> dict, V value)
+            => dict.Where(pair => EqualityComparer<V>.Default.Equals(pair.Value, value)).Select(pair => pair.Key).ToList().ForEach(key => dict.Remove(key));
 }
 
 public class NotOverlapValue<T>
