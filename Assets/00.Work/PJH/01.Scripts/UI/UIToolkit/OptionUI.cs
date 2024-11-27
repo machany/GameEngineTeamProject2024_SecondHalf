@@ -214,21 +214,16 @@ public class OptionUI : UIToolkit, IInputable, IDraggable
 
     private void ScreenDropdown(ChangeEvent<string> changeEvent)
     {
-        ScreenSetting(changeEvent.newValue);
-    }
-
-    private void ScreenSetting(string newValue)
-    {
-        switch (newValue)
+        switch (changeEvent.newValue)
         {
             case "전체화면":
                 Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
-                PlayerPrefs.SetString("ScreenSetting", newValue);
+                PlayerPrefs.SetString("ScreenSetting", changeEvent.newValue);
                 break;
             
             case "창 화면":
                 Screen.fullScreenMode = FullScreenMode.Windowed;
-                PlayerPrefs.SetString("ScreenSetting", newValue);
+                PlayerPrefs.SetString("ScreenSetting", changeEvent.newValue);
                 break;
         }
     }

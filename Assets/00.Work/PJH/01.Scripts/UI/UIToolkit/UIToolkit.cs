@@ -14,7 +14,7 @@ public abstract class UIToolkit : MonoBehaviour
         }
         catch (Exception exception)
         {
-            root = null;
+            root = gameObject.AddComponent<UIDocument>().rootVisualElement;
             Debug.LogWarning($"root visual element not found in UI document. exception : {exception}");
         }
     }
