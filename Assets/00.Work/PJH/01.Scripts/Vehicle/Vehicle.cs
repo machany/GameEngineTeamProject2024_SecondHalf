@@ -7,25 +7,25 @@ using Random = UnityEngine.Random;
 
 public class Vehicle : MonoBehaviour, IInitialize
 {
-    // 반투명화를 위함
+    // ????? ??
     private SpriteRenderer _spriteRenderer;
     private VehicleStorage _vehicleStorage;
 
     [SerializeField] private PoolItemSO _me;
 
-    // 이동 관련
+    // ?? ??
     private static Ease ease = Ease.InOutCubic;
     private Transform _currentTargetTrm;
     private float _moveSpeed;
     private float minStopTime, maxStopTime;
 
-    // 내가 속해있는 선로
+    // ?? ???? ??
     private LineSO _currentLine;
 
-    // 내가 갈 방향
+    // ?? ? ??
     public sbyte _dir { get; private set; } = -1;
     private int _index;
-    // _index호줄시 처리해야 할 과정을 위함
+    // _index??? ???? ? ??? ??
     public int index
     {
         get => _index;
@@ -59,7 +59,7 @@ public class Vehicle : MonoBehaviour, IInitialize
         LineController.Instance.OnLineTypeChanged += HandleLineTypeChange;
     }
 
-    // 반투명화 등 처리
+    // ???? ? ??
     private void HandleLineTypeChange(LineType curLineType)
     {
         Color color = _spriteRenderer.color;
@@ -75,7 +75,7 @@ public class Vehicle : MonoBehaviour, IInitialize
         }
     }
 
-    // 라인 설정
+    // ?? ??
     public void SetLine(LineType lineType, LineGroupType lineGroupType, int startIndex = 0)
     {
         _currentLine = LineController.Instance.GetLine(lineType, lineGroupType);
@@ -105,7 +105,7 @@ public class Vehicle : MonoBehaviour, IInitialize
         try
         {
             if (!_currentLine.lineInfo.Contains(_currentTargetTrm))
-                throw new Exception("의도된 예외입니다. 현재 라인에 도착지점이 없음");
+                throw new Exception("??? ?????. ?? ??? ????? ??");
 
             _vehicleStorage.ArriveBuilding(_currentTargetTrm, _currentLine, index - _dir, _dir);
             SetMove(_currentLine.lineInfo[index]);
@@ -120,7 +120,7 @@ public class Vehicle : MonoBehaviour, IInitialize
         }
     }
 
-    // 움직이는 방향 설정
+    // ???? ?? ??
     private void SetMove(Transform targetTrm)
     {
         Vector3 dir = targetTrm.position - _currentTargetTrm.position;

@@ -4,8 +4,10 @@ using UnityEngine.UIElements;
 
 public class MenuUI : UIToolkit
 {
-    private readonly string[] _stageGroupStr = {"GroupBox_Korea", "GroupBox_Korea"};
-    
+    private readonly string[] _stageGroupStr = { "GroupBox_Korea", "GroupBox_China" };
+    private readonly string[] _stageLabelStr = {"Label_Korea", "Label_China"};
+    private readonly string[] _stageButtonStr = {"Button_Korea", "Button_China"};
+
     // 타이틀
     private VisualElement _titleVisualElement;
     private Button _titleExitButton;
@@ -26,7 +28,9 @@ public class MenuUI : UIToolkit
     private VisualElement _stageVisualElement;
     private Button _stageExitButton;
     private ScrollView _stageScrollView;
-    private List<GroupBox> _stageGroupBoxes = new();
+    private GroupBox[] _stageGroupBoxes = new GroupBox[5];
+    private Label[] _stageLabels = new Label[5];
+    private Button[] _stageButtons = new Button[5];
 
     private void OnEnable()
     {
@@ -45,6 +49,9 @@ public class MenuUI : UIToolkit
         _settingExitButton.clicked += ClickSettingExitButton;
 
         _stageExitButton.clicked += ClickStageExitButton;
+
+        _stageButtons[0].clicked += ClickKoreaButton;
+        _stageButtons[1].clicked += ClickChinaButton;
     }
 
     private void OnDisable()
@@ -60,6 +67,9 @@ public class MenuUI : UIToolkit
         _settingExitButton.clicked -= ClickSettingExitButton;
 
         _stageExitButton.clicked -= ClickStageExitButton;
+        
+        _stageButtons[0].clicked -= ClickKoreaButton;
+        _stageButtons[1].clicked -= ClickChinaButton;
     }
 
     protected override void GetUIElements()
@@ -83,8 +93,12 @@ public class MenuUI : UIToolkit
         _stageExitButton = root.Q<Button>("Button_StageExit");
         _stageScrollView = root.Q<ScrollView>("ScrollView_Stage");
 
-        //for (int i = 0; i < _stageGroupBoxes.Count; ++i)
-          //  _stageGroupBoxes[i] = root.Q<GroupBox>(_stageGroupStr[i]);
+        for (int i = 0; i < _stageGroupStr.Length; ++i)
+        {
+            _stageGroupBoxes[i] = root.Q<GroupBox>(_stageGroupStr[i]);
+            _stageLabels[i] = root.Q<Label>(_stageLabelStr[i]);
+            _stageButtons[i] = root.Q<Button>(_stageButtonStr[i]);
+        }
     }
 
     #region 타이틀
@@ -152,6 +166,22 @@ public class MenuUI : UIToolkit
         _menuVisualElement.RemoveFromClassList("visual-element-menu-2");
         _settingVisualElement.RemoveFromClassList("visual-element-setting-2");
         _stageVisualElement.RemoveFromClassList("visual-element-stage-1");
+    }
+    
+    private void ClickKoreaButton()
+    {
+        // 씬이동
+    }
+    
+    private void ClickChinaButton()
+    {
+        // 씬이동
+    }
+    
+    private void UpdateHighScore()
+    {
+        // 파일 입출력으로 스코어 업데이트
+        //SaveGame
     }
 
     #endregion

@@ -19,14 +19,6 @@ public class SaveGame : MonoBehaviour
         Save();
         
     }
-    
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Load();
-        }
-    }
 
     public void Save()
     {
