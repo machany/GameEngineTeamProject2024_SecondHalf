@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 507fdba2da1fc75419927db86d1b7cb4
+guid: 76305e565ca088c4cb8916174d168052
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -119,43 +119,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Windows Store Apps
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SliderBar1_0
+      name: up_0
       rect:
         serializedVersion: 2
-        x: 4
-        y: 47
-        width: 392
-        height: 6
+        x: 79
+        y: 163
+        width: 438
+        height: 271
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -163,8 +137,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3353d2b206802844e9c0af41425b00f3
-      internalID: 1837394357
+      spriteID: 7cc12bd5df2087d4c9e8834eb6391475
+      internalID: -428154527
       vertices: []
       indices: 
       edges: []
@@ -180,7 +154,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      SliderBar1_0: 1837394357
+      up_0: -428154527
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
