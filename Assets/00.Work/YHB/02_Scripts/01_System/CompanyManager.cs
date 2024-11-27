@@ -43,11 +43,11 @@ public class CompanyManager : MonoSingleton<CompanyManager>
     {
         companyShape = new NotOverlapValue<CompanyShapeType>(new CompanyShapeType[5]
         {
+            CompanyShapeType.Circle,
             CompanyShapeType.Triangle,
+            CompanyShapeType.InvertedTriangle,
             CompanyShapeType.Square,
             CompanyShapeType.Rhombus,
-            CompanyShapeType.InvertedTriangle,
-            CompanyShapeType.Circle
         });
 
         companyResource = new NotOverlapValue<ResourceType>(new ResourceType[5]

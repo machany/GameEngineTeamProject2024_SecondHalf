@@ -11620,7 +11620,7 @@ GameObject:
   - component: {fileID: 1497259048}
   - component: {fileID: 1497259051}
   m_Layer: 0
-  m_Name: Pa
+  m_Name: CompanyEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11715,7 +11715,7 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -11783,7 +11783,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 3
+      scalar: 1
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -12711,31 +12711,31 @@ ParticleSystem:
         serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
-          time: 0
-          value: 0
-          inSlope: 0
-          outSlope: 0
+          time: 0.0023956299
+          value: 0.0072021484
+          inSlope: 3.462529
+          outSlope: 3.462529
           tangentMode: 0
           weightedMode: 0
           inWeight: 0.33333334
-          outWeight: 0.33333334
+          outWeight: 0.243743
         - serializedVersion: 3
-          time: 0.16548967
-          value: 0.6134814
-          inSlope: 2.200558
-          outSlope: 2.200558
+          time: 0.493433
+          value: 0.7504151
+          inSlope: 0.46047664
+          outSlope: 0.46047664
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.2564194
+          inWeight: 0.34637174
+          outWeight: 0.32071105
         - serializedVersion: 3
-          time: 0.5557904
+          time: 1
           value: 1
-          inSlope: 0.27198824
-          outSlope: 0.27198824
+          inSlope: 0.31738088
+          outSlope: 0.31738088
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.28176433
+          inWeight: 0.41466156
           outWeight: 0.33333334
         m_PreInfinity: 2
         m_PostInfinity: 2
@@ -13043,8 +13043,8 @@ ParticleSystem:
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
-        key1: {r: 1, g: 1, b: 1, a: 0}
-        key2: {r: 0, g: 0, b: 0, a: 1}
+        key1: {r: 1, g: 1, b: 1, a: 0.6862745}
+        key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
@@ -13059,8 +13059,8 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 386
-        atime1: 24903
-        atime2: 34618
+        atime1: 39321
+        atime2: 65535
         atime3: 24903
         atime4: 0
         atime5: 0
@@ -13069,7 +13069,7 @@ ParticleSystem:
         m_Mode: 0
         m_ColorSpace: 0
         m_NumColorKeys: 2
-        m_NumAlphaKeys: 2
+        m_NumAlphaKeys: 3
       minGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -16525,10 +16525,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _material: {fileID: 2100000, guid: 17ffb2810ffdbbe45b0a0b0a48cd59c0, type: 2}
-  CircleSize: _CircleSize
-  LineThick: _LineThick
-  value1: 0.5
-  value2: 0
+  circleSize: _CircleSize
+  lineThick: _LineThick
+  startCircleSize: 0
+  startLineThick: 0
+  endCircleSize: 0.9
+  endLineThick: 0.7
 --- !u!1 &1531324564
 GameObject:
   m_ObjectHideFlags: 0

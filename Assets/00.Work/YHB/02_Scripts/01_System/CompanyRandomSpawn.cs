@@ -67,6 +67,8 @@ public class CompanyRandomSpawn : MonoBehaviour, IInitialize
             building.name = "Building";
         }
 
+        SoundManager.Instance.PlaySound(SoundType.SFX, "GameStart");
+        SoundManager.Instance.PlaySoundLoopInChannel(SoundType.BGM);
         StartCoroutine(SpawnProcces());
     }
 
@@ -107,6 +109,8 @@ public class CompanyRandomSpawn : MonoBehaviour, IInitialize
         GameObject company = PoolManager.Instance.Pop(companySO);
         company.transform.position = targetPos;
         company.transform.parent = building;
+
+        SoundManager.Instance.PlaySound(SoundType.SFX, "CompanyCreation");
 
         _delayTime = Mathf.Clamp((_delayTime + addDelay) * (_count <= multiplyStartCount ? multiplyDelay : 1), startDelayCount, maxDelayTime);
 

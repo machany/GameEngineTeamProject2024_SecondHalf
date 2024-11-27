@@ -6,7 +6,8 @@ using UnityEngine.Audio;
 public enum SoundType
 {
     BGM,
-    SFX
+    SFX,
+    GameOver
 }
 
 [CreateAssetMenu(menuName = "SO/Sound/SoundChannelSO")]
