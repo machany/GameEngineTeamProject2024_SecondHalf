@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using VHierarchy.Libs;
 
 public class LineMouseInput : MonoSingleton<LineMouseInput>, IInitialize
 {
@@ -48,7 +47,7 @@ public class LineMouseInput : MonoSingleton<LineMouseInput>, IInitialize
         
         OptionUI.OnOptionPanel -= HandleOptionEvent;
 
-        dragChecker.Destroy();
+        Destroy(dragChecker.gameObject);
     }
 
     private void Update()
