@@ -12,7 +12,7 @@ public enum VehicleType
 
 public class ResourceManager : MonoSingleton<ResourceManager>
 {
-    private Dictionary<LineGroupType, bool> lineGroup;
+    public Dictionary<LineGroupType, bool> lineGroup {  get; private set; }
     private Dictionary<VehicleType, sbyte> useVehicle;
     private Dictionary<VehicleType, sbyte> maxUsedVehicle;
 
