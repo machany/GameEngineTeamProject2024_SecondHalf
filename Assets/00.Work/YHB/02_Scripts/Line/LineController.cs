@@ -74,7 +74,7 @@ public class LineController : MonoSingleton<LineController>, IInitialize
                 LineSO line = new LineSO();
                 line.type = type;
                 line.group = group;
-                line.render = PoolManager.Instance.Pop(linerender).GetComponent<LineRender>();
+                line.render = PoolManager.Instance.Pop(linerender.key).GetComponent<LineRender>();
                 line.render.Initialize(line);
                 line.usedBridgeCount = 0;
                 lines.Add(line);
@@ -159,7 +159,7 @@ public class LineController : MonoSingleton<LineController>, IInitialize
     private void DropVehicle(bool doubleClick = false, int index = 0)
     {
         Debug.Log("s" + _dropMode);
-        Vehicle vehicle = PoolManager.Instance.Pop(vehile).GetComponent<Vehicle>();
+        Vehicle vehicle = PoolManager.Instance.Pop(vehile.key).GetComponent<Vehicle>();
         vehicle.gameObject.name = _curVehicle.name;
         vehicle.GetComponent<VehicleStorage>().vehicleSO = _curVehicle;
         vehicle.GetComponent<VehicleStorage>().Initialize();
