@@ -54,7 +54,7 @@ public class LineMouseInput : MonoSingleton<LineMouseInput>, IInitialize
     private void Update()
     {
         if (_dragMode)
-            dragChecker.CheckBuilding(_mainCam.ScreenToWorldPoint(inputReader.MousePositionValue));
+            dragChecker.CheckBuildingDrag(_mainCam.ScreenToWorldPoint(inputReader.MousePositionValue));
     }
 
     private void HandleMouseClickDragMode()

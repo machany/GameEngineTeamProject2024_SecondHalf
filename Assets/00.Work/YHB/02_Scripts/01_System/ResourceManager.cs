@@ -87,6 +87,11 @@ public class ResourceManager : MonoSingleton<ResourceManager>
         return save;
     }
 
+    public void ReturnUseVehicle(VehicleType type)
+    {
+        useVehicle[type]--;
+    }
+
     public void AddVehicle(VehicleType type, sbyte value)
         => maxUsedVehicle[type] = (sbyte)Mathf.Clamp(maxUsedVehicle[type] + value, 1, maxVehicle);
 

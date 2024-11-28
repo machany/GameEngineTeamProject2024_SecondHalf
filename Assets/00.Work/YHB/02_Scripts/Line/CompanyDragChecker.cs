@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class CompanyDragChecker : MonoBehaviour
 {
@@ -13,7 +12,6 @@ public class CompanyDragChecker : MonoBehaviour
     [SerializeField] private LayerMask buildingLayer;
 
     private bool _equalsBuildingCool;
-    private bool _destoryMod;
     private GameObject _building;
 
     public void SetMouseClick(Vector3 position)
@@ -23,27 +21,32 @@ public class CompanyDragChecker : MonoBehaviour
         _equalsBuildingCool = false;
 
         Collider2D collision = Physics2D.OverlapCircle(position, radius, buildingLayer);
-        _destoryMod = collision is not null;
+        CheckBuilding(collision.gameObject);
     }
-    
-    public void CheckBuilding(Vector3 position)
+
+    public void CheckBuildingDrag(Vector3 position)
     {
         Collider2D collision = Physics2D.OverlapCircle(position, radius, buildingLayer);
         if (collision is not null)
         {
-            if (EqualityComparer<GameObject>.Default.Equals(_building, collision.gameObject))
+            CheckBuilding(collision.gameObject);
+        }
+    }
+
+    private void CheckBuilding(GameObject collision)
+    {
+        if (EqualityComparer<GameObject>.Default.Equals(_building, collision))
+        {
+            if (!_equalsBuildingCool)
             {
-                if (_destoryMod || !_equalsBuildingCool)
-                {
-                    StartCoroutine(BuildingCoolTime(collision.gameObject));
-                    OnBuilding?.Invoke(collision.gameObject);
-                }
+                StartCoroutine(BuildingCoolTime(collision));
+                OnBuilding?.Invoke(collision);
             }
-            else
-            {
-                StartCoroutine(BuildingCoolTime(collision.gameObject));
-                OnBuilding?.Invoke(collision.gameObject);
-            }
+        }
+        else
+        {
+            StartCoroutine(BuildingCoolTime(collision));
+            OnBuilding?.Invoke(collision);
         }
     }
 

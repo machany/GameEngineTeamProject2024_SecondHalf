@@ -4,39 +4,28 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using DG.Tweening;
 
-public class TutorialManager : MonoBehaviour, ITalk , ITalkImage
+public class TutorialManager : MonoBehaviour, ITalkImage
 {
 
     public Action OnTalkEnd;
     
-    private Label _text;
     private VisualElement _root;
 
     private int _currentText = 1;
 
     [SerializeField] private List<Sprite> _sprites = new();
-    [SerializeField] private List<string> _texts = new();
 
     public List<Sprite> Sprite {get; set; }
     public List<string> Text {get; set; }
     
     private void Awake()
     {
-        Text = _texts;
         Sprite = _sprites;
-        _root = transform.GetChild(0).GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>("Image");
-        _text = transform.GetChild(1).GetComponent<UIDocument>().rootVisualElement.Q<Label>("Text");
+        _root = transform.GetChild(0).GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>("BG");
     }
 
     private void Start()
     {
-        _text.text = string.Empty;
-        
-        DOTween.To(() => _text.text, 
-                value => _text.text = value, 
-                Text[0], 
-                1f) 
-            .SetEase(Ease.InOutQuad);
         _root.style.backgroundImage = Sprite[0].texture;
     }
 
@@ -52,7 +41,6 @@ public class TutorialManager : MonoBehaviour, ITalk , ITalkImage
     {
         try
         {
-            NextText(Text[_currentText]);
             NextSprite(Sprite[_currentText]);
             _currentText++;
         }
@@ -63,20 +51,6 @@ public class TutorialManager : MonoBehaviour, ITalk , ITalkImage
             gameObject.SetActive(false);
         }
     }
-
-
-    public void NextText(string text)
-    {
-     
-        _text.text = string.Empty;
-        
-        DOTween.To(() => _text.text, 
-                value => _text.text = value, 
-                text, 
-                1f) 
-            .SetEase(Ease.InOutQuad);
-    }
-
 
     public void NextSprite(Sprite sprite)
     {
