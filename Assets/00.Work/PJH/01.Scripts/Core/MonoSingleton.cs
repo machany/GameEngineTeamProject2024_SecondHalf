@@ -28,6 +28,6 @@ public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
 
     private void OnDisable()
     {
-        IsDestroyed = true;
+        // IsDestroyed = true;
     }
 }

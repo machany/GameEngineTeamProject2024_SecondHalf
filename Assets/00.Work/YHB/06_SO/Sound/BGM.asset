@@ -15,7 +15,7 @@ MonoBehaviour:
   channelType: 0
   mixerGroup: {fileID: 788812029194349068, guid: 75b9aa39ce51c8345a88ce0c47700e26, type: 2}
   channel: 1
-  loop: 1
+  loop: 0
   playOnAwake: 1
   volume: 0.5
   sounds:

@@ -1,7 +1,5 @@
-using DG.Tweening;
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class LineController : MonoSingleton<LineController>, IInitialize
@@ -231,6 +229,8 @@ public class LineController : MonoSingleton<LineController>, IInitialize
             return;
         }
 
+        bool connection = true;
+
         if (_curLine.lineInfo.Contains(companyTrm))
         {
             if (_currentTrm is not null && EqualityComparer<Transform>.Default.Equals(companyTrm, _currentTrm))
@@ -296,6 +296,7 @@ public class LineController : MonoSingleton<LineController>, IInitialize
 
             OnLineInfoChanged?.Invoke(_curLine);
             OnBridgeFailConnect?.Invoke();
+            connection = false;
             goto EndProces;
         }
 
@@ -303,11 +304,14 @@ public class LineController : MonoSingleton<LineController>, IInitialize
         OnLineInfoChanged?.Invoke(_curLine);
 
     EndProces:
-        ParticleSystem particle = PoolManager.Instance.Pop(companyEffect.key).GetComponent<ParticleSystem>();
-        particle.transform.position = companyTrm.position;
-        Color stColor = GetLineGroupColor(CurrentGroupType);
-        stColor.a = 1;
-        particle.startColor = stColor;
+        if (connection)
+        {
+            ParticleSystem particle = PoolManager.Instance.Pop(companyEffect.key).GetComponent<ParticleSystem>();
+            particle.transform.position = companyTrm.position;
+            Color stColor = GetLineGroupColor(CurrentGroupType);
+            stColor.a = 1;
+            particle.startColor = stColor;
+        }
         ShotRay();
         _curLine.render.DrawLine();
     }
