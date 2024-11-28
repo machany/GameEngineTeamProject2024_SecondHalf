@@ -46,6 +46,7 @@ public class RewardUI : UIToolkit
 
     private void Awake()
     {
+        root = GetComponent<UIDocument>().rootVisualElement;
         root.style.display = DisplayStyle.None;
         
         SpeedUI.OnDateChanged += GetSO;
@@ -55,8 +56,6 @@ public class RewardUI : UIToolkit
     private void OnEnable()
     {
         GetUIElements();
-
-        SetDay();
 
         _oneResButton.clicked += ClickOneResButton;
         _twoResButton.clicked += ClickTwoResButton;
@@ -196,5 +195,7 @@ public class RewardUI : UIToolkit
     private void OnRewardUI()
     {
         root.style.display = DisplayStyle.Flex;
+        
+        SetDay();
     }
 }
