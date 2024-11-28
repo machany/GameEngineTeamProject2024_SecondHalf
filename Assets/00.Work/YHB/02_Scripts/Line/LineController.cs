@@ -305,15 +305,18 @@ public class LineController : MonoSingleton<LineController>, IInitialize
 
     EndProces:
         if (connection)
-        {
-            ParticleSystem particle = PoolManager.Instance.Pop(companyEffect.key).GetComponent<ParticleSystem>();
-            particle.transform.position = companyTrm.position;
-            Color stColor = GetLineGroupColor(CurrentGroupType);
-            stColor.a = 1;
-            particle.startColor = stColor;
-        }
+            MakeCompanyEffect(companyTrm.position, GetLineGroupColor(CurrentGroupType));
         ShotRay();
         _curLine.render.DrawLine();
+    }
+
+    public void MakeCompanyEffect(Vector3 position, Color color)
+    {
+        ParticleSystem particle = PoolManager.Instance.Pop(companyEffect.key).GetComponent<ParticleSystem>();
+        particle.transform.position = position;
+        Color stColor = color;
+        stColor.a = 1;
+        particle.startColor = stColor;
     }
 
     // 라인을 설정

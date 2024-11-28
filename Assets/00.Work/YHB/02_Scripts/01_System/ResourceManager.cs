@@ -87,6 +87,11 @@ public class ResourceManager : MonoSingleton<ResourceManager>
         return save;
     }
 
+    public void ReturnUseVehicle(VehicleType type)
+    {
+        useVehicle[type]--;
+    }
+
     public void AddVehicle(VehicleType type, sbyte value)
         => maxUsedVehicle[type] = (sbyte)Mathf.Clamp(maxUsedVehicle[type] + value, 1, maxVehicle);
 
@@ -95,7 +100,13 @@ public class ResourceManager : MonoSingleton<ResourceManager>
 
     public void UnlockLine()
     {
-        if (_curLineCount < maxLineCount)
-            lineGroup[(LineGroupType)_curLineCount++] = true;
+        foreach (LineGroupType type in lineGroup.Keys)
+        {
+            if (!lineGroup[type])
+            {
+                lineGroup[type] = true;
+                break;
+            }
+        }
     }
 }

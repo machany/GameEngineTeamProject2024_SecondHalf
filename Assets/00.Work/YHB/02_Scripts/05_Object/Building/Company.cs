@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Analytics;
 using Random = UnityEngine.Random;
 
 public enum ResourceType
@@ -25,6 +26,8 @@ public enum CompanyShapeType // 회사의 모양을 나타냅니다.
 
 public class Company : Building, IInitialize
 {
+    [SerializeField] private SortMark sortMark;
+    
     /// <summary>회사의 모양</summary>
     public CompanyShapeType shapeType;
     /// <summary>회사의 필요로 하는 자원, 색</summary>
@@ -129,7 +132,13 @@ public class Company : Building, IInitialize
     /// <param name="n">추가로 생산할 자원의 개수 기본값 : 1</param>
     private IEnumerator ProductCoe(int n)
     {
+        if (_countDown.countDown)
+            LineController.Instance.MakeCompanyEffect(transform.position, CompanyManager.Instance.companyInfo.GetResourceColor(requestType));
+
         yield return new WaitForSeconds(Random.Range(CompanyManager.Instance.companyInfo.minDelayTime, CompanyManager.Instance.companyInfo.maxDelayTime));
+
+        if (_countDown.countDown)
+            LineController.Instance.MakeCompanyEffect(transform.position, CompanyManager.Instance.companyInfo.GetResourceColor(requestType));
         ProductCost += n;
     }
 
@@ -137,7 +146,13 @@ public class Company : Building, IInitialize
     /// <param name="n">추가할 필요 자원의 개수 기본값 : 1</param>
     private IEnumerator RequestCoe(int n)
     {
+        if (_countDown.countDown)
+            LineController.Instance.MakeCompanyEffect(transform.position, CompanyManager.Instance.companyInfo.GetResourceColor(requestType));
+
         yield return new WaitForSeconds(Random.Range(CompanyManager.Instance.companyInfo.minDelayTime, CompanyManager.Instance.companyInfo.maxDelayTime));
+
+        if (_countDown.countDown)
+            LineController.Instance.MakeCompanyEffect(transform.position, CompanyManager.Instance.companyInfo.GetResourceColor(requestType));
         RequestCost += n;
     }
 
@@ -150,6 +165,7 @@ public class Company : Building, IInitialize
 
     private void OnDisable()
     {
+        sortMark.Disable(this);
         Disable();
     }
 

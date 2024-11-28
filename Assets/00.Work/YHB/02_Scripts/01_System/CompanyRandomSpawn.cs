@@ -93,8 +93,8 @@ public class CompanyRandomSpawn : MonoBehaviour, IInitialize
         {
             yield return new WaitForSeconds(_delayTime);
 
-            companyInfo.productTime += companyInfo.productAddTime;
-            companyInfo.requestTime += companyInfo.requestAddTime;
+            CompanyManager.Instance.productTime -= companyInfo.productAddTime;
+            CompanyManager.Instance.requestTime -= companyInfo.requestAddTime;
 
             _curSpawnRange = new Vector2(Mathf.Clamp(_curSpawnRange.x + addRange.x, firstRange.x, _spawnRange.x), Mathf.Clamp(_curSpawnRange.y + addRange.y, firstRange.y, _spawnRange.y));
             CameraControl.Instance.curWorldBounds = new Vector2(Mathf.Clamp(_curSpawnRange.x * 2, firstRange.x * 2, CameraControl.Instance.maxWorldBounds.x), Mathf.Clamp(_curSpawnRange.y * 2, firstRange.y * 2, CameraControl.Instance.maxWorldBounds.y));
