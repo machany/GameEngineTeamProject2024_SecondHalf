@@ -5,45 +5,56 @@ using UnityEngine.UI;
 
 public class DangerShade : MonoBehaviour
 {
-    public Material _material;
-    public string VignetteSoftness = "_VignetteSoftness";
-    public float value1 = 0.5f;
-    public float value2 = 0.3f;
-    public float transitionDuration = 2.0f;
-    private Coroutine _vignetteCoroutine;
+    public Image _Image;
+    private Coroutine _coroutine;
+
     private void Awake()
     {
-        _material = GetComponent<Image>().material;
+        _Image = GetComponent<Image>();
     }
 
     private void OnEnable()
     {
-         StartCoroutine(SmoothChangeVignetteSoftness());
+        _coroutine = StartCoroutine(SmoothChangeVignetteSoftness());
     }
+
     private void OnDisable()
     {
-        if (_vignetteCoroutine != null)
+        if (_coroutine != null)
         {
-            StopCoroutine(_vignetteCoroutine);
-            _vignetteCoroutine = null;
+            StopCoroutine(_coroutine);
+            _coroutine = null;
         }
     }
+
     private IEnumerator SmoothChangeVignetteSoftness()
     {
         while (true)
         {
-            yield return LerpVignetteSoftness(value1, value2);
-            yield return LerpVignetteSoftness(value2, value1);
+            yield return StartCoroutine(In());
+            yield return StartCoroutine(Out());
         }
     }
 
-    private IEnumerator LerpVignetteSoftness(float startValue, float endValue)
+    private IEnumerator In()
     {
-        for (float t = 0; t < 1; t += Time.deltaTime / transitionDuration)
+        while (_Image.color.a < 1) // 알파 값이 1보다 작을 때까지 증가
         {
-            _material.SetFloat(VignetteSoftness, Mathf.Lerp(startValue, endValue, t));
+            var color = _Image.color;
+            color.a = Mathf.Clamp01(color.a + Time.deltaTime); // 알파 값 증가
+            _Image.color = color;
             yield return null;
         }
-        _material.SetFloat(VignetteSoftness, endValue);
+    }
+
+    private IEnumerator Out()
+    {
+        while (_Image.color.a > 0) // 알파 값이 0보다 클 때까지 감소
+        {
+            var color = _Image.color;
+            color.a = Mathf.Clamp01(color.a - Time.deltaTime); // 알파 값 감소
+            _Image.color = color;
+            yield return null;
+        }
     }
 }
