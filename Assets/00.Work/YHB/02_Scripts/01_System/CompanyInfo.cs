@@ -33,7 +33,11 @@ public class CompanyInfoSO : ScriptableObject
     [Header("SortMark")]
     public float interval;
     public float requestPos, productPos;
-    
+
+    [Header("Resource")]
+    public float productTime;
+    public float requestTime, productAddTime, requestAddTime;
+
     /// <summary>
     /// 자원의 타입에 맞는 색을 반환해주는 함수입니다.
     /// </summary>

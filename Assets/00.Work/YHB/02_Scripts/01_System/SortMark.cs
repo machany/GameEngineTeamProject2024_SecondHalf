@@ -76,7 +76,7 @@ public class SortMark : MonoBehaviour, IInitialize
             int save = n - _sortRequestTargets.Count;
             for (int i = 0; i < save; i++)
             {
-                _sortRequestTargets.Add(PoolManager.Instance.Pop(RequestMark));
+                _sortRequestTargets.Add(PoolManager.Instance.Pop(RequestMark.key));
                 _sortRequestTargets[_sortRequestTargets.Count - 1].transform.position = transform.position;
             }
         }
@@ -102,7 +102,7 @@ public class SortMark : MonoBehaviour, IInitialize
             int save = n - _sortProductTargets.Count;
             for (int i = 0; i < save; i++)
             {
-                _sortProductTargets.Add(PoolManager.Instance.Pop(ProductMark));
+                _sortProductTargets.Add(PoolManager.Instance.Pop(ProductMark.key));
                 _sortProductTargets[_sortProductTargets.Count - 1].transform.position = transform.position;
             }
         }
@@ -125,7 +125,7 @@ public class SortMark : MonoBehaviour, IInitialize
     {
         gameObject.transform.DOMove(transform.position, CompanyManager.Instance.companyInfo.DuringTime);
         yield return new WaitForSeconds(CompanyManager.Instance.companyInfo.DuringTime);
-        PoolManager.Instance.Push(poolItem, gameObject);
+        PoolManager.Instance.Push(poolItem.key, gameObject);
     }
 
     private void SortRequest()
