@@ -29,11 +29,12 @@ public class SortMark : MonoBehaviour, IInitialize
         LineUI.OnToggleLineEvent += ToggleColorRroduct;
         _invisibleValue = LineController.Instance.invisibleValue * 1.5f;
     }
+    public void Disable(){}
 
-    public void Disable()
+    public void Disable(Company company)
     {
-        transform.GetComponentInParent<Company>().OnRequestCostChanged -= ChangeRequestSortMark;
-        transform.GetComponentInParent<Company>().OnProductCostChanged -= ChangeProductSortMark;
+        company.OnRequestCostChanged -= ChangeRequestSortMark;
+        company.OnProductCostChanged -= ChangeProductSortMark;
 
         LineUI.OnToggleLineEvent -= ToggleColorRequest;
         LineUI.OnToggleLineEvent -= ToggleColorRroduct;

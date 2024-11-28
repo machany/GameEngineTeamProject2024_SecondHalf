@@ -961,14 +961,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fab78a9c6826504abe45d0aee5428ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startBridge: 3
+  startBridge: 1
   maxBridge: 3
-  startLineCount: 1
-  maxLineCount: 1
+  startLineCount: 2
+  maxLineCount: 4
   startCar: 1
   startTruck: 1
   startTrailer: 1
-  maxVehicle: 100
+  maxVehicle: 6
 --- !u!1 &1071319270
 GameObject:
   m_ObjectHideFlags: 0
@@ -2221,6 +2221,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   companyInfo: {fileID: 11400000, guid: 3a7339551be1b5f41829243707fec7ec, type: 2}
+  productTime: 0
+  requestTime: 0
 --- !u!4 &2083696859
 Transform:
   m_ObjectHideFlags: 0
@@ -2251,7 +2253,7 @@ MonoBehaviour:
   companyInfo: {fileID: 11400000, guid: 3a7339551be1b5f41829243707fec7ec, type: 2}
   companyEffect: {fileID: 11400000, guid: 98700383d4be22c4fa0ba2c65ec43e40, type: 2}
   firstRange: {x: 32, y: 18}
-  firstDelay: 3
+  firstDelay: 5
   startDelayCount: 3
   startDelay: 5
   addDelay: 0.5
@@ -2263,11 +2265,11 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
-  obstractRadius: 0.75
+  obstractRadius: 1
   notOverlapObjectLayer:
     serializedVersion: 2
     m_Bits: 128
-  overlapRadius: 2.5
+  overlapRadius: 3
   building: {fileID: 824104681}
 --- !u!1 &2140642178
 GameObject:

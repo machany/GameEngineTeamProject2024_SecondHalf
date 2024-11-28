@@ -724,7 +724,7 @@ MonoBehaviour:
   inputReader: {fileID: 11400000, guid: 0fe90c4e69d236e4abb64bafd1272308, type: 2}
   moveSpeed: 10
   zoomSpeed: 0.3
-  minZoom: 3
+  minZoom: 5
   maxWorldBounds: {x: 48, y: 27}
   curWorldBounds: {x: 0, y: 0}
 --- !u!1 &998796958
@@ -847,13 +847,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startBridge: 3
-  maxBridge: 3
-  startLineCount: 1
-  maxLineCount: 1
+  maxBridge: 6
+  startLineCount: 3
+  maxLineCount: 4
   startCar: 1
   startTruck: 1
   startTrailer: 1
-  maxVehicle: 100
+  maxVehicle: 4
 --- !u!1 &1046362667
 GameObject:
   m_ObjectHideFlags: 0
@@ -1935,20 +1935,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   companyInfo: {fileID: 11400000, guid: 3a7339551be1b5f41829243707fec7ec, type: 2}
   companyEffect: {fileID: 11400000, guid: 98700383d4be22c4fa0ba2c65ec43e40, type: 2}
-  firstRange: {x: 10.66667, y: 6}
-  firstDelay: 3
+  firstRange: {x: 16, y: 8}
+  firstDelay: 5
   startDelayCount: 3
-  startDelay: 5
-  addDelay: 0.5
+  startDelay: 8
+  addDelay: 1
   multiplyDelay: 1.1
-  multiplyStartCount: 5
+  multiplyStartCount: 7
   maxDelayTime: 30
   companySO: {fileID: 11400000, guid: b556b593d780cc046ad6c7c6526086cc, type: 2}
-  maxCompanyCount: 30
+  maxCompanyCount: 40
   obstacle:
     serializedVersion: 2
     m_Bits: 256
-  obstractRadius: 0.75
+  obstractRadius: 0.5
   notOverlapObjectLayer:
     serializedVersion: 2
     m_Bits: 128

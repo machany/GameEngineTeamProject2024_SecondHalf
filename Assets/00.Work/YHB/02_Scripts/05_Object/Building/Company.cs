@@ -165,7 +165,7 @@ public class Company : Building, IInitialize
 
     private void OnDisable()
     {
-        sortMark.Disable();
+        sortMark.Disable(this);
         Disable();
     }
 
