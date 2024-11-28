@@ -36,7 +36,7 @@ MonoBehaviour:
   interval: 0.2
   requestPos: -1
   productPos: 1
-  productTime: 10
-  requestTime: 15
-  productAddTime: 0.01
-  requestAddTime: 0.01
+  productTime: 6
+  requestTime: 6
+  productAddTime: 1
+  requestAddTime: 1

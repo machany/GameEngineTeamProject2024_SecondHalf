@@ -1,11 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.Serialization;
-using Random = UnityEngine.Random;
 
 public class CompanyManager : MonoSingleton<CompanyManager>
 {
@@ -26,6 +21,8 @@ public class CompanyManager : MonoSingleton<CompanyManager>
 
     public CompanyInfoSO companyInfo;
 
+    public float productTime, requestTime;
+
     private void Awake()
     {
         Initialize();
@@ -34,12 +31,15 @@ public class CompanyManager : MonoSingleton<CompanyManager>
     private void LateUpdate()
     {
         AskProductAndRequest();
-    }    
+    }
     /// <summary>
     /// 초기화 함수 입니다.
     /// </summary>
     private void Initialize()
     {
+        productTime = companyInfo.productTime;
+        requestTime = companyInfo.productTime;
+
         companyShape = new NotOverlapValue<CompanyShapeType>(new CompanyShapeType[5]
         {
             CompanyShapeType.Circle,
@@ -72,7 +72,7 @@ public class CompanyManager : MonoSingleton<CompanyManager>
         for (sbyte i = 0; i < n; i++)
             productShape.Add((CompanyShapeType)i, (ResourceType)i);
     }
-    
+
     private void AskProductAndRequest()
     {
         if (Time.time > _lastproductTime + companyInfo.productTime)
