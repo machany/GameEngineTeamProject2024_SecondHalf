@@ -6,22 +6,22 @@ public class CompanyRandomSpawn : MonoBehaviour, IInitialize
     [Header("Setting")]
     [SerializeField] private CompanyInfoSO companyInfo;
     [SerializeField] private PoolItemSO companyEffect;
-    [Tooltip("°ÔÀÓ ½ÃÀÛ½Ã ÁöÁ¤µÈ ¹üÀ§ÀÔ´Ï´Ù.")]
+    [Tooltip("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Û½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.")]
     [SerializeField] private Vector2 firstRange = Vector2.zero;
-    [Tooltip("°ÔÀÓ ½ÃÀÛÈÄ ¸îÃÊ ÈÄ¿¡ È¸»ç¸¦ »ý¼ºÇÒÁö Á¤ÇÕ´Ï´Ù.")]
+    [Tooltip("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ä¿ï¿½ È¸ï¿½ç¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Õ´Ï´ï¿½.")]
     [SerializeField] private float firstDelay = 10f;
-    [Tooltip("¸î¹ø µ¿¾È È¸»ç¸¦ firstDelay·Î ¼ÒÈ¯ÇÒÁö Á¤ÇÕ´Ï´Ù.")]
+    [Tooltip("ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ç¸¦ firstDelayï¿½ï¿½ ï¿½ï¿½È¯ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Õ´Ï´ï¿½.")]
     [SerializeField] private int startDelayCount = 1;
-    [Tooltip("firstDelay¸¦ ³¡³»°í ½ÃÀÛÇÒ DelayÀÔ´Ï´Ù.")]
+    [Tooltip("firstDelayï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Delayï¿½Ô´Ï´ï¿½.")]
     [SerializeField] private float startDelay = 10f;
-    [Tooltip("È¸»ç »ý¼º ÈÄ Ãß°¡ÇÒ DelayÀÔ´Ï´Ù.")]
+    [Tooltip("È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ Delayï¿½Ô´Ï´ï¿½.")]
     [SerializeField] private float addDelay = 5f;
     [Range(1f, 2f)]
-    [Tooltip("addDelay¸¦ ´õÇÏ°í ³ª¼­ °öÇÕ´Ï´Ù.")]
+    [Tooltip("addDelayï¿½ï¿½ ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Õ´Ï´ï¿½.")]
     [SerializeField] private float multiplyDelay = 1.1f;
-    [Tooltip("°öÇÏ±â ½ÃÀÛÇÏ´Â È¸»ç »ý¼º ¼ö ÀÔ´Ï´Ù.")]
+    [Tooltip("ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ô´Ï´ï¿½.")]
     [SerializeField] private int multiplyStartCount = 5;
-    [Tooltip("ÃÖ´ë »ý¼º ½Ã°£ÀÔ´Ï´Ù.")]
+    [Tooltip("ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½Ô´Ï´ï¿½.")]
     [SerializeField] private float maxDelayTime = 60f;
 
     [Header("Company")]
@@ -57,7 +57,7 @@ public class CompanyRandomSpawn : MonoBehaviour, IInitialize
 
         overlapRadius += obstractRadius;
 
-        // firstRangeÀÇ °¢ °ªÀ» overlapRadius * startDelayCount  1.5fº¸´Ü Å©°í, _spawnRange.xº¸´Ü ÀÛÀ½
+        // firstRangeï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ overlapRadius * startDelayCount  1.5fï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½, _spawnRange.xï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         firstRange = new Vector2(Mathf.Clamp(firstRange.x, overlapRadius * startDelayCount / 1.5f, _spawnRange.x), Mathf.Clamp(firstRange.y, overlapRadius * startDelayCount / 1.5f, _spawnRange.y));
 
         _delayTime = 0;
@@ -93,8 +93,11 @@ public class CompanyRandomSpawn : MonoBehaviour, IInitialize
         {
             yield return new WaitForSeconds(_delayTime);
 
-            companyInfo.productTime += companyInfo.productAddTime;
-            companyInfo.requestTime += companyInfo.requestAddTime;
+            if (companyInfo.productTime > 1)
+            companyInfo.productTime -= companyInfo.productAddTime;
+            
+            if (companyInfo.requestTime > 1)
+            companyInfo.requestTime -= companyInfo.requestAddTime;
 
             _curSpawnRange = new Vector2(Mathf.Clamp(_curSpawnRange.x + addRange.x, firstRange.x, _spawnRange.x), Mathf.Clamp(_curSpawnRange.y + addRange.y, firstRange.y, _spawnRange.y));
             CameraControl.Instance.curWorldBounds = new Vector2(Mathf.Clamp(_curSpawnRange.x * 2, firstRange.x * 2, CameraControl.Instance.maxWorldBounds.x), Mathf.Clamp(_curSpawnRange.y * 2, firstRange.y * 2, CameraControl.Instance.maxWorldBounds.y));
@@ -108,7 +111,7 @@ public class CompanyRandomSpawn : MonoBehaviour, IInitialize
         do
         {
             targetPos = new Vector2(Random.Range(-spawnRange.x / 2, spawnRange.x / 2), Random.Range(-spawnRange.y / 2, spawnRange.y / 2));
-            // È¸»ç Áßº¹ ºÒ°¡ ¹üÀ§ Ã¼Å©¿¡ °É¸®°Å³ª ¹æÇØ¹° Ã¼Å©¿¡ °É¸®¸é ¸®¼Â
+            // È¸ï¿½ï¿½ ï¿½ßºï¿½ ï¿½Ò°ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã¼Å©ï¿½ï¿½ ï¿½É¸ï¿½ï¿½Å³ï¿½ ï¿½ï¿½ï¿½Ø¹ï¿½ Ã¼Å©ï¿½ï¿½ ï¿½É¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         } while (Physics2D.OverlapCircle(targetPos, overlapRadius, notOverlapObjectLayer) || Physics2D.OverlapCircle(targetPos, obstractRadius, obstacle));
 
         Company company = PoolManager.Instance.Pop(companySO.key).GetComponent<Company>();
