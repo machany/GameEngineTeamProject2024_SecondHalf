@@ -128,36 +128,38 @@ public class LineController : MonoSingleton<LineController>, IInitialize
 
     private void HandleCarEvent(bool selected)
     {
-        _dropMode = selected;
-
         if (_dropMode && EqualityComparer<VehicleSO>.Default.Equals(_curVehicle, car))
             DropVehicle(true);
+
+        _dropMode = true;
 
         _curVehicle = car;
     }
 
     private void HandleTruckEvent(bool selected)
     {
-        _dropMode = selected;
-
         if (_dropMode && EqualityComparer<VehicleSO>.Default.Equals(_curVehicle, truck))
             DropVehicle(true);
+
+        _dropMode = true;
 
         _curVehicle = truck;
     }
 
     private void HandleTrailerEvent(bool selected)
     {
-        _dropMode = selected;
-
         if (_dropMode && EqualityComparer<VehicleSO>.Default.Equals(_curVehicle, trailer))
             DropVehicle(true);
+
+        _dropMode = true;
 
         _curVehicle = trailer;
     }
 
     private void DropVehicle(bool doubleClick = false, int index = 0)
     {
+        if (!ResourceManager.Instance.TryUseVehicle(_curVehicle.vehicleType)) return;
+
         Debug.Log("s" + _dropMode);
         Vehicle vehicle = PoolManager.Instance.Pop(vehile.key).GetComponent<Vehicle>();
         vehicle.gameObject.name = _curVehicle.name;
