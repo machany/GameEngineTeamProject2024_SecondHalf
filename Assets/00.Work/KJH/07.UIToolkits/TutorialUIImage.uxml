@@ -1,4 +1,4 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/00.Work/KJH/07.UIToolkits/Image.uss?fileID=7433441132597879392&amp;guid=5d5f801c5f7042548bc1a861e9d99da7&amp;type=3#Image" />
-    <ui:VisualElement name="BG" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/00.Work/PJH/04.Sprites/UI/Panel2.png?fileID=2800000&amp;guid=972cd119473c07740a74efb8819d2b52&amp;type=3#Panel2&quot;); width: 100%; height: 100%; left: 0; top: 0; right: 0; bottom: 0;" />
+    <ui:VisualElement name="BG" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/00.Work/KJH/06.Image/1.png?fileID=2800000&amp;guid=4a0ce3ed1f34f9d438ff2ca3dd1889d1&amp;type=3#1&quot;); bottom: 10%; width: 100%; height: 90%;" />
 </ui:UXML>
