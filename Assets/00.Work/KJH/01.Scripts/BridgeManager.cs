@@ -65,4 +65,9 @@ public class BridgeManager : MonoSingleton<BridgeManager>, IInitialize
     {
         LineController.Instance.OnBridgeChanged -= HandleUpdateCurrentBridge;
     }
+    
+    public void AddAvailableBridge(int n)
+    {
+        AvailableBridge += n;
+    }
 }

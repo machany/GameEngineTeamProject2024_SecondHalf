@@ -9,8 +9,10 @@ public class SpeedUI : UIToolkit, IInputable
     [field: SerializeField] public InputReader InputCompo { get; private set; }
     
     [SerializeField] private List<float> speedValueList = new();
-
-    public Action OnDateChanged;
+    [SerializeField] private List<RewardItemSO> rewardItemList = new();
+    
+    public static Action<RewardItemSO[]> OnDateChanged;
+    public static Action OnRewardUI;
     
     private const string _speedStr = "VisualElement_Speed";
     private const string _speedToggleStr = "Button_SpeedToggle";
@@ -32,15 +34,17 @@ public class SpeedUI : UIToolkit, IInputable
     private int _beforeTime;
 
     [SerializeField] private int _dateTime = 90;
-    private int _currentDate;
+    public static int currentDate;
     
     private float _currentTime;
+
+    private NotOverlapValue<RewardItemSO> _rewardItem;
     
     private void OnEnable()
     {
         GetUIElements();
-
-        StartCoroutine(CalculateDateCoroutine());
+        
+        _rewardItem = new NotOverlapValue<RewardItemSO>(rewardItemList);
 
         _speedToggleButton.clicked += ClickSpeedToggleButton;
         _stopButton.clicked += ClickStopButton;
@@ -55,8 +59,6 @@ public class SpeedUI : UIToolkit, IInputable
 
     private void OnDisable()
     {
-        StopCoroutine(CalculateDateCoroutine());
-        
         _speedToggleButton.clicked -= ClickSpeedToggleButton;
         _stopButton.clicked -= ClickStopButton;
         _speed1Button.clicked -= ClickSpeed1Button;
@@ -70,7 +72,7 @@ public class SpeedUI : UIToolkit, IInputable
 
     private void Update()
     {
-        //CalculateDate();
+        CalculateDate();
     }
 
     protected override void GetUIElements()
@@ -144,29 +146,21 @@ public class SpeedUI : UIToolkit, IInputable
         if (_currentTime > _dateTime)
         {
             _currentTime = 0;
-            ++_currentDate;
-            _speedToggleButton.text = _currentDate.ToString();
+            ++currentDate;
+            _speedToggleButton.text = currentDate.ToString();
             
-            OnDateChanged?.Invoke();
+            OnDateChanged?.Invoke(MakeRewardItemArray(3));
+            OnRewardUI?.Invoke();
         }
     }
-
-    private IEnumerator CalculateDateCoroutine()
+    
+    private RewardItemSO[] MakeRewardItemArray(int count)
     {
-        while (true)
-        {
-            _currentTime += Time.deltaTime;
-            
-            if (_currentTime > _dateTime)
-            {
-                _currentTime = 0;
-                ++_currentDate;
-                _speedToggleButton.text = _currentDate.ToString();
-            
-                OnDateChanged?.Invoke();
-            }
+        var array = new RewardItemSO[count];
+        
+        for (int i = 0; i < count; ++i)
+            array[i] = _rewardItem.GetValue();
 
-            yield return null;
-        }
+        return array;
     }
 }
