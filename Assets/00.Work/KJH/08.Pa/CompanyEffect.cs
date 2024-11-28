@@ -19,9 +19,6 @@ public class CompanyEffect : MonoBehaviour
     private int circleSizeID;
     private int lineThickID;
 
-    
-    
-
     private float effectTime = 1f;
     private float currentTime = 0;
 
