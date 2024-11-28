@@ -46,6 +46,7 @@ public class RewardUI : UIToolkit
 
     private void Awake()
     {
+        root = GetComponent<UIDocument>().rootVisualElement;
         root.style.display = DisplayStyle.None;
         
         SpeedUI.OnDateChanged += GetSO;

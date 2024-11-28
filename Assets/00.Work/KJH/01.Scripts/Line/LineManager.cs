@@ -1,9 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using VHierarchy.Libs;
 using System.Linq;
 
 public class LineManager : MonoBehaviour
