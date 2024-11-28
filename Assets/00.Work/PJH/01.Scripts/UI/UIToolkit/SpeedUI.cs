@@ -12,6 +12,7 @@ public class SpeedUI : UIToolkit, IInputable
     [SerializeField] private List<RewardItemSO> rewardItemList = new();
     
     public static Action<RewardItemSO[]> OnDateChanged;
+    public static Action OnRewardUI;
     
     private const string _speedStr = "VisualElement_Speed";
     private const string _speedToggleStr = "Button_SpeedToggle";
@@ -149,6 +150,7 @@ public class SpeedUI : UIToolkit, IInputable
             _speedToggleButton.text = currentDate.ToString();
             
             OnDateChanged?.Invoke(MakeRewardItemArray(3));
+            OnRewardUI?.Invoke();
         }
     }
     

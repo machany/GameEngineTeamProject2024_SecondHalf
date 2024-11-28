@@ -46,8 +46,10 @@ public class RewardUI : UIToolkit
 
     private void Awake()
     {
-        SpeedUI.OnDateChanged += GetSO;
         root.style.display = DisplayStyle.None;
+        
+        SpeedUI.OnDateChanged += GetSO;
+        SpeedUI.OnRewardUI += OnRewardUI;
     }
 
     private void OnEnable()
@@ -55,10 +57,17 @@ public class RewardUI : UIToolkit
         GetUIElements();
 
         SetDay();
+
+        _oneResButton.clicked += ClickOneResButton;
+        _twoResButton.clicked += ClickTwoResButton;
+        _threeResButton.clicked += ClickThreeResButton;
     }
 
     private void OnDisable()
     {
+        _oneResButton.clicked -= ClickOneResButton;
+        _twoResButton.clicked -= ClickTwoResButton;
+        _threeResButton.clicked -= ClickThreeResButton;
     }
 
     protected override void GetUIElements()
@@ -98,7 +107,7 @@ public class RewardUI : UIToolkit
     private void SetOneBox(RewardItemSO itemSO)
     {
         _oneItemSO = itemSO;
-        
+
         _oneResButton.style.backgroundImage = itemSO.itemSprite.texture;
         _oneNameLabel.text = itemSO.itemName;
         _oneDescLabel.text = itemSO.itemDescription;
@@ -112,7 +121,7 @@ public class RewardUI : UIToolkit
     private void SetTwoBox(RewardItemSO itemSO)
     {
         _twoItemSO = itemSO;
-        
+
         _twoResButton.style.backgroundImage = itemSO.itemSprite.texture;
         _twoNameLabel.text = itemSO.itemName;
         _twoDescLabel.text = itemSO.itemDescription;
@@ -126,7 +135,7 @@ public class RewardUI : UIToolkit
     private void SetThreeBox(RewardItemSO itemSO)
     {
         _threeItemSO = itemSO;
-        
+
         _threeResButton.style.backgroundImage = itemSO.itemSprite.texture;
         _threeNameLabel.text = itemSO.itemName;
         _threeDescLabel.text = itemSO.itemDescription;
@@ -136,20 +145,56 @@ public class RewardUI : UIToolkit
         else
             _threeCountLabel.text = itemSO.itemCount.ToString();
     }
-    
+
     private void ClickOneResButton()
     {
         root.style.display = DisplayStyle.None;
-        
+
         AddRewardItem(_oneItemSO);
     }
-    
+
+    private void ClickTwoResButton()
+    {
+        root.style.display = DisplayStyle.None;
+
+        AddRewardItem(_twoItemSO);
+    }
+
+    private void ClickThreeResButton()
+    {
+        root.style.display = DisplayStyle.None;
+
+        AddRewardItem(_threeItemSO);
+    }
+
     private void AddRewardItem(RewardItemSO itemSO)
     {
-        // switch (itemSO.itemType)
-        // {
-        //     case ERewardItemType.Line:
-        //         ResourceManager.Instance.
-        // }
+        switch (itemSO.itemType)
+        {
+            case ERewardItemType.Line:
+                ResourceManager.Instance.UnlockLine();
+                break;
+
+            case ERewardItemType.Bridge:
+                BridgeManager.Instance.AddAvailableBridge(itemSO.itemCount);
+                break;
+
+            case ERewardItemType.Car:
+                ResourceManager.Instance.AddVehicle(VehicleType.car, (sbyte)itemSO.itemCount);
+                break;
+
+            case ERewardItemType.Truck:
+                ResourceManager.Instance.AddVehicle(VehicleType.truck, (sbyte)itemSO.itemCount);
+                break;
+
+            case ERewardItemType.Trailer:
+                ResourceManager.Instance.AddVehicle(VehicleType.trailer, (sbyte)itemSO.itemCount);
+                break;
+        }
+    }
+    
+    private void OnRewardUI()
+    {
+        root.style.display = DisplayStyle.Flex;
     }
 }
