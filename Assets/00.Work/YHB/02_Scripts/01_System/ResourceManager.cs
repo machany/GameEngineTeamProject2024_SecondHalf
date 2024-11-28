@@ -92,7 +92,13 @@ public class ResourceManager : MonoSingleton<ResourceManager>
 
     public void UnlockLine()
     {
-        if (_curLineCount < maxLineCount)
-            lineGroup[(LineGroupType)_curLineCount++] = true;
+        foreach (LineGroupType type in lineGroup.Keys)
+        {
+            if (!lineGroup[type])
+            {
+                lineGroup[type] = true;
+                break;
+            }
+        }
     }
 }
