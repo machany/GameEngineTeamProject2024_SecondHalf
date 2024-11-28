@@ -4,6 +4,7 @@ using UnityEngine;
 public class CompanyRandomSpawn : MonoBehaviour, IInitialize
 {
     [Header("Setting")]
+    [SerializeField] private CompanyInfoSO companyIfo;
     [Tooltip("게임 시작시 지정된 범위입니다.")]
     [SerializeField] private Vector2 firstRange = Vector2.zero;
     [Tooltip("게임 시작후 몇초 후에 회사를 생성할지 정합니다.")]
@@ -91,6 +92,9 @@ public class CompanyRandomSpawn : MonoBehaviour, IInitialize
         {
             yield return new WaitForSeconds(_delayTime);
 
+            companyIfo.productTime += companyIfo.productAddTime;
+            companyIfo.requestTime += companyIfo.requestAddTime;
+
             _curSpawnRange = new Vector2(Mathf.Clamp(_curSpawnRange.x + addRange.x, firstRange.x, _spawnRange.x), Mathf.Clamp(_curSpawnRange.y + addRange.y, firstRange.y, _spawnRange.y));
             CameraControl.Instance.curWorldBounds = new Vector2(Mathf.Clamp(_curSpawnRange.x * 2, firstRange.x * 2, CameraControl.Instance.maxWorldBounds.x), Mathf.Clamp(_curSpawnRange.y * 2, firstRange.y * 2, CameraControl.Instance.maxWorldBounds.y));
         } while (SpawnCompany(_curSpawnRange));
@@ -106,7 +110,7 @@ public class CompanyRandomSpawn : MonoBehaviour, IInitialize
             // 회사 중복 불가 범위 체크에 걸리거나 방해물 체크에 걸리면 리셋
         } while (Physics2D.OverlapCircle(targetPos, overlapRadius, notOverlapObjectLayer) || Physics2D.OverlapCircle(targetPos, obstractRadius, obstacle));
 
-        GameObject company = PoolManager.Instance.Pop(companySO);
+        GameObject company = PoolManager.Instance.Pop(companySO.key);
         company.transform.position = targetPos;
         company.transform.parent = building;
 

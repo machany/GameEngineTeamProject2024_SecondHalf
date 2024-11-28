@@ -4,16 +4,14 @@ using UnityEngine.Serialization;
 
 public class BridgeManager : MonoSingleton<BridgeManager>, IInitialize
 {
-    [SerializeField] private int maxBridge = 3;
-    [SerializeField] private int startBridge = 3;
-
     //최대 사용 가능 다리
     private int _availableBridge;
-    
+    private sbyte _maxBridge;
+
     public int AvailableBridge
     {
         get => _availableBridge;
-        set => _availableBridge = Mathf.Clamp(value, 0, maxBridge);
+        set => _availableBridge = Mathf.Clamp(value, 0, _maxBridge);
     }
     
     //현재 사용하고 있는 다리 수량
@@ -27,7 +25,8 @@ public class BridgeManager : MonoSingleton<BridgeManager>, IInitialize
     public void Initialize()
     {
         LineController.Instance.OnBridgeChanged += HandleUpdateCurrentBridge;
-        AvailableBridge = startBridge;
+        AvailableBridge = ResourceManager.Instance.startBridge;
+        _maxBridge = ResourceManager.Instance.maxBridge;
     }
 
     /// <summary>
