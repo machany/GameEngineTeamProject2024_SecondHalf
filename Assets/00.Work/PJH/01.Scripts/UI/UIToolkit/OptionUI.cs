@@ -16,9 +16,11 @@ public class OptionUI : UIToolkit, IInputable, IDraggable
     private const string _musicStr = "Slider_MusicVolume";
     private const string _effectStr = "Slider_EffectVolume";
     private const string _screenStr = "DropdownField_Screen";
+    private const string _gameExitStr = "Button_GameExit";
 
     private Button _optionButton;
     private Button _exitButton;
+    private Button _gameExitButton;
 
     private VisualElement _settingVisualElement;
 
@@ -41,6 +43,7 @@ public class OptionUI : UIToolkit, IInputable, IDraggable
 
         _optionButton.clicked += ClickOptionButton;
         _exitButton.clicked += ClickExitButton;
+        _gameExitButton.clicked += ClickGameExitButton;
 
         InputCompo.OnOptionEvent += OnOptionEvent;
 
@@ -59,6 +62,7 @@ public class OptionUI : UIToolkit, IInputable, IDraggable
     {
         _optionButton.clicked -= ClickOptionButton;
         _exitButton.clicked -= ClickExitButton;
+        _gameExitButton.clicked -= ClickGameExitButton;
 
         InputCompo.OnOptionEvent -= OnOptionEvent;
 
@@ -79,6 +83,7 @@ public class OptionUI : UIToolkit, IInputable, IDraggable
 
         _optionButton = root.Q<Button>(_optionStr);
         _exitButton = root.Q<Button>(_exitStr);
+        _gameExitButton = root.Q<Button>(_gameExitStr);
 
         _settingVisualElement = root.Q<VisualElement>(_settingStr);
 
@@ -125,6 +130,11 @@ public class OptionUI : UIToolkit, IInputable, IDraggable
         _isDrag = false;
         Time.timeScale = 1;
         OnOptionPanel?.Invoke(false);
+    }
+    
+    private void ClickGameExitButton()
+    {
+        // 씬 전환 페이드 ㅇ니아웃
     }
 
     private void OnOptionEvent()
