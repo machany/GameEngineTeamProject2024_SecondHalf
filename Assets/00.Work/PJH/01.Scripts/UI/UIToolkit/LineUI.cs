@@ -91,7 +91,8 @@ public class LineUI : UIToolkit, IInputable
         for (int i = 1; i < 5; ++i)
             _isLineSelected[i] = false;
 
-        OnRedLineEvent?.Invoke();
+        if (ResourceManager.Instance.TryUseLineGroup(LineGroupType.Red))
+            OnRedLineEvent?.Invoke();
     }
 
     private void ClickYellowButton()
@@ -101,27 +102,30 @@ public class LineUI : UIToolkit, IInputable
         for (int i = 0; i < 5; ++i)
             _isLineSelected[i] = i == 1 && _isLineSelected[i];
 
-        OnYellowLineEvent?.Invoke();
+        if (ResourceManager.Instance.TryUseLineGroup(LineGroupType.Yellow))
+            OnYellowLineEvent?.Invoke();
     }
 
     private void ClickGreenButton()
     {
         _isLineSelected[2] = !_isLineSelected[2];
-        
+
         for (int i = 0; i < 5; ++i)
             _isLineSelected[i] = i == 2 && _isLineSelected[i];
 
-        OnGreenLineEvent?.Invoke();
+        if (ResourceManager.Instance.TryUseLineGroup(LineGroupType.Green))
+            OnGreenLineEvent?.Invoke();
     }
 
     private void ClickBlueButton()
     {
         _isLineSelected[3] = !_isLineSelected[3];
-        
+
         for (int i = 0; i < 5; ++i)
             _isLineSelected[i] = i == 3 && _isLineSelected[i];
 
-        OnBlueLineEvent?.Invoke();
+        if (ResourceManager.Instance.TryUseLineGroup(LineGroupType.Blue))
+            OnBlueLineEvent?.Invoke();
     }
 
     private void ClickPurpleButton()
@@ -131,6 +135,7 @@ public class LineUI : UIToolkit, IInputable
         for (int i = 1; i < 4; ++i)
             _isLineSelected[i] = false;
 
-        OnPurpleLineEvent?.Invoke();
+        if (ResourceManager.Instance.TryUseLineGroup(LineGroupType.Purple))
+            OnPurpleLineEvent?.Invoke();
     }
 }
