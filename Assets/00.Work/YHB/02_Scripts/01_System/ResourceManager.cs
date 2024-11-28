@@ -90,6 +90,9 @@ public class ResourceManager : MonoSingleton<ResourceManager>
     public void AddVehicle(VehicleType type, sbyte value)
         => maxUsedVehicle[type] = (sbyte)Mathf.Clamp(maxUsedVehicle[type] + value, 1, maxVehicle);
 
+    public int GetVehicleValue(VehicleType type)
+        => maxUsedVehicle[type] - useVehicle[type];
+
     public void UnlockLine()
     {
         if (_curLineCount < maxLineCount)
