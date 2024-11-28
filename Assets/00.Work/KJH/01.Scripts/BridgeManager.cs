@@ -25,8 +25,8 @@ public class BridgeManager : MonoSingleton<BridgeManager>, IInitialize
     public void Initialize()
     {
         LineController.Instance.OnBridgeChanged += HandleUpdateCurrentBridge;
-        AvailableBridge = ResourceManager.Instance.startBridge;
         _maxBridge = ResourceManager.Instance.maxBridge;
+        AvailableBridge = ResourceManager.Instance.startBridge;
     }
 
     /// <summary>
