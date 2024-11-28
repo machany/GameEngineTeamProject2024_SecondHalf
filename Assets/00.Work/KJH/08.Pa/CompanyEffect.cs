@@ -19,12 +19,8 @@ public class CompanyEffect : MonoBehaviour
     private int circleSizeID;
     private int lineThickID;
 
-    
-    
-
     private float effectTime = 1f;
     private float currentTime = 0;
-    private int companyEffectKey;
 
     [Header("value")]
     [Range(0f, 1f)]
@@ -34,11 +30,6 @@ public class CompanyEffect : MonoBehaviour
 
     private static bool _isReset;
     private static float _lifeTime;
-
-    private void Awake()
-    {
-        companyEffectKey = poolItemSO.key;
-    }
 
     public void OnEnable()
     {
@@ -75,7 +66,7 @@ public class CompanyEffect : MonoBehaviour
 
     private void ObjPool()
     {
-        PoolManager.Instance.Push(companyEffectKey,  gameObject);
+        PoolManager.Instance.Push(poolItemSO.key,  gameObject);
         Debug.Log("pool에 들어감!");
     }
     

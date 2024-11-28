@@ -25,6 +25,8 @@ public enum CompanyShapeType // 회사의 모양을 나타냅니다.
 
 public class Company : Building, IInitialize
 {
+    [SerializeField] private SortMark sortMark;
+    
     /// <summary>회사의 모양</summary>
     public CompanyShapeType shapeType;
     /// <summary>회사의 필요로 하는 자원, 색</summary>
@@ -150,6 +152,7 @@ public class Company : Building, IInitialize
 
     private void OnDisable()
     {
+        sortMark.Disable();
         Disable();
     }
 

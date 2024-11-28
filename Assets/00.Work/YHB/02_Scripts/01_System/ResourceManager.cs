@@ -17,31 +17,31 @@ public class ResourceManager : MonoSingleton<ResourceManager>
     private Dictionary<VehicleType, sbyte> maxUsedVehicle;
 
     [Header("Bridge")]
-    [Tooltip("½ÃÀÛ½Ã Áö±ÞµÇ´Â ´Ù¸®")]
+    [Tooltip("ï¿½ï¿½ï¿½Û½ï¿½ ï¿½ï¿½ï¿½ÞµÇ´ï¿½ ï¿½Ù¸ï¿½")]
     public sbyte startBridge = 3;
-    [Tooltip("ÃÖ´ë·Î ¼ÒÀ¯ÇÒ ¼ö ÀÖ´Â ´Ù¸®")]
+    [Tooltip("ï¿½Ö´ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½Ù¸ï¿½")]
     public sbyte maxBridge = 10;
 
     [Header("Line")]
-    [Tooltip("½ÃÀÛ½Ã »ç¿ëÇÒ ¼ö ÀÖ´Â ¼±·ÎÀÇ °¹¼ö")]
+    [Tooltip("ï¿½ï¿½ï¿½Û½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½")]
     [Range(1, 5)]
     [SerializeField] private sbyte startLineCount = 1;
-    [Tooltip("ÃÖ´ë·Î »ç¿ëÇÒ ¼ö ÀÖ´Â ¼±·ÎÀÇ °¹¼ö")]
+    [Tooltip("ï¿½Ö´ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½")]
     [Range(1, 5)]
     [SerializeField] private sbyte maxLineCount = 1;
     private sbyte _curLineCount = 0;
 
     [Header("Vehicle")]
-    [Tooltip("½ÃÀÛ½Ã Áö±ÞÇÏ´Â Â÷ÀÇ ¼ö")]
+    [Tooltip("ï¿½ï¿½ï¿½Û½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½")]
     [Range(0, 10)]
     [SerializeField] private sbyte startCar = 1;
-    [Tooltip("½ÃÀÛ½Ã Áö±ÞÇÏ´Â Æ®·°ÀÇ ¼ö")]
+    [Tooltip("ï¿½ï¿½ï¿½Û½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½")]
     [Range(0, 10)]
     [SerializeField] private sbyte startTruck = 1;
-    [Tooltip("½ÃÀÛ½Ã Áö±ÞÇÏ´Â Æ®·¹ÀÏ·¯ÀÇ ¼ö")]
+    [Tooltip("ï¿½ï¿½ï¿½Û½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ Æ®ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ ï¿½ï¿½")]
     [Range(0, 10)]
     [SerializeField] private sbyte startTrailer = 1;
-    [Tooltip("ÃÖ´ë·Î »ç¿ëÇÏ´Â Â÷ÀÇ ¼ö")]
+    [Tooltip("ï¿½Ö´ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½")]
     [Range(1, 100)]
     [SerializeField] private sbyte maxVehicle = 100;
 
@@ -91,7 +91,8 @@ public class ResourceManager : MonoSingleton<ResourceManager>
         => maxUsedVehicle[type] = (sbyte)Mathf.Clamp(maxUsedVehicle[type] + value, 1, maxVehicle);
 
     public void UnlockLine()
-    {
+    {        Debug.Log(lineGroup[(LineGroupType)_curLineCount]);
+
         if (_curLineCount < maxLineCount)
             lineGroup[(LineGroupType)_curLineCount++] = true;
     }
