@@ -18,12 +18,7 @@ public class SortMark : MonoBehaviour, IInitialize
     {
         Initialize();
     }
-
-    private void OnDisable()
-    {
-        Disable();
-    }
-
+    
     public void Initialize()
     {
         transform.GetComponentInParent<Company>().OnRequestCostChanged += ChangeRequestSortMark;
@@ -166,7 +161,7 @@ public class SortMark : MonoBehaviour, IInitialize
             _sortProductTargets[i].transform.DOMove(new Vector2(linear(interval, distance, i), CompanyManager.Instance.companyInfo.productPos) + (Vector2)transform.position, CompanyManager.Instance.companyInfo.DuringTime);
     }
 
-    // 0 ~ 2 * pi»çÀÌÀÇ (0 ~ 1)ºñÀ²ÀÇ À§Ä¡¸¦ ±¸ÇÔ
+    // 0 ~ 2 * piï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (0 ~ 1)ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     private float linear(float criteria, int number)
         => Mathf.Lerp(0, 2 * Mathf.PI, criteria * number);
 

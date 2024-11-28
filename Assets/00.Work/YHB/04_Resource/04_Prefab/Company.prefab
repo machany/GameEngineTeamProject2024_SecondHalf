@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildingType: 0
+  sortMark: {fileID: 2426126148979064845}
   shapeType: 0
   requestType: 0
 --- !u!58 &4302235176040073345

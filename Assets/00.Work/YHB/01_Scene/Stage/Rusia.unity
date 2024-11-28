@@ -692,9 +692,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputReader: {fileID: 11400000, guid: 0fe90c4e69d236e4abb64bafd1272308, type: 2}
-  moveSpeed: 10
-  zoomSpeed: 0.3
-  minZoom: 3
+  moveSpeed: 15
+  zoomSpeed: 0.5
+  minZoom: 7
   maxWorldBounds: {x: 96, y: 54}
   curWorldBounds: {x: 0, y: 0}
 --- !u!1 &963492974
@@ -1577,8 +1577,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundChannels:
-  - {fileID: 11400000, guid: 0ac2a47d2b0f08c4d9b895ee8b1b6dc5, type: 2}
-  - {fileID: 11400000, guid: eca7f712d2b87a346b5d444b7e3344c8, type: 2}
+  - {fileID: 11400000, guid: aeea58c6f2d89364eae6ee263a0d0324, type: 2}
+  - {fileID: 11400000, guid: c278cfe365d85fb4a9a1b62705439358, type: 2}
   - {fileID: 11400000, guid: a844bd963fb94564eab42a2969e449f9, type: 2}
 --- !u!1 &1494511242
 GameObject:
@@ -2250,7 +2250,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   companyInfo: {fileID: 11400000, guid: 3a7339551be1b5f41829243707fec7ec, type: 2}
   companyEffect: {fileID: 11400000, guid: 98700383d4be22c4fa0ba2c65ec43e40, type: 2}
-  firstRange: {x: 10.66667, y: 6}
+  firstRange: {x: 32, y: 18}
   firstDelay: 3
   startDelayCount: 3
   startDelay: 5
