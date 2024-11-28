@@ -5,6 +5,11 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "SO/PoolItem")]
 public class PoolItemSO : ScriptableObject
 {
-    public string key;
+    public int key;
     public GameObject prefab;
+
+    private void OnValidate()
+    {
+        key = this.name.GetHashCode();
+    }
 }

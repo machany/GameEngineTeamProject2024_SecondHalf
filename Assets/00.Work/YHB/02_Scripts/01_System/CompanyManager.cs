@@ -22,8 +22,7 @@ public class CompanyManager : MonoSingleton<CompanyManager>
     public Action OnCompanyRequest;
 
     /// 생성 주기입니다.
-    [SerializeField] private float productTime, requestTime;
-    private float _lastProductTime, _lastRequestTime;
+    private float _lastproductTime, _lastrequestTime;
 
     public CompanyInfoSO companyInfo;
 
@@ -76,14 +75,14 @@ public class CompanyManager : MonoSingleton<CompanyManager>
     
     private void AskProductAndRequest()
     {
-        if (Time.time > _lastProductTime + productTime)
+        if (Time.time > _lastproductTime + companyInfo.productTime)
         {
-            _lastProductTime = Time.time;
+            _lastproductTime = Time.time;
             OnCompanyProduct?.Invoke();
         }
-        else if (Time.time > _lastRequestTime + requestTime)
+        else if (Time.time > _lastrequestTime + companyInfo.requestTime)
         {
-            _lastRequestTime = Time.time;
+            _lastrequestTime = Time.time;
             OnCompanyRequest?.Invoke();
         }
     }

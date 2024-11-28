@@ -115,7 +115,7 @@ public class Vehicle : MonoBehaviour, IInitialize
         {
             Debug.LogException(ex);
             _vehicleStorage.SendResource();
-            PoolManager.Instance.Push(_me, gameObject);
+            PoolManager.Instance.Push(_me.key, gameObject);
             return;
         }
     }
