@@ -24,7 +24,7 @@ public class TutorialManager : MonoBehaviour, ITalk , ITalkImage
     {
         Text = _texts;
         Sprite = _sprites;
-        _root = transform.GetChild(0).GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>("Image");
+        _root = transform.GetChild(0).GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>("BG");
         _text = transform.GetChild(1).GetComponent<UIDocument>().rootVisualElement.Q<Label>("Text");
     }
 
@@ -42,7 +42,7 @@ public class TutorialManager : MonoBehaviour, ITalk , ITalkImage
 
     private void Update()
     { 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
         {
             TalkUpdate();
         }
