@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "SO/Vehicle/VehicleSO")]
 public class VehicleSO : ScriptableObject
 {
+    public VehicleType vehicleType;
     public Sprite sprite;
 
     [Header("[ Stat ]")]

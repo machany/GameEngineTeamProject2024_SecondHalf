@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06cda06411191db45a136165caad2a74, type: 3}
   m_Name: Truck
   m_EditorClassIdentifier: 
+  vehicleType: 1
   sprite: {fileID: 21300000, guid: 41672fe9fde86da479fa579f615c880f, type: 3}
   moveSpeed: 1.25
   maxStorageResourceCapacity: 3

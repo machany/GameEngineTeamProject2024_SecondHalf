@@ -4922,5 +4922,5 @@ MonoBehaviour:
   lineThick: _LineThick
   startCircleSize: 0
   startLineThick: 0
-  endCircleSize: 0.9
-  endLineThick: 0.7
+  endCircleSize: 0.7
+  endLineThick: 0.5
