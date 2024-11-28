@@ -154,6 +154,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 503941581}
+  - {fileID: 462030349}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8684509
@@ -169,9 +170,87 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sprites:
-  - {fileID: 21300000, guid: 4a0ce3ed1f34f9d438ff2ca3dd1889d1, type: 3}
+  - {fileID: 21300000, guid: 80809a2ddb10dc942864489073ba50f8, type: 3}
   - {fileID: 21300000, guid: 2a6c11928520742409b930ea7a47ec5f, type: 3}
   - {fileID: 21300000, guid: 63a7676c74ba6d24f9c72a91e8224b64, type: 3}
+  _texts:
+  - "\uC9D1 \uBAA8\uC591\uC73C\uB85C \uC0DD\uAE34 \uAC74\uBB3C\uC778 \uBB3C\uB958\uC13C\uD130\uC785\uB2C8\uB2E4."
+  - "\uBB3C\uB958\uC13C\uD130\uB294 \uC790\uC6D0\uC744 \uC800\uC7A5\uD558\uB294 \uD575\uC2EC\uC801\uC778
+    \uAC74\uBB3C\uC785\uB2C8\uB2E4."
+  - "\uB3C4\uD615\uCC98\uB7FC \uC0DD\uAE34 \uBB3C\uCCB4\uB294 \uD68C\uC0AC\uC785\uB2C8\uB2E4."
+  - "\uD68C\uC0AC\uB294 \uC790\uC6D0\uC744 \uC0DD\uC0B0\uD569\uB2C8\uB2E4."
+  - "\uB610, \uD68C\uC0AC\uB294 \uC790\uC6D0\uC744 \uD544\uC694\uB85C \uD569\uB2C8\uB2E4."
+  - "\uD68C\uC0AC \uC704\uC5D0 \uD45C\uC2DC\uB418\uB294 \uC790\uC6D0\uC740 \uD68C\uC0AC\uAC00
+    \uC0DD\uC0B0\uD55C \uC790\uC6D0\uC785\uB2C8\uB2E4."
+  - "\uC544\uB798\uB294 \uD68C\uC0AC\uAC00 \uD544\uC694\uB85C\uD558\uB294 \uC790\uC6D0\uC785\uB2C8\uB2E4."
+  - "\uD68C\uC0AC\uAC00 \uC0DD\uC0B0/\uD544\uC694\uD55C \uC790\uC6D0\uC5D0 \uB9DE\uCDB0
+    \uC0C9\uC774 \uC815\uD574\uC9D1\uB2C8\uB2E4."
+  - "\uC67C\uCABD \uBC84\uD2BC\uC744 \uB20C\uB7EC \uC790\uB3D9\uCC28\uB97C \uBC30\uCE58\uD569\uB2C8\uB2E4."
+  - "\uBC84\uD2BC\uC744 2\uBC88 \uB204\uB974\uAC70\uB098 \uAC74\uBB3C\uC744 \uB20C\uB7EC
+    \uBC30\uCE58\uD569\uB2C8\uB2E4."
+  - "\uC2DC\uBC1C"
+  - "\uC2DC\uBC1C"
+  - "\uC2DC\uBC1C"
+  - "\uC2DC\uBC1C"
+  - "\uC2DC\uBC1C"
+  - "\uC2DC\uBC1C"
+  - "\uC2DC\uBC1C"
+  - "\uC2DC\uBC1C"
+  - "\uC2DC\uBC1C"
+  - "\uC2DC\uBC1C"
+  - "\uC2DC\uBC1C"
+  - "\uC2DC\uBC1C"
+  - "\uC2DC\uBC1C"
+  - "\uC2DC\uBC1C"
+  - "\uC2DC\uBC1C"
+--- !u!1 &462030348
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 462030349}
+  - component: {fileID: 462030350}
+  m_Layer: 0
+  m_Name: Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &462030349
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 462030348}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8684508}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &462030350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 462030348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PanelSettings: {fileID: 11400000, guid: 9be69b6c5bb44a84482c963c977ae859, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: f9cce700cabf3404aaa26e8048b2ff4a, type: 3}
+  m_SortingOrder: 1
 --- !u!1 &503941580
 GameObject:
   m_ObjectHideFlags: 0
@@ -325,7 +404,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
+  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
