@@ -1,9 +1,13 @@
+using DG.Tweening;
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class LineController : MonoSingleton<LineController>, IInitialize
 {
+    [SerializeField] private PoolItemSO companyEffect;
+
     public Action OnLineChanged;
     public Action OnBridgeFailConnect;
     // 현재 라인이 감지한 모든 강의 갯수
@@ -158,9 +162,12 @@ public class LineController : MonoSingleton<LineController>, IInitialize
 
     private void DropVehicle(bool doubleClick = false, int index = 0)
     {
-        if (!ResourceManager.Instance.TryUseVehicle(_curVehicle.vehicleType)) return;
+        if (!ResourceManager.Instance.TryUseVehicle(_curVehicle.vehicleType))
+        {
+            SoundManager.Instance.PlaySound(SoundType.SFX, "LineConnectionFail");
+            return;
+        }
 
-        Debug.Log("s" + _dropMode);
         Vehicle vehicle = PoolManager.Instance.Pop(vehile.key).GetComponent<Vehicle>();
         vehicle.gameObject.name = _curVehicle.name;
         vehicle.GetComponent<VehicleStorage>().vehicleSO = _curVehicle;
@@ -296,6 +303,11 @@ public class LineController : MonoSingleton<LineController>, IInitialize
         OnLineInfoChanged?.Invoke(_curLine);
 
     EndProces:
+        ParticleSystem particle = PoolManager.Instance.Pop(companyEffect.key).GetComponent<ParticleSystem>();
+        particle.transform.position = companyTrm.position;
+        Color stColor = GetLineGroupColor(CurrentGroupType);
+        stColor.a = 1;
+        particle.startColor = stColor;
         ShotRay();
         _curLine.render.DrawLine();
     }
