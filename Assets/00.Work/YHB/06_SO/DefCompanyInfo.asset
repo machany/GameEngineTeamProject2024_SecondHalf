@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e16f5f80544ea2c42b864e6778e099a0, type: 3}
-  m_Name: CompanyInfo
+  m_Name: DefCompanyInfo
   m_EditorClassIdentifier: 
   companySprites:
   - {fileID: 21300000, guid: f90331b08812ec8439aa18e002faceaa, type: 3}
@@ -19,22 +19,22 @@ MonoBehaviour:
   - {fileID: 21300000, guid: f73f7f632bc3ed140b2eb28e20300fa2, type: 3}
   - {fileID: 21300000, guid: 7b2b82e92d1efad49bbcf347bbd13bb5, type: 3}
   companyColor:
-  - {r: 0.8039216, g: 0.11764706, b: 0.11764706, a: 1}
-  - {r: 0.8039216, g: 0.8039216, b: 0.11764706, a: 1}
-  - {r: 0.11764706, g: 0.8039216, b: 0.11764706, a: 1}
-  - {r: 0.11764706, g: 0.11764706, b: 0.8039216, a: 1}
-  - {r: 0.47058824, g: 0.11764706, b: 0.8039216, a: 1}
-  limitRequestCost: 7
-  maxProductCost: 15
-  maxRequestCost: 12
+  - {r: 0.6679245, g: 0, b: 0, a: 1}
+  - {r: 0.6075471, g: 0.6075471, b: 0, a: 1}
+  - {r: 0, g: 0.6226415, b: 0, a: 1}
+  - {r: 0, g: 0, b: 0.5169811, a: 1}
+  - {r: 0.25007755, g: 0, b: 0.4867924, a: 1}
+  limitRequestCost: 5
+  maxProductCost: 7
+  maxRequestCost: 15
   minDelayTime: 0
   maxDelayTime: 3
   DuringTime: 0.5
-  startCountDownTime: 5.7
+  startCountDownTime: 4.5
   interval: 0.25
   requestPos: -1
   productPos: 1
-  productTime: 8
-  requestTime: 13
-  productAddTime: 0.05
-  requestAddTime: 0.06
+  productTime: 10
+  requestTime: 10
+  productAddTime: 0.1
+  requestAddTime: 0.15

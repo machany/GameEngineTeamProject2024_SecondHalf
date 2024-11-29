@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e16f5f80544ea2c42b864e6778e099a0, type: 3}
-  m_Name: CompanyInfo
+  m_Name: KoreaCompanyInfo
   m_EditorClassIdentifier: 
   companySprites:
   - {fileID: 21300000, guid: f90331b08812ec8439aa18e002faceaa, type: 3}
@@ -24,17 +24,17 @@ MonoBehaviour:
   - {r: 0.11764706, g: 0.8039216, b: 0.11764706, a: 1}
   - {r: 0.11764706, g: 0.11764706, b: 0.8039216, a: 1}
   - {r: 0.47058824, g: 0.11764706, b: 0.8039216, a: 1}
-  limitRequestCost: 7
+  limitRequestCost: 8
   maxProductCost: 15
-  maxRequestCost: 12
+  maxRequestCost: 13
   minDelayTime: 0
   maxDelayTime: 3
   DuringTime: 0.5
-  startCountDownTime: 5.7
+  startCountDownTime: 7
   interval: 0.25
   requestPos: -1
   productPos: 1
-  productTime: 8
-  requestTime: 13
+  productTime: 7
+  requestTime: 11
   productAddTime: 0.05
-  requestAddTime: 0.06
+  requestAddTime: 0.07

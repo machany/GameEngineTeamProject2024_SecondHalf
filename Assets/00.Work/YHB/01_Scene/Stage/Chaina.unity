@@ -281,6 +281,7 @@ GameObject:
   m_Component:
   - component: {fileID: 445631933}
   - component: {fileID: 445631934}
+  - component: {fileID: 445631935}
   m_Layer: 0
   m_Name: RewardUI
   m_TagString: Untagged
@@ -319,6 +320,18 @@ MonoBehaviour:
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: 86085fc46f1f32342bddc57637d7ae08, type: 3}
   m_SortingOrder: 0
+--- !u!114 &445631935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 445631932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5472f86c6cf83b1418256bcc562f2efe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &533932002
 GameObject:
   m_ObjectHideFlags: 0
@@ -407,6 +420,7 @@ MonoBehaviour:
   - 1
   - 1.5
   - 2
+  rewardItemList: []
   _dateTime: 90
 --- !u!114 &604473801
 MonoBehaviour:
@@ -2066,6 +2080,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   companyInfo: {fileID: 11400000, guid: 3a7339551be1b5f41829243707fec7ec, type: 2}
+  productTime: 0
+  requestTime: 0
 --- !u!4 &2083696859
 Transform:
   m_ObjectHideFlags: 0
