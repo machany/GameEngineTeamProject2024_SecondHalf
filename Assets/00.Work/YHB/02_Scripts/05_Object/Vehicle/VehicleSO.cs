@@ -18,6 +18,13 @@ public class VehicleSO : ScriptableObject
     [Range(0f, 5f)]
     public float minStopTime;
     [Tooltip("회사에서 기다리는 최대 시간")]
-    [Range(0.5f, 5f)]
+    [Range(0f, 5f)]
     public float maxStopTime;
+
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        maxStopTime = Mathf.Clamp(maxStopTime, minStopTime, 5f);
+    }
+#endif
 }
