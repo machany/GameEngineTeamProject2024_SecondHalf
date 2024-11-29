@@ -1,12 +1,16 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class OptionUI : UIToolkit, IInputable, IDraggable
 {
+    [SerializeField] private AudioMixer audioMixer;
+
     public static Action<bool> OnOptionPanel;
-    
+
     [field: SerializeField] public InputReader InputCompo { get; private set; }
 
     private const string _optionStr = "Button_Option";
@@ -54,7 +58,7 @@ public class OptionUI : UIToolkit, IInputable, IDraggable
         _masterVolumeSlider.RegisterValueChangedCallback(MasterSlider);
         _musicVolumeSlider.RegisterValueChangedCallback(MusicSlider);
         _effectVolumeSlider.RegisterValueChangedCallback(EffectSlider);
-        
+
         _screenDropdownField.RegisterValueChangedCallback(ScreenDropdown);
     }
 
@@ -69,11 +73,11 @@ public class OptionUI : UIToolkit, IInputable, IDraggable
         _settingVisualElement.UnregisterCallback<MouseDownEvent>(OnMouseDown);
         _settingVisualElement.UnregisterCallback<MouseMoveEvent>(OnMouseMove);
         _settingVisualElement.UnregisterCallback<MouseUpEvent>(OnMouseUp);
-        
+
         _masterVolumeSlider.UnregisterValueChangedCallback(MasterSlider);
         _musicVolumeSlider.UnregisterValueChangedCallback(MusicSlider);
         _effectVolumeSlider.UnregisterValueChangedCallback(EffectSlider);
-        
+
         _screenDropdownField.UnregisterValueChangedCallback(ScreenDropdown);
     }
 
@@ -93,19 +97,22 @@ public class OptionUI : UIToolkit, IInputable, IDraggable
 
         _screenDropdownField = root.Q<DropdownField>(_screenStr);
     }
-    
+
     private void Initialize()
     {
         float masterVolume = PlayerPrefs.GetFloat("MasterVolume", 50);
         _masterVolumeSlider.value = masterVolume;
 
-        float musicVolume = PlayerPrefs.GetFloat("MasterVolume", 50);
+        float musicVolume = PlayerPrefs.GetFloat("MusicVolume", 50);
         _musicVolumeSlider.value = musicVolume;
 
         float effectVolume = PlayerPrefs.GetFloat("EffectVolume", 50);
         _effectVolumeSlider.value = effectVolume;
 
         // 사운드 매니저 값 세팅
+        audioMixer.GetFloat("MasterVolume", out masterVolume);
+        audioMixer.GetFloat("MusicVolume", out musicVolume);
+        audioMixer.GetFloat("EffectVolume", out effectVolume);
 
         _screenDropdownField.choices = new List<string> { "전체 화면", "창 화면" };
 
@@ -131,10 +138,11 @@ public class OptionUI : UIToolkit, IInputable, IDraggable
         Time.timeScale = 1;
         OnOptionPanel?.Invoke(false);
     }
-    
+
     private void ClickGameExitButton()
     {
         // 씬 전환 페이드 ㅇ니아웃
+        FadeManager.FadeOut(() => SceneManager.LoadScene("Title"));
     }
 
     private void OnOptionEvent()
@@ -230,7 +238,7 @@ public class OptionUI : UIToolkit, IInputable, IDraggable
                 Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
                 PlayerPrefs.SetString("ScreenSetting", changeEvent.newValue);
                 break;
-            
+
             case "창 화면":
                 Screen.fullScreenMode = FullScreenMode.Windowed;
                 PlayerPrefs.SetString("ScreenSetting", changeEvent.newValue);

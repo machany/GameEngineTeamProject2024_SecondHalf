@@ -1,12 +1,20 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UIElements;
 
 public class MenuUI : UIToolkit
 {
-    private readonly string[] _stageGroupStr = { "GroupBox_Korea", "GroupBox_China", "GroupBox_Russia" };
-    private readonly string[] _stageLabelStr = { "Label_Korea", "Label_China", "Label_Russia" };
-    private readonly string[] _stageButtonStr = { "Button_Korea", "Button_China", "Button_Russia" };
+    [SerializeField] private string guideScene;
+    [SerializeField] private string[] stageScene;
+    
+    [SerializeField] private AudioMixer masterMixer; 
+
+    private readonly string[] _stageGroupStr = { "GroupBox_Korea", "GroupBox_China", "GroupBox_Russia", "GroupBox_Def" };
+    private readonly string[] _stageScoreLabelStr = { "Label_KoreaScore", "Label_ChinaScore", "Label_RussiaScore", "Label_DefScore" };
+    private readonly string[] _stageButtonStr = { "Button_Korea", "Button_China", "Button_Russia", "Button_Def" };
 
     // 타이틀
     private VisualElement _titleVisualElement;
@@ -32,9 +40,13 @@ public class MenuUI : UIToolkit
     private VisualElement _stageVisualElement;
     private Button _stageExitButton;
     private ScrollView _stageScrollView;
-    private GroupBox[] _stageGroupBoxes = new GroupBox[5];
-    private Label[] _stageLabels = new Label[5];
-    private Button[] _stageButtons = new Button[5];
+    private GroupBox[] _stageGroupBoxes = new GroupBox[4];
+    private Label[] _stageLabels = new Label[4];
+    private Button[] _stageButtons = new Button[4];
+
+    private string[] _stageClearInfo;
+    private string[] _stageHighScoreInfo;
+    
 
     private void OnEnable()
     {
@@ -66,6 +78,8 @@ public class MenuUI : UIToolkit
 
         _stageButtons[0].clicked += ClickKoreaButton;
         _stageButtons[1].clicked += ClickChinaButton;
+        _stageButtons[2].clicked += ClickRussiaButton;
+        _stageButtons[3].clicked += ClickDefButton;
     }
 
     private void OnDisable()
@@ -88,6 +102,8 @@ public class MenuUI : UIToolkit
 
         _stageButtons[0].clicked -= ClickKoreaButton;
         _stageButtons[1].clicked -= ClickChinaButton;
+        _stageButtons[2].clicked -= ClickRussiaButton;
+        _stageButtons[3].clicked -= ClickDefButton;
     }
 
     protected override void GetUIElements()
@@ -115,10 +131,10 @@ public class MenuUI : UIToolkit
         _stageExitButton = root.Q<Button>("Button_StageExit");
         _stageScrollView = root.Q<ScrollView>("ScrollView_Stage");
 
-        for (int i = 0; i < _stageGroupStr.Length; ++i)
+        for (int i = 0; i < 4; ++i)
         {
             _stageGroupBoxes[i] = root.Q<GroupBox>(_stageGroupStr[i]);
-            _stageLabels[i] = root.Q<Label>(_stageLabelStr[i]);
+            _stageLabels[i] = root.Q<Label>(_stageScoreLabelStr[i]);
             _stageButtons[i] = root.Q<Button>(_stageButtonStr[i]);
         }
     }
@@ -128,13 +144,16 @@ public class MenuUI : UIToolkit
         float masterVolume = PlayerPrefs.GetFloat("MasterVolume", 50);
         _masterVolumeSlider.value = masterVolume;
 
-        float musicVolume = PlayerPrefs.GetFloat("MasterVolume", 50);
+        float musicVolume = PlayerPrefs.GetFloat("MusicVolume", 50);
         _musicVolumeSlider.value = musicVolume;
 
         float effectVolume = PlayerPrefs.GetFloat("EffectVolume", 50);
         _effectVolumeSlider.value = effectVolume;
 
         // 사운드 매니저 값 세팅
+        masterMixer.GetFloat("MasterVolume", out masterVolume);
+        masterMixer.GetFloat("MusicVolume", out musicVolume);
+        masterMixer.GetFloat("EffectVolume", out effectVolume);
 
         string screenValue = PlayerPrefs.GetString("ScreenSetting", "전체 화면");
 
@@ -170,7 +189,7 @@ public class MenuUI : UIToolkit
 
     private void ClickGuideButton()
     {
-        // 튜토리얼 씬 전환 FadeManager.FadeIn
+        FadeManager.FadeOut(() => SceneManager.LoadScene(guideScene));
     }
 
     private void ClickSettingButton()
@@ -208,18 +227,21 @@ public class MenuUI : UIToolkit
     {
         // 사운드 세팅
         PlayerPrefs.SetFloat("MasterVolume", changeEvent.newValue);
+        masterMixer.SetFloat("MasterVolume", changeEvent.newValue);
     }
 
     private void MusicSlider(ChangeEvent<float> changeEvent)
     {
         // 사운드 세팅
         PlayerPrefs.SetFloat("MusicVolume", changeEvent.newValue);
+        masterMixer.SetFloat("MusicVolume", changeEvent.newValue);
     }
 
     private void EffectSlider(ChangeEvent<float> changeEvent)
     {
         // 사운드 세팅
         PlayerPrefs.SetFloat("EffectVolume", changeEvent.newValue);
+        masterMixer.SetFloat("EffectVolume", changeEvent.newValue);
     }
 
     private void ScreenDropdown(ChangeEvent<string> changeEvent)
@@ -251,23 +273,33 @@ public class MenuUI : UIToolkit
 
     private void ClickKoreaButton()
     {
-        // 씬이동
+        FadeManager.FadeOut(() => SceneManager.LoadScene(stageScene[0]));
     }
-
+    
     private void ClickChinaButton()
     {
-        // 씬이동
+        FadeManager.FadeOut(() => SceneManager.LoadScene(stageScene[1]));
+    }
+
+    private void ClickRussiaButton()
+    {
+        FadeManager.FadeOut(() => SceneManager.LoadScene(stageScene[2]));
+    }
+    
+    private void ClickDefButton()
+    {
+        FadeManager.FadeOut(() => SceneManager.LoadScene(stageScene[3]));
     }
 
     private void LoadStageInformation()
     {
-        //SaveGame.Instance.Save();
+        //_stageClearInfo = SaveGame.Instance.Load(1, 4);
     }
 
     private void LoadHighScore()
     {
         // 파일 입출력으로 스코어 업데이트
-        //SaveGame.Instance.Load(1,5);
+        //_stageHighScoreInfo = SaveGame.Instance.Load(5, 4);
     }
 
     #endregion
