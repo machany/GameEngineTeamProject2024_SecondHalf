@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68d547d025cec7540954cde871a12d6c, type: 3}
   m_Name: Car
   m_EditorClassIdentifier: 
-  _itemSprite: {fileID: 0}
-  _itemName: "\uC790\uB3D9\uCC28"
-  _itemDescription: "\uC790\uB3D9\uCC28\uB97C \uB354 \uBC30\uCE58\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4."
-  _itemCount: 2
-  _itemType: 2
+  itemSprite: {fileID: 21300000, guid: 011fc529f41d8a8448bded78026865e5, type: 3}
+  itemName: "\uC790\uB3D9\uCC28"
+  itemDescription: "\uC790\uB3D9\uCC28\uB97C \uB354 \uBC30\uCE58\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4."
+  itemCount: 2
+  itemType: 2

@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68d547d025cec7540954cde871a12d6c, type: 3}
   m_Name: Bridge
   m_EditorClassIdentifier: 
-  _itemSprite: {fileID: 0}
-  _itemName: "\uB2E4\uB9AC"
-  _itemDescription: "\uAC15\uC744 \uC9C0\uB098\uB294 \uC120\uB85C\uB97C \uB354 \uB9CC\uB4E4
+  itemSprite: {fileID: 21300000, guid: a188ca369ee38cf4dab48bf31ce49333, type: 3}
+  itemName: "\uB2E4\uB9AC"
+  itemDescription: "\uAC15\uC744 \uC9C0\uB098\uB294 \uC120\uB85C\uB97C \uB354 \uAC74\uC124\uD560
     \uC218 \uC788\uC2B5\uB2C8\uB2E4."
-  _itemCount: 2
-  _itemType: 1
+  itemCount: 2
+  itemType: 1
