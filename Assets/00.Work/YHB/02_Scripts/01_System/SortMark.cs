@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class SortMark : MonoBehaviour, IInitialize
 {
+    private Company company;
+
     private List<GameObject> _sortRequestTargets = new List<GameObject>();
     private List<GameObject> _sortProductTargets = new List<GameObject>();
 
@@ -21,17 +23,16 @@ public class SortMark : MonoBehaviour, IInitialize
     
     public void Initialize()
     {
-        transform.GetComponentInParent<Company>().OnRequestCostChanged += ChangeRequestSortMark;
-        transform.GetComponentInParent<Company>().OnProductCostChanged += ChangeProductSortMark;
-
+        company = transform.GetComponentInParent<Company>();
+        company.OnRequestCostChanged += ChangeRequestSortMark;
+        company.OnProductCostChanged += ChangeProductSortMark;
 
         LineUI.OnToggleLineEvent += ToggleColorRequest;
         LineUI.OnToggleLineEvent += ToggleColorRroduct;
         _invisibleValue = LineController.Instance.invisibleValue * 1.5f;
     }
-    public void Disable(){}
 
-    public void Disable(Company company)
+    public void Disable()
     {
         company.OnRequestCostChanged -= ChangeRequestSortMark;
         company.OnProductCostChanged -= ChangeProductSortMark;
@@ -73,6 +74,7 @@ public class SortMark : MonoBehaviour, IInitialize
             for (int i = 0; i < save; i++)
             {
                 _sortRequestTargets.Add(PoolManager.Instance.Pop(RequestMark.key));
+                _sortRequestTargets[_sortRequestTargets.Count - 1].GetComponent<SpriteRenderer>().color = CompanyManager.Instance.companyInfo.GetResourceColor(company.requestType);
                 _sortRequestTargets[_sortRequestTargets.Count - 1].transform.position = transform.position;
             }
         }
@@ -99,6 +101,7 @@ public class SortMark : MonoBehaviour, IInitialize
             for (int i = 0; i < save; i++)
             {
                 _sortProductTargets.Add(PoolManager.Instance.Pop(ProductMark.key));
+                _sortRequestTargets[_sortRequestTargets.Count - 1].GetComponent<SpriteRenderer>().color = CompanyManager.Instance.companyInfo.GetResourceColor(CompanyManager.Instance.productShape[company.shapeType]);
                 _sortProductTargets[_sortProductTargets.Count - 1].transform.position = transform.position;
             }
         }
