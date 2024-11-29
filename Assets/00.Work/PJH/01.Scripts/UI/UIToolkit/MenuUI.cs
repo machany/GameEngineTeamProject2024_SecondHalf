@@ -10,7 +10,8 @@ public class MenuUI : UIToolkit
     [SerializeField] private string guideScene;
     [SerializeField] private string[] stageScene;
     
-    [SerializeField] private AudioMixer masterMixer; 
+    [SerializeField] private SoundChannelSO musicSound;
+    [SerializeField] private SoundChannelSO effectSound; 
 
     private readonly string[] _stageGroupStr = { "GroupBox_Korea", "GroupBox_China", "GroupBox_Russia", "GroupBox_Def" };
     private readonly string[] _stageScoreLabelStr = { "Label_KoreaScore", "Label_ChinaScore", "Label_RussiaScore", "Label_DefScore" };
@@ -150,10 +151,9 @@ public class MenuUI : UIToolkit
         float effectVolume = PlayerPrefs.GetFloat("EffectVolume", 50);
         _effectVolumeSlider.value = effectVolume;
 
-        // 사운드 매니저 값 세팅
-        masterMixer.GetFloat("MasterVolume", out masterVolume);
-        masterMixer.GetFloat("MusicVolume", out musicVolume);
-        masterMixer.GetFloat("EffectVolume", out effectVolume);
+        //masterSound.volume = masterVolume;
+        musicSound.volume = musicVolume;
+        effectSound.volume = effectVolume;
 
         string screenValue = PlayerPrefs.GetString("ScreenSetting", "전체 화면");
 
@@ -226,22 +226,23 @@ public class MenuUI : UIToolkit
     private void MasterSlider(ChangeEvent<float> changeEvent)
     {
         // 사운드 세팅
+        musicSound.volume = changeEvent.newValue;
+        effectSound.volume = changeEvent.newValue;
         PlayerPrefs.SetFloat("MasterVolume", changeEvent.newValue);
-        masterMixer.SetFloat("MasterVolume", changeEvent.newValue);
     }
 
     private void MusicSlider(ChangeEvent<float> changeEvent)
     {
         // 사운드 세팅
+        musicSound.volume = changeEvent.newValue;
         PlayerPrefs.SetFloat("MusicVolume", changeEvent.newValue);
-        masterMixer.SetFloat("MusicVolume", changeEvent.newValue);
     }
 
     private void EffectSlider(ChangeEvent<float> changeEvent)
     {
         // 사운드 세팅
+        effectSound.volume = changeEvent.newValue;
         PlayerPrefs.SetFloat("EffectVolume", changeEvent.newValue);
-        masterMixer.SetFloat("EffectVolume", changeEvent.newValue);
     }
 
     private void ScreenDropdown(ChangeEvent<string> changeEvent)

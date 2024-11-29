@@ -7,7 +7,8 @@ using UnityEngine.UIElements;
 
 public class OptionUI : UIToolkit, IInputable, IDraggable
 {
-    [SerializeField] private AudioMixer audioMixer;
+    [SerializeField] private SoundChannelSO musicSound;
+    [SerializeField] private SoundChannelSO effectSound;
 
     public static Action<bool> OnOptionPanel;
 
@@ -108,11 +109,10 @@ public class OptionUI : UIToolkit, IInputable, IDraggable
 
         float effectVolume = PlayerPrefs.GetFloat("EffectVolume", 50);
         _effectVolumeSlider.value = effectVolume;
-
-        // 사운드 매니저 값 세팅
-        audioMixer.GetFloat("MasterVolume", out masterVolume);
-        audioMixer.GetFloat("MusicVolume", out musicVolume);
-        audioMixer.GetFloat("EffectVolume", out effectVolume);
+        
+        //masterSound.volume = masterVolume;
+        musicSound.volume = musicVolume;
+        effectSound.volume = effectVolume;
 
         _screenDropdownField.choices = new List<string> { "전체 화면", "창 화면" };
 
@@ -215,18 +215,22 @@ public class OptionUI : UIToolkit, IInputable, IDraggable
     private void MasterSlider(ChangeEvent<float> changeEvent)
     {
         // 사운드 세팅
+        musicSound.volume = changeEvent.newValue;
+        effectSound.volume = changeEvent.newValue;
         PlayerPrefs.SetFloat("MasterVolume", changeEvent.newValue);
     }
 
     private void MusicSlider(ChangeEvent<float> changeEvent)
     {
         // 사운드 세팅
+        musicSound.volume = changeEvent.newValue;
         PlayerPrefs.SetFloat("MusicVolume", changeEvent.newValue);
     }
 
     private void EffectSlider(ChangeEvent<float> changeEvent)
     {
         // 사운드 세팅
+        effectSound.volume = changeEvent.newValue;
         PlayerPrefs.SetFloat("EffectVolume", changeEvent.newValue);
     }
 

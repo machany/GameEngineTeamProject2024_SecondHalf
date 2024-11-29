@@ -1738,7 +1738,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cebafd72858ba24488a71e62755524b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioMixer: {fileID: 24100000, guid: 75b9aa39ce51c8345a88ce0c47700e26, type: 2}
+  musicSound: {fileID: 11400000, guid: aeea58c6f2d89364eae6ee263a0d0324, type: 2}
+  effectSound: {fileID: 11400000, guid: c278cfe365d85fb4a9a1b62705439358, type: 2}
   <InputCompo>k__BackingField: {fileID: 11400000, guid: 0fe90c4e69d236e4abb64bafd1272308, type: 2}
 --- !u!114 &1552150345
 MonoBehaviour:
