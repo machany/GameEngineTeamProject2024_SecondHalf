@@ -160,7 +160,7 @@ public class LineController : MonoSingleton<LineController>, IInitialize
 
     private void DropVehicle(bool doubleClick = false, int index = 0)
     {
-        if (!ResourceManager.Instance.TryUseVehicle(_curVehicle.vehicleType))
+        if (_curLine.lineInfo.Count <= 0 || !ResourceManager.Instance.TryUseVehicle(_curVehicle.vehicleType))
         {
             SoundManager.Instance.PlaySound(SoundType.SFX, "LineConnectionFail");
             return;

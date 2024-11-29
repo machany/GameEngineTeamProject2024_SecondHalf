@@ -21,7 +21,7 @@ public class CompanyManager : MonoSingleton<CompanyManager>
 
     public CompanyInfoSO companyInfo;
 
-    public float productTime, requestTime;
+    [HideInInspector] public float productTime, requestTime;
 
     private void Awake()
     {
@@ -68,9 +68,8 @@ public class CompanyManager : MonoSingleton<CompanyManager>
     {
         productShape.Clear();
 
-        int n = Enum.GetValues(typeof(CompanyShapeType)).Length;
-        for (sbyte i = 0; i < n; i++)
-            productShape.Add((CompanyShapeType)i, (ResourceType)i);
+        for (sbyte i = 0; i < 5; i++)
+            productShape.Add(companyShape.GetValue(), companyResource.GetValue());
     }
 
     private void AskProductAndRequest()
