@@ -105,7 +105,7 @@ public class Vehicle : MonoBehaviour, IInitialize
         try
         {
             if (!_currentLine.lineInfo.Contains(_currentTargetTrm))
-                throw new Exception("??? ?????. ?? ??? ????? ??");
+                throw new Exception("의도된 예외");
 
             _vehicleStorage.ArriveBuilding(_currentTargetTrm, _currentLine, index - _dir, _dir);
             SetMove(_currentLine.lineInfo[index]);
