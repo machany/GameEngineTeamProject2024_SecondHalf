@@ -1265,12 +1265,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   items:
-  - {fileID: 11400000, guid: a14c9eeeef8123a4ab72526d54c3837e, type: 2}
-  - {fileID: 11400000, guid: 08be7555d5d75dd41a846fa58cb104b2, type: 2}
   - {fileID: 11400000, guid: 7198d1eb0c691c54f9655aab62584556, type: 2}
   - {fileID: 11400000, guid: 6d488ded90540214da960406d3c85952, type: 2}
   - {fileID: 11400000, guid: b556b593d780cc046ad6c7c6526086cc, type: 2}
   - {fileID: 11400000, guid: 98700383d4be22c4fa0ba2c65ec43e40, type: 2}
+  - {fileID: 11400000, guid: 1c74e6fb5b50726488a514013e74b051, type: 2}
 --- !u!1 &1219009512
 GameObject:
   m_ObjectHideFlags: 0
