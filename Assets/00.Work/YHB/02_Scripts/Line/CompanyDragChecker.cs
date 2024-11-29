@@ -19,9 +19,10 @@ public class CompanyDragChecker : MonoBehaviour
         LineController.Instance.ResetCurTrm();
         StopAllCoroutines();
         _equalsBuildingCool = false;
-
+        
         Collider2D collision = Physics2D.OverlapCircle(position, radius, buildingLayer);
-        CheckBuilding(collision.gameObject);
+        if (collision is not null)
+            CheckBuilding(collision.gameObject);
     }
 
     public void CheckBuildingDrag(Vector3 position)

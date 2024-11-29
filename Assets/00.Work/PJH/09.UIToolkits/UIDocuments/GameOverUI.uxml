@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement style="flex-grow: 1; background-color: rgba(255, 255, 255, 0.6);">
+        <ui:Label tabindex="-1" text="게임 종료" parse-escape-sequences="true" display-tooltip-when-elided="true" style="align-self: center; width: 30%; height: 20%; -unity-font-definition: url(&quot;project://database/Assets/00.Work/PJH/08.Fonts/Pretendard-Bold%20SDF.asset?fileID=11400000&amp;guid=9a04ffdef7b72414bbbea9737116b924&amp;type=2#Pretendard-Bold SDF&quot;); -unity-text-align: middle-center; font-size: 150px; top: 100px;" />
+        <ui:Label tabindex="-1" text="당신의 회사는 너무 혼잡해 폐쇄되었습니다.&#10;당신은 N일 동안 회사를 운영했습니다." parse-escape-sequences="true" display-tooltip-when-elided="true" style="align-self: center; top: 100px; font-size: 40px; -unity-text-align: middle-left; -unity-font-definition: url(&quot;project://database/Assets/00.Work/PJH/08.Fonts/Pretendard-Bold%20SDF.asset?fileID=11400000&amp;guid=9a04ffdef7b72414bbbea9737116b924&amp;type=2#Pretendard-Bold SDF&quot;);" />
+    </ui:VisualElement>
+</ui:UXML>

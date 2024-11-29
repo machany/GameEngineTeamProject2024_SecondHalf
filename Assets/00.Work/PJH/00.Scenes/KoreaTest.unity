@@ -319,7 +319,7 @@ MonoBehaviour:
   m_PanelSettings: {fileID: 11400000, guid: 5f6dabb821e20554ab0dd248f08cbd7e, type: 2}
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: 86085fc46f1f32342bddc57637d7ae08, type: 3}
-  m_SortingOrder: 0
+  m_SortingOrder: -1
 --- !u!114 &445631935
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1219,7 +1219,7 @@ MonoBehaviour:
   m_PanelSettings: {fileID: 11400000, guid: 5f6dabb821e20554ab0dd248f08cbd7e, type: 2}
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: c30ecfd63e570664b8a29d7f798b5553, type: 3}
-  m_SortingOrder: 1
+  m_SortingOrder: 0
 --- !u!1 &1200871488
 GameObject:
   m_ObjectHideFlags: 0
