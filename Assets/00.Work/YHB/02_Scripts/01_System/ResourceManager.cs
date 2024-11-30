@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public enum VehicleType
@@ -12,7 +10,7 @@ public enum VehicleType
 
 public class ResourceManager : MonoSingleton<ResourceManager>
 {
-    public Dictionary<LineGroupType, bool> lineGroup {  get; private set; }
+    public Dictionary<LineGroupType, bool> lineGroup { get; private set; }
     private Dictionary<VehicleType, sbyte> useVehicle;
     private Dictionary<VehicleType, sbyte> maxUsedVehicle;
 
@@ -29,7 +27,6 @@ public class ResourceManager : MonoSingleton<ResourceManager>
     [Tooltip("최대로 사용할 수 있는 선로의 갯수")]
     [Range(1, 5)]
     [SerializeField] private sbyte maxLineCount = 1;
-    private sbyte _curLineCount = 0;
 
     [Header("Vehicle")]
     [Tooltip("시작시 지급하는 차의 수")]
@@ -47,7 +44,6 @@ public class ResourceManager : MonoSingleton<ResourceManager>
 
     private void Awake()
     {
-        _curLineCount = startLineCount;
         lineGroup = new Dictionary<LineGroupType, bool>()
         {
             { LineGroupType.Red, false},
@@ -92,21 +88,25 @@ public class ResourceManager : MonoSingleton<ResourceManager>
         useVehicle[type]--;
     }
 
-    public void AddVehicle(VehicleType type, sbyte value)
-        => maxUsedVehicle[type] = (sbyte)Mathf.Clamp(maxUsedVehicle[type] + value, 1, maxVehicle);
-
     public int GetVehicleValue(VehicleType type)
         => maxUsedVehicle[type] - useVehicle[type];
 
-    public void UnlockLine()
+    public bool UnlockLine()
     {
         foreach (LineGroupType type in lineGroup.Keys)
         {
             if (!lineGroup[type])
             {
                 lineGroup[type] = true;
-                break;
+                return true;
             }
         }
+        return false;
+    }
+
+    public bool TryAddVehicle(VehicleType type, sbyte value)
+    {
+        maxUsedVehicle[type] = (sbyte)Mathf.Clamp(maxUsedVehicle[type] + value, 1, maxVehicle);
+        return maxUsedVehicle[type] < maxVehicle;
     }
 }

@@ -38,7 +38,7 @@ public class SpeedUI : UIToolkit, IInputable
     
     private float _currentTime;
 
-    private NotOverlapValue<RewardItemSO> _rewardItem;
+    private static NotOverlapValue<RewardItemSO> _rewardItem;
     
     private void OnEnable()
     {
@@ -148,8 +148,12 @@ public class SpeedUI : UIToolkit, IInputable
             _currentTime = 0;
             ++currentDate;
             _speedToggleButton.text = currentDate.ToString();
-            
-            OnDateChanged?.Invoke(MakeRewardItemArray(3));
+
+            RewardItemSO[] reward = MakeRewardItemArray(3);
+            if (reward is null)
+                return;
+
+            OnDateChanged?.Invoke(reward);
             OnRewardUI?.Invoke();
         }
     }
@@ -157,10 +161,16 @@ public class SpeedUI : UIToolkit, IInputable
     private RewardItemSO[] MakeRewardItemArray(int count)
     {
         var array = new RewardItemSO[count];
-        
+
+        if (_rewardItem.GetRangeCount() <= 0)
+            return null;
+
         for (int i = 0; i < count; ++i)
             array[i] = _rewardItem.GetValue();
 
         return array;
     }
+
+    public static void Delete(RewardItemSO item)
+        => _rewardItem.RangeRemove(item);
 }
