@@ -1,7 +1,7 @@
 .button-toggle {
     width: 150px;
     height: 100px;
-    background-image: url("project://database/Assets/00.Work/PJH/04.Sprites/UI/toggle2.png?fileID=21300000&guid=b5b02719a8fc93f42bb69f16363d719b&type=3#toggle2");
+    background-image: url("project://database/Assets/00.Work/PJH/04.Sprites/UI/Toggle2.png?fileID=21300000&guid=b5b02719a8fc93f42bb69f16363d719b&type=3#Toggle2");
     border-left-color: rgba(255, 255, 255, 0);
     border-right-color: rgba(255, 255, 255, 0);
     border-top-color: rgba(255, 255, 255, 0);
@@ -12,4 +12,84 @@
 
 .button-toggle-2 {
     background-image: url("project://database/Assets/00.Work/PJH/04.Sprites/UI/toggle3.png?fileID=21300000&guid=f58c36be0a82b6849b3addfac8600890&type=3#toggle3");
+}
+
+.button-red {
+    width: 100px;
+    height: 100px;
+    background-color: rgba(255, 255, 255, 0);
+    border-left-color: rgba(149, 149, 149, 0);
+    border-right-color: rgba(149, 149, 149, 0);
+    border-top-color: rgba(149, 149, 149, 0);
+    border-bottom-color: rgba(149, 149, 149, 0);
+    background-image: url("project://database/Assets/00.Work/PJH/04.Sprites/UI/line2.png?fileID=21300000&guid=3ff79c3e84a839c498db33c4b0989245&type=3#line2");
+    -unity-background-image-tint-color: rgb(236, 26, 26);
+}
+
+.button-yellow {
+    background-color: rgba(255, 255, 255, 0);
+    width: 100px;
+    height: 100px;
+    border-left-color: rgba(149, 149, 149, 0);
+    border-right-color: rgba(149, 149, 149, 0);
+    border-top-color: rgba(149, 149, 149, 0);
+    border-bottom-color: rgba(149, 149, 149, 0);
+    -unity-background-image-tint-color: rgb(222, 217, 43);
+    background-image: url("project://database/Assets/00.Work/PJH/04.Sprites/UI/line2.png?fileID=21300000&guid=3ff79c3e84a839c498db33c4b0989245&type=3#line2");
+}
+
+.button-green {
+    width: 100px;
+    height: 100px;
+    background-color: rgba(255, 255, 255, 0);
+    border-left-color: rgba(149, 149, 149, 0);
+    border-right-color: rgba(149, 149, 149, 0);
+    border-top-color: rgba(149, 149, 149, 0);
+    border-bottom-color: rgba(149, 149, 149, 0);
+    -unity-background-image-tint-color: rgb(45, 213, 85);
+    background-image: url("project://database/Assets/00.Work/PJH/04.Sprites/UI/line2.png?fileID=21300000&guid=3ff79c3e84a839c498db33c4b0989245&type=3#line2");
+}
+
+.button-blue {
+    width: 100px;
+    height: 100px;
+    background-color: rgba(255, 255, 255, 0);
+    border-left-color: rgba(149, 149, 149, 0);
+    border-right-color: rgba(149, 149, 149, 0);
+    border-top-color: rgba(149, 149, 149, 0);
+    border-bottom-color: rgba(149, 149, 149, 0);
+    -unity-background-image-tint-color: rgb(44, 95, 188);
+    background-image: url("project://database/Assets/00.Work/PJH/04.Sprites/UI/line2.png?fileID=21300000&guid=3ff79c3e84a839c498db33c4b0989245&type=3#line2");
+}
+
+.button-purple {
+    width: 100px;
+    height: 100px;
+    background-color: rgba(255, 255, 255, 0);
+    border-left-color: rgba(149, 149, 149, 0);
+    border-right-color: rgba(149, 149, 149, 0);
+    border-top-color: rgba(149, 149, 149, 0);
+    border-bottom-color: rgba(149, 149, 149, 0);
+    -unity-background-image-tint-color: rgb(185, 47, 203);
+    background-image: url("project://database/Assets/00.Work/PJH/04.Sprites/UI/line2.png?fileID=21300000&guid=3ff79c3e84a839c498db33c4b0989245&type=3#line2");
+}
+
+.button-red-dark {
+    -unity-background-image-tint-color: rgb(84, 60, 60);
+}
+
+.button-yellow-dark {
+    -unity-background-image-tint-color: rgb(69, 68, 54);
+}
+
+.button-green-dark {
+    -unity-background-image-tint-color: rgb(50, 61, 52);
+}
+
+.button-blue-dark {
+    -unity-background-image-tint-color: rgb(30, 32, 36);
+}
+
+.button-purple-dark {
+    -unity-background-image-tint-color: rgb(50, 42, 51);
 }
