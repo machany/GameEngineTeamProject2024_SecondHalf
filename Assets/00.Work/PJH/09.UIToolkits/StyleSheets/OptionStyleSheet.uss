@@ -78,3 +78,7 @@
 .button-exit:active {
     -unity-background-image-tint-color: rgb(205, 30, 30);
 }
+
+.unity-popup-field__label {
+    color: rgb(255, 255, 255);
+}

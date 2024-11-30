@@ -241,7 +241,7 @@ public class OptionUI : UIToolkit, IInputable, IDraggable
     {
         switch (changeEvent.newValue)
         {
-            case "전체화면":
+            case "전체 화면":
                 Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
                 PlayerPrefs.SetString("ScreenSetting", changeEvent.newValue);
                 break;
