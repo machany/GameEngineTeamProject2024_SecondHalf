@@ -123,11 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &181551022 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9013358147622996266, guid: 9d3cf0848e68f184286d227f1c32705c, type: 3}
-  m_PrefabInstance: {fileID: 2075924535}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &181551023 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2867132524321254531, guid: 9d3cf0848e68f184286d227f1c32705c, type: 3}
@@ -281,7 +276,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Effect: {fileID: 1219009512}
-  GameOverPanel: {fileID: 181551022}
+  GameOverPanel: {fileID: 0}
 --- !u!1 &445631932
 GameObject:
   m_ObjectHideFlags: 0
@@ -330,7 +325,7 @@ MonoBehaviour:
   m_PanelSettings: {fileID: 11400000, guid: 5f6dabb821e20554ab0dd248f08cbd7e, type: 2}
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: 86085fc46f1f32342bddc57637d7ae08, type: 3}
-  m_SortingOrder: 0
+  m_SortingOrder: 1
 --- !u!114 &445631935
 MonoBehaviour:
   m_ObjectHideFlags: 0
