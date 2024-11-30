@@ -3,7 +3,7 @@
     <ui:VisualElement name="VisualElement_Line" style="flex-grow: 0; width: 40%; height: 100px; align-self: center; top: 980px; flex-direction: row; justify-content: space-around;">
         <ui:VisualElement name="VisualElement" style="flex-grow: 0; width: 150px; height: 100px; flex-shrink: 0; position: absolute; background-image: url(&quot;project://database/Assets/00.Work/PJH/04.Sprites/UI/Toggle1.png?fileID=21300000&amp;guid=cf433a5a8ed592a46a7c09726361702b&amp;type=3#Toggle1&quot;); left: 10px; top: 2px;" />
         <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="Button_Toggle" class="button-toggle button-toggle-2" style="width: 150px;" />
-        <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="Button_Red" class="button-red button-red-dark" />
+        <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="Button_Red" class="button-red" />
         <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="Button_Yellow" class="button-yellow button-yellow-dark" />
         <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="Button_Green" class="button-green button-green-dark" />
         <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="Button_Blue" class="button-blue button-blue-dark" />

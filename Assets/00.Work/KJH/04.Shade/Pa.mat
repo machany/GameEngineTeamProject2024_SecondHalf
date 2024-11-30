@@ -53,10 +53,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _CircleSize: 0.57331336
+    - _CircleSize: 0.7
     - _EnableExternalAlpha: 0
     - _Hight: 1
-    - _LineThick: 0.40950954
+    - _LineThick: 0.5
     - _Width: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}

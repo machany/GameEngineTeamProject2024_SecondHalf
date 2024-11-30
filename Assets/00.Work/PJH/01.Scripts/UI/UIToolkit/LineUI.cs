@@ -92,7 +92,7 @@ public class LineUI : UIToolkit, IInputable
     private void ClickRedButton()
     {
         _isLineSelected[0] = !_isLineSelected[0];
-        _lineButtons[0].ToggleInClassList(_redDarkStyle);
+        _lineButtons[0].RemoveFromClassList(_redDarkStyle);
         
         _lineButtons[1].AddToClassList(_yellowDarkStyle);
         _lineButtons[2].AddToClassList(_greenDarkStyle);
@@ -109,7 +109,7 @@ public class LineUI : UIToolkit, IInputable
     private void ClickYellowButton()
     {
         _isLineSelected[1] = !_isLineSelected[1];
-        _lineButtons[1].ToggleInClassList(_yellowDarkStyle);
+        _lineButtons[1].RemoveFromClassList(_yellowDarkStyle);
         
         _lineButtons[0].AddToClassList(_redDarkStyle);
         _lineButtons[2].AddToClassList(_greenDarkStyle);
@@ -126,7 +126,7 @@ public class LineUI : UIToolkit, IInputable
     private void ClickGreenButton()
     {
         _isLineSelected[2] = !_isLineSelected[2];
-        _lineButtons[2].ToggleInClassList(_greenDarkStyle);
+        _lineButtons[2].RemoveFromClassList(_greenDarkStyle);
         
         _lineButtons[0].AddToClassList(_redDarkStyle);
         _lineButtons[1].AddToClassList(_yellowDarkStyle);
@@ -143,7 +143,7 @@ public class LineUI : UIToolkit, IInputable
     private void ClickBlueButton()
     {
         _isLineSelected[3] = !_isLineSelected[3];
-        _lineButtons[3].ToggleInClassList(_blueDarkStyle);
+        _lineButtons[3].RemoveFromClassList(_blueDarkStyle);
         
         _lineButtons[0].AddToClassList(_redDarkStyle);
         _lineButtons[1].AddToClassList(_yellowDarkStyle);
@@ -160,7 +160,7 @@ public class LineUI : UIToolkit, IInputable
     private void ClickPurpleButton()
     {
         _isLineSelected[4] = !_isLineSelected[4];
-        _lineButtons[4].ToggleInClassList(_purpleDarkStyle);
+        _lineButtons[4].RemoveFromClassList(_purpleDarkStyle);
         
         _lineButtons[0].AddToClassList(_redDarkStyle);
         _lineButtons[1].AddToClassList(_yellowDarkStyle);
