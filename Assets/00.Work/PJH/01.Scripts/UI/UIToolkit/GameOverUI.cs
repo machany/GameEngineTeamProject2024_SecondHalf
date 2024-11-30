@@ -18,7 +18,7 @@ public class GameOverUI : UIToolkit
     private readonly string[] _scenenames = { "Korea", "China", "Russia", "Def" };
     private string _sceneName;
 
-    private string score;
+    private string[] score = MenuUI._stageHighScoreInfo;
 
     private void Awake()
     {

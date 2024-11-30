@@ -46,7 +46,7 @@ public class MenuUI : UIToolkit
     private Button[] _stageButtons = new Button[4];
 
     private string[] _stageClearInfo;
-    private string[] _stageHighScoreInfo;
+    public static string[] _stageHighScoreInfo;
     
 
     private void OnEnable()
