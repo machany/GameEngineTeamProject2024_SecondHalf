@@ -223,6 +223,11 @@ MonoBehaviour:
   - {fileID: 21300000, guid: feae88acaabe2dc4981fa606a8ca98f7, type: 3}
   - {fileID: 21300000, guid: feae88acaabe2dc4981fa606a8ca98f7, type: 3}
   - {fileID: 21300000, guid: 9a6aad0abfe541645806d7f4b7b785e2, type: 3}
+  - {fileID: 21300000, guid: 9a6aad0abfe541645806d7f4b7b785e2, type: 3}
+  - {fileID: 21300000, guid: 9a6aad0abfe541645806d7f4b7b785e2, type: 3}
+  - {fileID: 21300000, guid: 9a6aad0abfe541645806d7f4b7b785e2, type: 3}
+  - {fileID: 21300000, guid: 9a6aad0abfe541645806d7f4b7b785e2, type: 3}
+  - {fileID: 21300000, guid: 9a6aad0abfe541645806d7f4b7b785e2, type: 3}
   _texts:
   - "\uAC74\uBB3C\uC5D0 \uB300\uD574"
   - "\uC774\uB807\uAC8C \uC0DD\uAE34 \uAC74\uBB3C\uC740 \uBB3C\uB958\uC13C\uD130\uC785\uB2C8\uB2E4."
@@ -309,6 +314,15 @@ MonoBehaviour:
   - "\uB9C8\uC9C0\uB9C9\uC73C\uB85C, \uCE74\uBA54\uB77C\uC5D0 \uB300\uD574"
   - "WASD\uB85C \uCE74\uBA54\uB77C\uB97C \uC6C0\uC9C1\uC785\uB2C8\uB2E4."
   - "\uB9C8\uC6B0\uC2A4 \uD720\uB85C \uC90C\uC544\uC6C3, \uC90C\uC778\uC744 \uD569\uB2C8\uB2E4."
+  - "\uD301\uC744 \uC8FC\uC790\uBA74 \uC120\uB85C\uB294 \uAE54\uB054\uD55C\uAC8C
+    \uC88B\uC2B5\uB2C8\uB2E4."
+  - "\uB208\uC5D0 \uBA85\uD655\uD558\uAC8C \uC5B4\uB514\uC5D0 \uC5F0\uACB0\uB418\uC5C8\uB294\uC9C0
+    \uC798 \uBCF4\uC138\uC694."
+  - "1\uAC1C\uC758 \uC120\uB85C\uC5D0 \uB9CE\uC740 \uD68C\uC0AC\uB97C \uD560\uB2F9\uD558\uC9C0
+    \uB9C8\uC138\uC694."
+  - "\uD604\uC7AC \uC785\uD488\uC0C1\uD0DC\uC778\uC9C0 \uCD9C\uD488\uC0C1\uD0DC\uC778\uC9C0
+    \uC798 \uD655\uC778\uD558\uC138\uC694."
+  - "\uBAA8\uB4E0 \uC120\uB85C\uB294 \uACB9\uCE58\uC9C0 \uC54A\uB294\uAC8C \uC88B\uC2B5\uB2C8\uB2E4."
   - "\uAC00\uC774\uB4DC\uAC00 \uC885\uB8CC\uB418\uC5C8\uC2B5\uB2C8\uB2E4."
 --- !u!1 &462030348
 GameObject:
