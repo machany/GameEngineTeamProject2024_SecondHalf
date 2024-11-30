@@ -22,6 +22,7 @@ public class GameOverUI : UIToolkit
         _sceneName = SceneManager.GetActiveScene().name;
         root = GetComponent<UIDocument>().rootVisualElement;
         root.style.display = DisplayStyle.None;
+        GameOverCount.OnGameOver += OnGameOver;
     }
 
     private void OnEnable()
