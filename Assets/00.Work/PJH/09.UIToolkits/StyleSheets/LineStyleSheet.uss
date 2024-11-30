@@ -8,10 +8,12 @@
     border-bottom-color: rgba(255, 255, 255, 0);
     background-color: rgba(255, 255, 255, 0);
     -unity-background-image-tint-color: rgb(0, 166, 255);
+    transition-duration: 0.25s;
 }
 
 .button-toggle-2 {
     background-image: url("project://database/Assets/00.Work/PJH/04.Sprites/UI/toggle3.png?fileID=21300000&guid=f58c36be0a82b6849b3addfac8600890&type=3#toggle3");
+    transition-duration: 0.25s;
 }
 
 .button-red {
@@ -24,6 +26,7 @@
     border-bottom-color: rgba(149, 149, 149, 0);
     background-image: url("project://database/Assets/00.Work/PJH/04.Sprites/UI/line2.png?fileID=21300000&guid=3ff79c3e84a839c498db33c4b0989245&type=3#line2");
     -unity-background-image-tint-color: rgb(236, 26, 26);
+    transition-duration: 0.25s;
 }
 
 .button-yellow {
@@ -36,6 +39,7 @@
     border-bottom-color: rgba(149, 149, 149, 0);
     -unity-background-image-tint-color: rgb(222, 217, 43);
     background-image: url("project://database/Assets/00.Work/PJH/04.Sprites/UI/line2.png?fileID=21300000&guid=3ff79c3e84a839c498db33c4b0989245&type=3#line2");
+    transition-duration: 0.25s;
 }
 
 .button-green {
@@ -48,6 +52,7 @@
     border-bottom-color: rgba(149, 149, 149, 0);
     -unity-background-image-tint-color: rgb(45, 213, 85);
     background-image: url("project://database/Assets/00.Work/PJH/04.Sprites/UI/line2.png?fileID=21300000&guid=3ff79c3e84a839c498db33c4b0989245&type=3#line2");
+    transition-duration: 0.25s;
 }
 
 .button-blue {
@@ -60,6 +65,7 @@
     border-bottom-color: rgba(149, 149, 149, 0);
     -unity-background-image-tint-color: rgb(44, 95, 188);
     background-image: url("project://database/Assets/00.Work/PJH/04.Sprites/UI/line2.png?fileID=21300000&guid=3ff79c3e84a839c498db33c4b0989245&type=3#line2");
+    transition-duration: 0.25s;
 }
 
 .button-purple {
@@ -72,58 +78,70 @@
     border-bottom-color: rgba(149, 149, 149, 0);
     -unity-background-image-tint-color: rgb(185, 47, 203);
     background-image: url("project://database/Assets/00.Work/PJH/04.Sprites/UI/line2.png?fileID=21300000&guid=3ff79c3e84a839c498db33c4b0989245&type=3#line2");
+    transition-duration: 0.25s;
 }
 
 .button-red-dark {
     -unity-background-image-tint-color: rgb(84, 60, 60);
+    transition-duration: 0.25s;
 }
 
 .button-yellow-dark {
     -unity-background-image-tint-color: rgb(69, 68, 54);
+    transition-duration: 0.25s;
 }
 
 .button-green-dark {
     -unity-background-image-tint-color: rgb(50, 61, 52);
+    transition-duration: 0.25s;
 }
 
 .button-blue-dark {
     -unity-background-image-tint-color: rgb(30, 32, 36);
+    transition-duration: 0.25s;
 }
 
 .button-purple-dark {
     -unity-background-image-tint-color: rgb(50, 42, 51);
+    transition-duration: 0.25s;
 }
 
 .button-red:hover {
     width: 120px;
     height: 120px;
     bottom: 20px;
+    transition-duration: 0.25s;
 }
 
 .button-yellow:hover {
     width: 120px;
     height: 120px;
     bottom: 20px;
+    transition-duration: 0.25s;
 }
 
 .button-green:hover {
     bottom: 20px;
     width: 120px;
     height: 120px;
+    transition-duration: 0.25s;
 }
 
 .button-blue:hover {
     width: 120px;
     height: 120px;
     bottom: 20px;
+    transition-duration: 0.25s;
 }
 
 .button-purple:hover {
     width: 120px;
     height: 120px;
     bottom: 20px;
+    transition-duration: 0.25s;
 }
 
 .button-toggle:hover {
     -unity-background-image-tint-color: rgb(0, 251, 255);
+    transition-duration: 0.25s;
 }

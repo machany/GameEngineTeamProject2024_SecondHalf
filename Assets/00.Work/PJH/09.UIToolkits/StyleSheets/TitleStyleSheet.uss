@@ -168,11 +168,13 @@
     align-self: flex-end;
     top: 50px;
     right: 100px;
+    transition-duration: 0.25s;
 }
 
 .button-title-exit:hover {
     width: 90px;
     height: 120px;
+    transition-duration: 0.25s;
 }
 
 .button-menu-exit {
@@ -187,11 +189,13 @@
     border-bottom-color: rgba(255, 255, 255, 0);
     align-self: flex-start;
     top: 50px;
+    transition-duration: 0.25s;
 }
 
 .button-menu-exit:hover {
     width: 90px;
     height: 120px;
+    transition-duration: 0.25s;
 }
 
 .button-setting-exit {
@@ -205,11 +209,13 @@
     border-top-color: rgba(255, 255, 255, 0);
     border-bottom-color: rgba(255, 255, 255, 0);
     left: 100px;
+    transition-duration: 0.25s;
 }
 
 .button-setting-exit:hover {
     width: 120px;
     height: 90px;
+    transition-duration: 0.25s;
 }
 
 .button-stage-exit {
@@ -225,11 +231,13 @@
     align-self: flex-start;
     bottom: 50px;
     left: 100px;
+    transition-duration: 0.25s;
 }
 
 .button-stage-exit:hover {
     width: 120px;
     height: 90px;
+    transition-duration: 0.25s;
 }
 
 .unity-popup-field__label {

@@ -122,9 +122,11 @@
     border-top-color: rgba(255, 255, 255, 0);
     border-bottom-color: rgba(255, 255, 255, 0);
     -unity-text-align: middle-center;
+    transition-duration: 0.25s;
 }
 
 .button-speed-toggle:hover {
     width: 110%;
     height: 110%;
+    transition-duration: 0.25s;
 }
