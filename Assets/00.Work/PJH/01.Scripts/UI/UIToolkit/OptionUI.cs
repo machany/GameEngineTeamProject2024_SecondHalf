@@ -1,12 +1,17 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class OptionUI : UIToolkit, IInputable, IDraggable
 {
+    [SerializeField] private SoundChannelSO musicSound;
+    [SerializeField] private SoundChannelSO effectSound;
+
     public static Action<bool> OnOptionPanel;
-    
+
     [field: SerializeField] public InputReader InputCompo { get; private set; }
 
     private const string _optionStr = "Button_Option";
@@ -16,9 +21,11 @@ public class OptionUI : UIToolkit, IInputable, IDraggable
     private const string _musicStr = "Slider_MusicVolume";
     private const string _effectStr = "Slider_EffectVolume";
     private const string _screenStr = "DropdownField_Screen";
+    private const string _gameExitStr = "Button_GameExit";
 
     private Button _optionButton;
     private Button _exitButton;
+    private Button _gameExitButton;
 
     private VisualElement _settingVisualElement;
 
@@ -41,6 +48,7 @@ public class OptionUI : UIToolkit, IInputable, IDraggable
 
         _optionButton.clicked += ClickOptionButton;
         _exitButton.clicked += ClickExitButton;
+        _gameExitButton.clicked += ClickGameExitButton;
 
         InputCompo.OnOptionEvent += OnOptionEvent;
 
@@ -51,7 +59,7 @@ public class OptionUI : UIToolkit, IInputable, IDraggable
         _masterVolumeSlider.RegisterValueChangedCallback(MasterSlider);
         _musicVolumeSlider.RegisterValueChangedCallback(MusicSlider);
         _effectVolumeSlider.RegisterValueChangedCallback(EffectSlider);
-        
+
         _screenDropdownField.RegisterValueChangedCallback(ScreenDropdown);
     }
 
@@ -59,17 +67,18 @@ public class OptionUI : UIToolkit, IInputable, IDraggable
     {
         _optionButton.clicked -= ClickOptionButton;
         _exitButton.clicked -= ClickExitButton;
+        _gameExitButton.clicked -= ClickGameExitButton;
 
         InputCompo.OnOptionEvent -= OnOptionEvent;
 
         _settingVisualElement.UnregisterCallback<MouseDownEvent>(OnMouseDown);
         _settingVisualElement.UnregisterCallback<MouseMoveEvent>(OnMouseMove);
         _settingVisualElement.UnregisterCallback<MouseUpEvent>(OnMouseUp);
-        
+
         _masterVolumeSlider.UnregisterValueChangedCallback(MasterSlider);
         _musicVolumeSlider.UnregisterValueChangedCallback(MusicSlider);
         _effectVolumeSlider.UnregisterValueChangedCallback(EffectSlider);
-        
+
         _screenDropdownField.UnregisterValueChangedCallback(ScreenDropdown);
     }
 
@@ -79,6 +88,7 @@ public class OptionUI : UIToolkit, IInputable, IDraggable
 
         _optionButton = root.Q<Button>(_optionStr);
         _exitButton = root.Q<Button>(_exitStr);
+        _gameExitButton = root.Q<Button>(_gameExitStr);
 
         _settingVisualElement = root.Q<VisualElement>(_settingStr);
 
@@ -88,19 +98,21 @@ public class OptionUI : UIToolkit, IInputable, IDraggable
 
         _screenDropdownField = root.Q<DropdownField>(_screenStr);
     }
-    
+
     private void Initialize()
     {
         float masterVolume = PlayerPrefs.GetFloat("MasterVolume", 50);
         _masterVolumeSlider.value = masterVolume;
 
-        float musicVolume = PlayerPrefs.GetFloat("MasterVolume", 50);
+        float musicVolume = PlayerPrefs.GetFloat("MusicVolume", 50);
         _musicVolumeSlider.value = musicVolume;
 
         float effectVolume = PlayerPrefs.GetFloat("EffectVolume", 50);
         _effectVolumeSlider.value = effectVolume;
-
-        // 사운드 매니저 값 세팅
+        
+        //masterSound.volume = masterVolume;
+        musicSound.volume = musicVolume;
+        effectSound.volume = effectVolume;
 
         _screenDropdownField.choices = new List<string> { "전체 화면", "창 화면" };
 
@@ -125,6 +137,12 @@ public class OptionUI : UIToolkit, IInputable, IDraggable
         _isDrag = false;
         Time.timeScale = 1;
         OnOptionPanel?.Invoke(false);
+    }
+
+    private void ClickGameExitButton()
+    {
+        // 씬 전환 페이드 ㅇ니아웃
+        FadeManager.FadeOut(() => SceneManager.LoadScene("Title"));
     }
 
     private void OnOptionEvent()
@@ -196,20 +214,26 @@ public class OptionUI : UIToolkit, IInputable, IDraggable
 
     private void MasterSlider(ChangeEvent<float> changeEvent)
     {
-        // 사운드 세팅
-        PlayerPrefs.SetFloat("MasterVolume", changeEvent.newValue);
+        float newVolume = changeEvent.newValue / 100f; // 0~100 범위 -> 0~1로 변환
+        musicSound.UpdateVolume(newVolume);
+        effectSound.UpdateVolume(newVolume);
+        PlayerPrefs.SetFloat("MasterVolume", newVolume);
     }
 
     private void MusicSlider(ChangeEvent<float> changeEvent)
     {
         // 사운드 세팅
-        PlayerPrefs.SetFloat("MusicVolume", changeEvent.newValue);
+        float newVolume = changeEvent.newValue / 100f;
+        musicSound.UpdateVolume(newVolume);
+        PlayerPrefs.SetFloat("MusicVolume", newVolume);
     }
 
     private void EffectSlider(ChangeEvent<float> changeEvent)
     {
         // 사운드 세팅
-        PlayerPrefs.SetFloat("EffectVolume", changeEvent.newValue);
+        float newVolume = changeEvent.newValue / 100f;
+        effectSound.UpdateVolume(newVolume);;
+        PlayerPrefs.SetFloat("EffectVolume", newVolume);
     }
 
     private void ScreenDropdown(ChangeEvent<string> changeEvent)
@@ -220,7 +244,7 @@ public class OptionUI : UIToolkit, IInputable, IDraggable
                 Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
                 PlayerPrefs.SetString("ScreenSetting", changeEvent.newValue);
                 break;
-            
+
             case "창 화면":
                 Screen.fullScreenMode = FullScreenMode.Windowed;
                 PlayerPrefs.SetString("ScreenSetting", changeEvent.newValue);

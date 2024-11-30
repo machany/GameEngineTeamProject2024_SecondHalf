@@ -1,8 +1,10 @@
 using UnityEngine;
+using UnityEngine.Analytics;
 
 public class GameOverEffect : MonoBehaviour
 {
     [SerializeField] private GameObject Effect;
+    [SerializeField] private GameObject GameOverPanel;
     private int count = 0;
 
     private void Awake()
@@ -14,6 +16,12 @@ public class GameOverEffect : MonoBehaviour
     {
         GameOverCount.OnGameOverEffectStart += EffectEnable;
         GameOverCount.OnGameOverEffectEnd += EffectDisable;
+        GameOverCount.OnGameOver +=GameOver;
+    }
+
+    private void GameOver()
+    {
+        GameOverPanel.SetActive(true);
     }
 
 

@@ -5,11 +5,12 @@ using UnityEngine;
 
 public class SortMark : MonoBehaviour, IInitialize
 {
+    private Company company;
+
     private List<GameObject> _sortRequestTargets = new List<GameObject>();
     private List<GameObject> _sortProductTargets = new List<GameObject>();
 
-    [SerializeField] private PoolItemSO ProductMark;
-    [SerializeField] private PoolItemSO RequestMark;
+    [SerializeField] private PoolItemSO mark;
 
     private int _beforeRequestCount, _beforeProductCount;
     private float _invisibleValue;
@@ -21,9 +22,9 @@ public class SortMark : MonoBehaviour, IInitialize
     
     public void Initialize()
     {
-        transform.GetComponentInParent<Company>().OnRequestCostChanged += ChangeRequestSortMark;
-        transform.GetComponentInParent<Company>().OnProductCostChanged += ChangeProductSortMark;
-
+        company = transform.GetComponentInParent<Company>();
+        company.OnRequestCostChanged += ChangeRequestSortMark;
+        company.OnProductCostChanged += ChangeProductSortMark;
 
         LineUI.OnToggleLineEvent += ToggleColorRequest;
         LineUI.OnToggleLineEvent += ToggleColorRroduct;
@@ -72,7 +73,8 @@ public class SortMark : MonoBehaviour, IInitialize
             int save = n - _sortRequestTargets.Count;
             for (int i = 0; i < save; i++)
             {
-                _sortRequestTargets.Add(PoolManager.Instance.Pop(RequestMark.key));
+                _sortRequestTargets.Add(PoolManager.Instance.Pop(mark.key));
+                _sortRequestTargets[_sortRequestTargets.Count - 1].GetComponent<SpriteRenderer>().color = CompanyManager.Instance.companyInfo.GetResourceColor(CompanyManager.Instance.productShape[company.shapeType]);
                 _sortRequestTargets[_sortRequestTargets.Count - 1].transform.position = transform.position;
             }
         }
@@ -83,7 +85,7 @@ public class SortMark : MonoBehaviour, IInitialize
             int save = _sortRequestTargets.Count - n;
             for (int i = 0; i < save; i++)
             {
-                StartCoroutine(DeleteSortMark(RequestMark, _sortRequestTargets[_sortRequestTargets.Count - 1]));
+                StartCoroutine(DeleteSortMark(mark, _sortRequestTargets[_sortRequestTargets.Count - 1]));
                 _sortRequestTargets.RemoveAt(_sortRequestTargets.Count - 1);
             }
         }
@@ -98,7 +100,8 @@ public class SortMark : MonoBehaviour, IInitialize
             int save = n - _sortProductTargets.Count;
             for (int i = 0; i < save; i++)
             {
-                _sortProductTargets.Add(PoolManager.Instance.Pop(ProductMark.key));
+                _sortProductTargets.Add(PoolManager.Instance.Pop(mark.key));
+                _sortProductTargets[_sortProductTargets.Count - 1].GetComponent<SpriteRenderer>().color = CompanyManager.Instance.companyInfo.GetResourceColor(company.requestType);
                 _sortProductTargets[_sortProductTargets.Count - 1].transform.position = transform.position;
             }
         }
@@ -109,7 +112,7 @@ public class SortMark : MonoBehaviour, IInitialize
             int save = _sortProductTargets.Count - n;
             for (int i = 0; i < save; i++)
             {
-                StartCoroutine(DeleteSortMark(ProductMark, _sortProductTargets[_sortProductTargets.Count - 1]));
+                StartCoroutine(DeleteSortMark(mark, _sortProductTargets[_sortProductTargets.Count - 1]));
                 _sortProductTargets.RemoveAt(_sortProductTargets.Count - 1);
             }
         }

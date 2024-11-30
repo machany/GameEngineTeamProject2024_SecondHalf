@@ -57,8 +57,6 @@ public class RewardUI : UIToolkit
     {
         GetUIElements();
 
-        SetDay();
-
         _oneResButton.clicked += ClickOneResButton;
         _twoResButton.clicked += ClickTwoResButton;
         _threeResButton.clicked += ClickThreeResButton;
@@ -149,6 +147,7 @@ public class RewardUI : UIToolkit
 
     private void ClickOneResButton()
     {
+        Time.timeScale = 1;
         root.style.display = DisplayStyle.None;
 
         AddRewardItem(_oneItemSO);
@@ -156,6 +155,7 @@ public class RewardUI : UIToolkit
 
     private void ClickTwoResButton()
     {
+        Time.timeScale = 1;
         root.style.display = DisplayStyle.None;
 
         AddRewardItem(_twoItemSO);
@@ -163,6 +163,7 @@ public class RewardUI : UIToolkit
 
     private void ClickThreeResButton()
     {
+        
         root.style.display = DisplayStyle.None;
 
         AddRewardItem(_threeItemSO);
@@ -173,23 +174,28 @@ public class RewardUI : UIToolkit
         switch (itemSO.itemType)
         {
             case ERewardItemType.Line:
-                ResourceManager.Instance.UnlockLine();
+                if (!ResourceManager.Instance.UnlockLine())
+                    SpeedUI.Delete(itemSO);
                 break;
 
             case ERewardItemType.Bridge:
-                BridgeManager.Instance.AddAvailableBridge(itemSO.itemCount);
+                if (!BridgeManager.Instance.TryAddAvailableBridge(itemSO.itemCount))
+                    SpeedUI.Delete(itemSO);
                 break;
 
             case ERewardItemType.Car:
-                ResourceManager.Instance.AddVehicle(VehicleType.car, (sbyte)itemSO.itemCount);
+                if (!ResourceManager.Instance.TryAddVehicle(VehicleType.car, (sbyte)itemSO.itemCount))
+                    SpeedUI.Delete(itemSO);
                 break;
 
             case ERewardItemType.Truck:
-                ResourceManager.Instance.AddVehicle(VehicleType.truck, (sbyte)itemSO.itemCount);
+                if (!ResourceManager.Instance.TryAddVehicle(VehicleType.truck, (sbyte)itemSO.itemCount))
+                    SpeedUI.Delete(itemSO);
                 break;
 
             case ERewardItemType.Trailer:
-                ResourceManager.Instance.AddVehicle(VehicleType.trailer, (sbyte)itemSO.itemCount);
+                if (!ResourceManager.Instance.TryAddVehicle(VehicleType.trailer, (sbyte)itemSO.itemCount))
+                    SpeedUI.Delete(itemSO);
                 break;
         }
     }
@@ -197,5 +203,9 @@ public class RewardUI : UIToolkit
     private void OnRewardUI()
     {
         root.style.display = DisplayStyle.Flex;
+        
+        SetDay();
+
+        Time.timeScale = 0;
     }
 }

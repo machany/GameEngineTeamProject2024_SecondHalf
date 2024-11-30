@@ -34,7 +34,7 @@ public class ResourceUI : UIToolkit
 
     private void Update()
     {
-        SetReSourceLabel();
+        UpdateReSourceLabel();
     }
 
     protected override void GetUIElements()
@@ -49,7 +49,7 @@ public class ResourceUI : UIToolkit
             _countLabels[i] = root.Q<Label>(_countStr[i]);
     }
 
-    private void SetReSourceLabel()
+    private void UpdateReSourceLabel()
     {
         _countLabels[0].text = DistributionCenter.Storage[ResourceType.Red].ToString();
         _countLabels[1].text = DistributionCenter.Storage[ResourceType.Yellow].ToString();

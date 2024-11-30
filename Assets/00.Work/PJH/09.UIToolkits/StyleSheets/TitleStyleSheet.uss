@@ -154,3 +154,80 @@
 .unity-popup-field__input {
     background-color: rgb(255, 255, 255);
 }
+
+.button-title-exit {
+    position: absolute;
+    background-image: url("project://database/Assets/00.Work/PJH/04.Sprites/UI/tog.png?fileID=1732763297&guid=971662011272aaf479626661675835b9&type=3#tog_0");
+    background-color: rgba(255, 255, 255, 0);
+    width: 70px;
+    height: 100px;
+    border-left-color: rgba(255, 255, 255, 0);
+    border-right-color: rgba(255, 255, 255, 0);
+    border-top-color: rgba(255, 255, 255, 0);
+    border-bottom-color: rgba(255, 255, 255, 0);
+    align-self: flex-end;
+    top: 50px;
+    right: 100px;
+}
+
+.button-title-exit:hover {
+    width: 90px;
+    height: 120px;
+}
+
+.button-menu-exit {
+    position: absolute;
+    background-image: url("project://database/Assets/00.Work/PJH/04.Sprites/UI/tog2.png?fileID=-1205837879&guid=5848d12eeb66d7a41a3006454b59193e&type=3#tog2_0");
+    background-color: rgba(255, 255, 255, 0);
+    width: 70px;
+    height: 100px;
+    border-left-color: rgba(255, 255, 255, 0);
+    border-right-color: rgba(255, 255, 255, 0);
+    border-top-color: rgba(255, 255, 255, 0);
+    border-bottom-color: rgba(255, 255, 255, 0);
+    align-self: flex-start;
+    top: 50px;
+}
+
+.button-menu-exit:hover {
+    width: 90px;
+    height: 120px;
+}
+
+.button-setting-exit {
+    position: absolute;
+    background-image: url("project://database/Assets/00.Work/PJH/04.Sprites/UI/up.png?fileID=-428154527&guid=76305e565ca088c4cb8916174d168052&type=3#up_0");
+    background-color: rgba(255, 255, 255, 0);
+    width: 100px;
+    height: 70px;
+    border-left-color: rgba(255, 255, 255, 0);
+    border-right-color: rgba(255, 255, 255, 0);
+    border-top-color: rgba(255, 255, 255, 0);
+    border-bottom-color: rgba(255, 255, 255, 0);
+    left: 100px;
+}
+
+.button-setting-exit:hover {
+    width: 120px;
+    height: 90px;
+}
+
+.button-stage-exit {
+    position: absolute;
+    background-image: url("project://database/Assets/00.Work/PJH/04.Sprites/UI/down.png?fileID=-1515807844&guid=624fc4bec6f0f414490786df56037b24&type=3#down_0");
+    background-color: rgba(255, 255, 255, 0);
+    width: 100px;
+    height: 70px;
+    border-left-color: rgba(255, 255, 255, 0);
+    border-right-color: rgba(255, 255, 255, 0);
+    border-top-color: rgba(255, 255, 255, 0);
+    border-bottom-color: rgba(255, 255, 255, 0);
+    align-self: flex-start;
+    bottom: 50px;
+    left: 100px;
+}
+
+.button-stage-exit:hover {
+    width: 120px;
+    height: 90px;
+}

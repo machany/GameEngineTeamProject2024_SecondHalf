@@ -24,19 +24,17 @@ MonoBehaviour:
   - {r: 0.11764706, g: 0.8039216, b: 0.11764706, a: 1}
   - {r: 0.11764706, g: 0.11764706, b: 0.8039216, a: 1}
   - {r: 0.47058824, g: 0.11764706, b: 0.8039216, a: 1}
-  limitRequestCost: 5
-  maxProductCost: 10
-  maxRequestCost: 10
+  limitRequestCost: 7
+  maxProductCost: 15
+  maxRequestCost: 12
   minDelayTime: 0
   maxDelayTime: 3
   DuringTime: 0.5
-  startCountDownTime: 5.7
-  RequestMark: {fileID: 3304131765039805723, guid: ff16daaa34c54a046a23639b6dd3ed52, type: 3}
-  ProductMark: {fileID: 471025050125259887, guid: 98a6b2b924e8d3e43b7f9e3f71f67072, type: 3}
-  interval: 0.2
+  startCountDownTime: 6
+  interval: 0.25
   requestPos: -1
   productPos: 1
-  productTime: 10
-  requestTime: 15
-  productAddTime: 0.01
-  requestAddTime: 0.01
+  productTime: 12
+  requestTime: 16
+  productAddTime: 0.05
+  requestAddTime: 0.06

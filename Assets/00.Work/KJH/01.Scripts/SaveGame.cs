@@ -4,7 +4,7 @@ using System.IO;
 public class SaveGame : MonoSingleton<SaveGame>
 {
     // 상대 경로
-    private const string savePath = "saveData.txt";
+    private static readonly string savePath = Path.Combine(Directory.GetCurrentDirectory(), "Save.txt");
 
     public void Save(string saveData)
     {
