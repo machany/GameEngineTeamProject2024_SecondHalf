@@ -19,11 +19,11 @@ MonoBehaviour:
   - {fileID: 21300000, guid: f73f7f632bc3ed140b2eb28e20300fa2, type: 3}
   - {fileID: 21300000, guid: 7b2b82e92d1efad49bbcf347bbd13bb5, type: 3}
   companyColor:
-  - {r: 0.6679245, g: 0, b: 0, a: 1}
-  - {r: 0.6075471, g: 0.6075471, b: 0, a: 1}
-  - {r: 0, g: 0.6226415, b: 0, a: 1}
-  - {r: 0, g: 0, b: 0.5169811, a: 1}
-  - {r: 0.25007755, g: 0, b: 0.4867924, a: 1}
+  - {r: 0.4339623, g: 0, b: 0, a: 1}
+  - {r: 0.3660378, g: 0.3660378, b: 0, a: 1}
+  - {r: 0, g: 0.3735848, b: 0, a: 1}
+  - {r: 0, g: 0, b: 0.4188679, a: 1}
+  - {r: 0.20060861, g: 0, b: 0.3886792, a: 1}
   limitRequestCost: 5
   maxProductCost: 7
   maxRequestCost: 15
