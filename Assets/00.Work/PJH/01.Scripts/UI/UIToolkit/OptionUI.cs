@@ -214,24 +214,26 @@ public class OptionUI : UIToolkit, IInputable, IDraggable
 
     private void MasterSlider(ChangeEvent<float> changeEvent)
     {
-        // 사운드 세팅
-        musicSound.volume = changeEvent.newValue;
-        effectSound.volume = changeEvent.newValue;
-        PlayerPrefs.SetFloat("MasterVolume", changeEvent.newValue);
+        float newVolume = changeEvent.newValue / 100f; // 0~100 범위 -> 0~1로 변환
+        musicSound.UpdateVolume(newVolume);
+        effectSound.UpdateVolume(newVolume);
+        PlayerPrefs.SetFloat("MasterVolume", newVolume);
     }
 
     private void MusicSlider(ChangeEvent<float> changeEvent)
     {
         // 사운드 세팅
-        musicSound.volume = changeEvent.newValue;
-        PlayerPrefs.SetFloat("MusicVolume", changeEvent.newValue);
+        float newVolume = changeEvent.newValue / 100f;
+        musicSound.UpdateVolume(newVolume);
+        PlayerPrefs.SetFloat("MusicVolume", newVolume);
     }
 
     private void EffectSlider(ChangeEvent<float> changeEvent)
     {
         // 사운드 세팅
-        effectSound.volume = changeEvent.newValue;
-        PlayerPrefs.SetFloat("EffectVolume", changeEvent.newValue);
+        float newVolume = changeEvent.newValue / 100f;
+        effectSound.UpdateVolume(newVolume);;
+        PlayerPrefs.SetFloat("EffectVolume", newVolume);
     }
 
     private void ScreenDropdown(ChangeEvent<string> changeEvent)
