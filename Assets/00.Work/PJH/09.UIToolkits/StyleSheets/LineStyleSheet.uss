@@ -7,7 +7,7 @@
     border-top-color: rgba(255, 255, 255, 0);
     border-bottom-color: rgba(255, 255, 255, 0);
     background-color: rgba(255, 255, 255, 0);
-    -unity-background-image-tint-color: rgb(0, 249, 255);
+    -unity-background-image-tint-color: rgb(0, 166, 255);
 }
 
 .button-toggle-2 {
@@ -92,4 +92,38 @@
 
 .button-purple-dark {
     -unity-background-image-tint-color: rgb(50, 42, 51);
+}
+
+.button-red:hover {
+    width: 120px;
+    height: 120px;
+    bottom: 20px;
+}
+
+.button-yellow:hover {
+    width: 120px;
+    height: 120px;
+    bottom: 20px;
+}
+
+.button-green:hover {
+    bottom: 20px;
+    width: 120px;
+    height: 120px;
+}
+
+.button-blue:hover {
+    width: 120px;
+    height: 120px;
+    bottom: 20px;
+}
+
+.button-purple:hover {
+    width: 120px;
+    height: 120px;
+    bottom: 20px;
+}
+
+.button-toggle:hover {
+    -unity-background-image-tint-color: rgb(0, 251, 255);
 }
