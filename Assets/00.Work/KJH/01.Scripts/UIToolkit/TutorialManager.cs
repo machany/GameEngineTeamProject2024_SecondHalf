@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class TutorialManager : MonoBehaviour, ITalk , ITalkImage
 {
@@ -59,6 +60,7 @@ public class TutorialManager : MonoBehaviour, ITalk , ITalkImage
         catch (Exception e)
         {
             Debug.Log("튜토리얼이 끝났습니다!");
+            FadeManager.FadeOut(() => SceneManager.LoadScene("Title"));
             OnTalkEnd?.Invoke();
             gameObject.SetActive(false);
         }
