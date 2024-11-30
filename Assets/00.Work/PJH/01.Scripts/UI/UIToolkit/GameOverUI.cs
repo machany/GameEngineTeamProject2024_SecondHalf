@@ -105,6 +105,7 @@ public class GameOverUI : UIToolkit
     private void OnGameOver()
     {
         root.style.display = DisplayStyle.Flex;
+        ChangeDescLabel();
         Time.timeScale = 0;
     }
 }
