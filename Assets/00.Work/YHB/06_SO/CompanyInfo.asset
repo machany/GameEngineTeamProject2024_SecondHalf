@@ -30,11 +30,11 @@ MonoBehaviour:
   minDelayTime: 0
   maxDelayTime: 3
   DuringTime: 0.5
-  startCountDownTime: 5.7
+  startCountDownTime: 6
   interval: 0.25
   requestPos: -1
   productPos: 1
-  productTime: 8
-  requestTime: 13
+  productTime: 12
+  requestTime: 16
   productAddTime: 0.05
   requestAddTime: 0.06
