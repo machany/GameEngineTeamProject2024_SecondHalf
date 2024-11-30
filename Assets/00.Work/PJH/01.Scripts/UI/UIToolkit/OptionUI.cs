@@ -142,6 +142,7 @@ public class OptionUI : UIToolkit, IInputable, IDraggable
     private void ClickGameExitButton()
     {
         // 씬 전환 페이드 ㅇ니아웃
+        Time.timeScale = 1;
         FadeManager.FadeOut(() => SceneManager.LoadScene("Title"));
     }
 
