@@ -523,7 +523,12 @@ MonoBehaviour:
   - 1
   - 1.5
   - 2
-  rewardItemList: []
+  rewardItemList:
+  - {fileID: 11400000, guid: 1dc8dd39670b1bd46a44227e857669ca, type: 2}
+  - {fileID: 11400000, guid: 1fde9b43f3f511841a54e9b386ba3069, type: 2}
+  - {fileID: 11400000, guid: 4f66874032270b94dabf3c92d0654463, type: 2}
+  - {fileID: 11400000, guid: 8bfdd2129fa0726478cb5e33b93da12d, type: 2}
+  - {fileID: 11400000, guid: 690e71abbc963e54d8fc62bf4683e3a4, type: 2}
   _dateTime: 90
 --- !u!114 &604473801
 MonoBehaviour:
