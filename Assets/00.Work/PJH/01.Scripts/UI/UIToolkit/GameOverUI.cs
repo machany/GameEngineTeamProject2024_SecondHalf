@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class GameOverUI : UIToolkit
@@ -14,8 +15,14 @@ public class GameOverUI : UIToolkit
     private Button _titleButton;
     private Button _exitButton;
 
+    private readonly string[] _scenenames = { "Korea", "China", "Russia", "Def" };
+    private string _sceneName;
+
+    private string score;
+
     private void Awake()
     {
+        _sceneName = SceneManager.GetActiveScene().name;
         root = GetComponent<UIDocument>().rootVisualElement;
         root.style.display = DisplayStyle.None;
     }
@@ -26,8 +33,33 @@ public class GameOverUI : UIToolkit
         
         ChangeDescLabel();
 
+        SaveData();
+
         _titleButton.clicked += ClickTitleButton;
         _exitButton.clicked += ClickExitButton;
+    }
+
+    private void SaveData()
+    {
+        for (int i = 0; i < _scenenames.Length; i++)
+        {
+            if (_sceneName == _scenenames[i])
+            {
+                for (int j = 0; j < _scenenames.Length; j++)
+                {
+                    if (j <= i)
+                    {
+                        SaveGame.Instance.Save("1");
+                    }
+                    else
+                    {
+                        SaveGame.Instance.Save("0");
+                    }
+                }
+                break;
+            }
+        }
+        SaveGame.Instance.Save(score);
     }
 
     private void OnDisable()
