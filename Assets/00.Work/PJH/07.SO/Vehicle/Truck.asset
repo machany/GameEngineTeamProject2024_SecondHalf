@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vehicleType: 1
   sprite: {fileID: 21300000, guid: 7dfb6f8e404f02443b525e22cf758220, type: 3}
-  moveSpeed: 1.25
+  moveSpeed: 1
   maxStorageResourceCapacity: 3
   maxStorageCapacity: 15
   minStopTime: 0.25
