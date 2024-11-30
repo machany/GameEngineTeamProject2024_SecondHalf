@@ -231,3 +231,7 @@
     width: 120px;
     height: 90px;
 }
+
+.unity-popup-field__label {
+    color: rgb(255, 255, 255);
+}
