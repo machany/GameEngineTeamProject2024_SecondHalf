@@ -8,7 +8,7 @@
             <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="Button_Speed3" class="button-speed3" />
         </ui:VisualElement>
         <ui:VisualElement name="VisualElement_Date" class="visual-element-data" style="background-color: rgba(255, 255, 255, 0); -unity-font-definition: url(&quot;project://database/Assets/00.Work/PJH/08.Fonts/Helvetica%20Rounded%20Bold%20SDF.asset?fileID=11400000&amp;guid=88c3459bd8bfa324d88fa0a393231897&amp;type=2#Helvetica Rounded Bold SDF&quot;); align-items: center; justify-content: center;">
-            <ui:Button text="0" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Button_SpeedToggle" style="background-color: rgba(255, 255, 255, 0); width: 100%; height: 100%; font-size: 100px; -unity-font-definition: url(&quot;project://database/Assets/00.Work/PJH/08.Fonts/Pretendard-Bold%20SDF.asset?fileID=11400000&amp;guid=9a04ffdef7b72414bbbea9737116b924&amp;type=2#Pretendard-Bold SDF&quot;); background-image: url(&quot;project://database/Assets/00.Work/PJH/04.Sprites/UI/Calendar.png?fileID=21300000&amp;guid=9a8576cebbfa03444872161c19d76864&amp;type=3#Calendar&quot;); color: rgb(255, 255, 255); border-left-color: rgba(255, 255, 255, 0); border-right-color: rgba(255, 255, 255, 0); border-top-color: rgba(255, 255, 255, 0); border-bottom-color: rgba(255, 255, 255, 0); -unity-text-align: middle-center;" />
+            <ui:Button text="0" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Button_SpeedToggle" class="button-speed-toggle" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
