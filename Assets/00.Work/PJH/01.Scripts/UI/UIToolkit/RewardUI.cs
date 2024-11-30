@@ -147,6 +147,7 @@ public class RewardUI : UIToolkit
 
     private void ClickOneResButton()
     {
+        Time.timeScale = 1;
         root.style.display = DisplayStyle.None;
 
         AddRewardItem(_oneItemSO);
@@ -154,6 +155,7 @@ public class RewardUI : UIToolkit
 
     private void ClickTwoResButton()
     {
+        Time.timeScale = 1;
         root.style.display = DisplayStyle.None;
 
         AddRewardItem(_twoItemSO);
@@ -161,6 +163,7 @@ public class RewardUI : UIToolkit
 
     private void ClickThreeResButton()
     {
+        
         root.style.display = DisplayStyle.None;
 
         AddRewardItem(_threeItemSO);
@@ -202,5 +205,7 @@ public class RewardUI : UIToolkit
         root.style.display = DisplayStyle.Flex;
         
         SetDay();
+
+        Time.timeScale = 0;
     }
 }
