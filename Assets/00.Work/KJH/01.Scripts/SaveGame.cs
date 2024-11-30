@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using System.IO;
 
@@ -57,20 +58,28 @@ public class SaveGame : MonoSingleton<SaveGame>
     /// <param name="repeatNum">반복 횟수</param>
     public string[] Load(int dataLine, int repeatNum)
     {
-        using StreamReader sr = new StreamReader(File.Open(savePath, FileMode.Open));
-        string[] lineData = new string[repeatNum];
-        
-        for (int i = 0; i < repeatNum; ++i)
+        try
         {
-            lineData[i] = ReadLineAt(sr, dataLine + i);
-            
-            if (lineData[i] == null)
+            using StreamReader sr = new StreamReader(File.Open(savePath, FileMode.Open));
+            string[] lineData = new string[repeatNum];
+        
+            for (int i = 0; i < repeatNum; ++i)
             {
-                Debug.Log($"dataLine + repeatNum({dataLine + i})보다 파일이 작습니다. null 배열 리턴");
-                return null;
+                lineData[i] = ReadLineAt(sr, dataLine + i);
+            
+                if (lineData[i] == null)
+                {
+                    Debug.Log($"dataLine + repeatNum({dataLine + i})보다 파일이 작습니다. null 배열 리턴");
+                    return null;
+                }
             }
-        }
 
-        return lineData;
+            return lineData;
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
+        
     }
 }

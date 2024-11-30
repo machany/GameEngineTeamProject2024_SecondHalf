@@ -41,26 +41,32 @@ public class GameOverUI : UIToolkit
 
     private void SaveData()
     {
+        if (SaveGame.Instance == null)
+        {
+            Debug.LogError("SaveGame.Instance is null. Ensure it is initialized before calling SaveData.");
+            return;
+        }
+
+        if (score == null || score.Length == 0)
+        {
+            Debug.LogError("Score array is null or empty. Ensure MenuUI._stageHighScoreInfo is initialized properly.");
+            return;
+        }
+
         for (int i = 0; i < _scenenames.Length; i++)
         {
             if (_sceneName == _scenenames[i])
             {
                 for (int j = 0; j < _scenenames.Length; j++)
                 {
-                    if (j <= i)
-                    {
-                        SaveGame.Instance.Save("1");
-                    }
-                    else
-                    {
-                        SaveGame.Instance.Save("0");
-                    }
+                    SaveGame.Instance.Save(j <= i ? "1" : "0");
                 }
                 break;
             }
         }
         SaveGame.Instance.Save(score);
     }
+
 
     private void OnDisable()
     {
