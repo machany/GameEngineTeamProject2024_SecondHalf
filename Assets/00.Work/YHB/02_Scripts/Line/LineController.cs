@@ -131,7 +131,7 @@ public class LineController : MonoSingleton<LineController>, IInitialize
     private void HandleCarEvent(bool selected)
     {
         if (_dropMode && EqualityComparer<VehicleSO>.Default.Equals(_curVehicle, car))
-            DropVehicle(true);
+            DropVehicle();
 
         _dropMode = true;
 
@@ -141,7 +141,7 @@ public class LineController : MonoSingleton<LineController>, IInitialize
     private void HandleTruckEvent(bool selected)
     {
         if (_dropMode && EqualityComparer<VehicleSO>.Default.Equals(_curVehicle, truck))
-            DropVehicle(true);
+            DropVehicle();
 
         _dropMode = true;
 
@@ -151,19 +151,19 @@ public class LineController : MonoSingleton<LineController>, IInitialize
     private void HandleTrailerEvent(bool selected)
     {
         if (_dropMode && EqualityComparer<VehicleSO>.Default.Equals(_curVehicle, trailer))
-            DropVehicle(true);
+            DropVehicle();
 
         _dropMode = true;
 
         _curVehicle = trailer;
     }
 
-    private void DropVehicle(bool doubleClick = false, int index = 0)
+    private void DropVehicle(int index = 0)
     {
         if (_curLine.lineInfo.Count <= 0 || !ResourceManager.Instance.TryUseVehicle(_curVehicle.vehicleType))
         {
             SoundManager.Instance.PlaySound(SoundType.SFX, "LineConnectionFail");
-            return;
+            goto EndProcess;
         }
 
         Vehicle vehicle = PoolManager.Instance.Pop(vehile.key).GetComponent<Vehicle>();
@@ -171,10 +171,11 @@ public class LineController : MonoSingleton<LineController>, IInitialize
         vehicle.GetComponent<VehicleStorage>().vehicleSO = _curVehicle;
         vehicle.GetComponent<VehicleStorage>().Initialize();
         vehicle.SetLine(CurrentLineType, CurrentGroupType, index);
+
+    EndProcess:
+        _dropMode = false;
         _curVehicle = null;
-        _dropMode = doubleClick;
         _currentTrm = null;
-        Debug.Log(_dropMode);
     }
 
     public void Disable()
@@ -225,7 +226,7 @@ public class LineController : MonoSingleton<LineController>, IInitialize
         if (_dropMode)
         {
             if (_curLine.lineInfo.Contains(companyTrm))
-                DropVehicle(false, _curLine.lineInfo.FindValueLocation(companyTrm) - 1);
+                DropVehicle(_curLine.lineInfo.FindValueLocation(companyTrm) - 1);
             return;
         }
 
