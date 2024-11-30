@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -37,6 +34,7 @@ public class GameOverUI : UIToolkit
 
         _titleButton.clicked += ClickTitleButton;
         _exitButton.clicked += ClickExitButton;
+        GameOverCount.OnGameOver += OnGameOver;
     }
 
     private void SaveData()
@@ -72,6 +70,7 @@ public class GameOverUI : UIToolkit
     {
         _titleButton.clicked -= ClickTitleButton;
         _exitButton.clicked -= ClickExitButton;
+        GameOverCount.OnGameOver -= OnGameOver;
     }
 
     protected override void GetUIElements()
@@ -86,10 +85,13 @@ public class GameOverUI : UIToolkit
     private void ClickTitleButton()
     {
         // 씬이동 Fade
+        Time.timeScale = 1;
+        FadeManager.FadeOut(() => SceneManager.LoadScene("Title"));
     }
 
     private void ClickExitButton()
     {
+        Time.timeScale = 1;
         FadeManager.FadeOut(Application.Quit);
     }
 
@@ -97,5 +99,11 @@ public class GameOverUI : UIToolkit
     {
         _descLabel.text = "당신의 회사는 너무 혼잡해 폐쇄되었습니다.\n" +
                           $"당신은 {SpeedUI.currentDate}일 동안 회사를 운영했습니다.";
+    }
+    
+    private void OnGameOver()
+    {
+        root.style.display = DisplayStyle.Flex;
+        Time.timeScale = 0;
     }
 }
