@@ -1,6 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/00.Work/PJH/09.UIToolkits/StyleSheets/TitleStyleSheet.uss?fileID=7433441132597879392&amp;guid=a2dd54acee400844796440611945df8b&amp;type=3#TitleStyleSheet" />
-    <ui:VisualElement name="VisualElement_Title" class="visual-element-title visual-element-title-1" style="background-color: rgba(238, 231, 231, 0.48);">
+    <ui:VisualElement name="VisualElement_Title" class="visual-element-title visual-element-title-1" style="background-color: rgba(255, 255, 255, 0.5);">
         <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="Button_TitleExit" class="button-title-exit" />
         <ui:Label tabindex="-1" text="Distribution Flow" parse-escape-sequences="true" display-tooltip-when-elided="true" style="align-self: center; width: 90%; height: 20%; -unity-font-definition: url(&quot;project://database/Assets/00.Work/PJH/08.Fonts/Pretendard-Bold%20SDF.asset?fileID=11400000&amp;guid=9a04ffdef7b72414bbbea9737116b924&amp;type=2#Pretendard-Bold SDF&quot;); -unity-text-align: middle-center; font-size: 200px;" />
     </ui:VisualElement>
