@@ -271,6 +271,74 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Effect: {fileID: 1219009512}
+  GameOverPanel: {fileID: 434176394}
+--- !u!1001 &434176392
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 533932003}
+    m_Modifications:
+    - target: {fileID: 2867132524321254531, guid: 9d3cf0848e68f184286d227f1c32705c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2867132524321254531, guid: 9d3cf0848e68f184286d227f1c32705c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2867132524321254531, guid: 9d3cf0848e68f184286d227f1c32705c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2867132524321254531, guid: 9d3cf0848e68f184286d227f1c32705c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2867132524321254531, guid: 9d3cf0848e68f184286d227f1c32705c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2867132524321254531, guid: 9d3cf0848e68f184286d227f1c32705c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2867132524321254531, guid: 9d3cf0848e68f184286d227f1c32705c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2867132524321254531, guid: 9d3cf0848e68f184286d227f1c32705c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2867132524321254531, guid: 9d3cf0848e68f184286d227f1c32705c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2867132524321254531, guid: 9d3cf0848e68f184286d227f1c32705c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9013358147622996266, guid: 9d3cf0848e68f184286d227f1c32705c, type: 3}
+      propertyPath: m_Name
+      value: GameOverUI
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9d3cf0848e68f184286d227f1c32705c, type: 3}
+--- !u!4 &434176393 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2867132524321254531, guid: 9d3cf0848e68f184286d227f1c32705c, type: 3}
+  m_PrefabInstance: {fileID: 434176392}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &434176394 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9013358147622996266, guid: 9d3cf0848e68f184286d227f1c32705c, type: 3}
+  m_PrefabInstance: {fileID: 434176392}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &445631932
 GameObject:
   m_ObjectHideFlags: 0
@@ -368,6 +436,7 @@ Transform:
   - {fileID: 998796959}
   - {fileID: 445631933}
   - {fileID: 695665520}
+  - {fileID: 434176393}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &604473798
@@ -1706,7 +1775,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cebafd72858ba24488a71e62755524b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioMixer: {fileID: 0}
+  musicSound: {fileID: 0}
+  effectSound: {fileID: 0}
   <InputCompo>k__BackingField: {fileID: 11400000, guid: 0fe90c4e69d236e4abb64bafd1272308, type: 2}
 --- !u!114 &1552150345
 MonoBehaviour:

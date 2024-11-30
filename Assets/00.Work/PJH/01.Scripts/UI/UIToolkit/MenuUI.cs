@@ -294,14 +294,15 @@ public class MenuUI : UIToolkit
 
     private void LoadStageInformation()
     {
-        _stageClearInfo = SaveGame.Instance.Load(1, 4);
+        //_stageClearInfo = SaveGame.Instance.Load(1, 4);
+        Debug.Log(_stageClearInfo);
     }
 
     private void LoadHighScore()
     {
         // 파일 입출력으로 스코어 업데이트
-        _stageHighScoreInfo = SaveGame.Instance.Load(5, 4);
-        
+        //_stageHighScoreInfo = SaveGame.Instance.Load(5, 4);
+        Debug.Log(_stageHighScoreInfo);
     }
 
     #endregion
