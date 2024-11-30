@@ -28,7 +28,7 @@ public class SortMark : MonoBehaviour, IInitialize
 
         LineUI.OnToggleLineEvent += ToggleColorRequest;
         LineUI.OnToggleLineEvent += ToggleColorRroduct;
-        _invisibleValue = LineController.Instance.invisibleValue * 1.75f;
+        _invisibleValue = LineController.Instance.invisibleValue * 1.5f;
     }
 
     public void Disable()

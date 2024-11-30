@@ -171,23 +171,28 @@ public class RewardUI : UIToolkit
         switch (itemSO.itemType)
         {
             case ERewardItemType.Line:
-                ResourceManager.Instance.UnlockLine();
+                if (ResourceManager.Instance.UnlockLine())
+                    SpeedUI.Delete(itemSO);
                 break;
 
             case ERewardItemType.Bridge:
-                BridgeManager.Instance.AddAvailableBridge(itemSO.itemCount);
+                if (BridgeManager.Instance.TryAddAvailableBridge(itemSO.itemCount))
+                    SpeedUI.Delete(itemSO);
                 break;
 
             case ERewardItemType.Car:
-                ResourceManager.Instance.AddVehicle(VehicleType.car, (sbyte)itemSO.itemCount);
+                if (ResourceManager.Instance.TryAddVehicle(VehicleType.car, (sbyte)itemSO.itemCount))
+                    SpeedUI.Delete(itemSO);
                 break;
 
             case ERewardItemType.Truck:
-                ResourceManager.Instance.AddVehicle(VehicleType.truck, (sbyte)itemSO.itemCount);
+                if (ResourceManager.Instance.TryAddVehicle(VehicleType.truck, (sbyte)itemSO.itemCount))
+                    SpeedUI.Delete(itemSO);
                 break;
 
             case ERewardItemType.Trailer:
-                ResourceManager.Instance.AddVehicle(VehicleType.trailer, (sbyte)itemSO.itemCount);
+                if (ResourceManager.Instance.TryAddVehicle(VehicleType.trailer, (sbyte)itemSO.itemCount))
+                    SpeedUI.Delete(itemSO);
                 break;
         }
     }
